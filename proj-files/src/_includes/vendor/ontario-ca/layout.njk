@@ -1,0 +1,31 @@
+{# formerly 'globals', set here for use by templates #}
+{% set templateGlobals =
+{
+    assetsRoot: globals.assetsPath,
+    designSystemRoot: globals.assetsPath + vendor["ontario-ca"].globals.designSystemPath,
+    coreRoot: globals.assetsPath + vendor["ontario-ca"].globals.corePath,
+    useApplicationHeader: globals.useApplicationHeader,
+    footerType: vendor["ontario-ca"].globals.allowedFooterTypes[globals.footerType],
+    env: vendor["ontario-ca"].globals.env
+}
+%}
+<!DOCTYPE html>
+{% set lang = lang or 'en' %}
+<html lang="{{ lang }}">
+{% include "vendor/ontario-ca/organisms/_head.njk" %}
+
+<body>  
+  {# Tag Manager should be first element in body #}
+  {% include "vendor/ontario-ca/atoms/_google_tag_manager_noscript.njk" %}
+  {% include "vendor/ontario-ca/atoms/_skip_to_main.njk" %}
+  {% include "vendor/ontario-ca/atoms/_ontario_icon_svgs.njk" %}
+  {% include "vendor/ontario-ca/templates/_header.njk" %}
+  {% include "vendor/ontario-ca/molecules/_ontarioca_breadcrumbs.njk" %}
+  <!-- This div is used by the _skip_to_main functionality to jump the header -->
+  <div id="main-content"></div>
+  {% include "app/_main_content.njk" %}
+  {% include "vendor/ontario-ca/templates/_footer.njk" %}
+  {% include "vendor/ontario-ca/atoms/_back_to_top_button.njk" %}
+</body>
+
+</html>

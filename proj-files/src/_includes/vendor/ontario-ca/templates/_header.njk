@@ -1,0 +1,14 @@
+<div class="ontario-header__container">
+{% if templateGlobals.useApplicationHeader or useApplicationHeader%}
+  {% include "vendor/ontario-ca/organisms/_application_header.njk" %}
+  {% include "vendor/ontario-ca/organisms/_application_subheader.njk" %}
+{% else %}
+  {% include "vendor/ontario-ca/organisms/_default_header.njk" %}
+{% endif %}
+</div>
+
+<div class="ontario-overlay"></div>
+
+{% include "vendor/ontario-ca/molecules/_header_script_imports.njk" %}
+
+{% include "vendor/ontario-ca/atoms/_header_eleventy_js_globals.njk" %}

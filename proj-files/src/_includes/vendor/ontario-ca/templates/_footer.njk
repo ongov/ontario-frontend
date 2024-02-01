@@ -1,0 +1,6 @@
+{% set footerType = footerType or templateGlobals.footerType %}
+{% if footerType === "expanded" %}
+{% include "vendor/ontario-ca/organisms/_expanded_footer.njk" %}
+{% else %}
+{% include "vendor/ontario-ca/organisms/_default_footer.njk" %}
+{% endif %}
