@@ -145,38 +145,6 @@ async function createNewProject(answers, options) {
 
   console.log(chalk.green('Npm dependencies installed successfully.'));
 
-  // Initialize a new git repo
-  console.log(chalk.blueBright('\nInitializing a new git repo...'));
-  const gitInit = spawn('git', ['init'], { stdio: 'inherit' });
-  await new Promise((resolve) => {
-    gitInit.on('close', resolve);
-  });
-  console.log(
-    chalk.green(
-      '\nSuccessfully initialized a new git repository in your project.',
-    ),
-  );
-  console.log(
-    chalk.green(
-      'You can now commit your initial project state with `git add .` and `git commit -m "initial commit"`',
-    ),
-  );
-  console.log(
-    chalk.green(
-      'Remember to create, or request, a new repository on Gitlab and link it with this local repository.',
-    ),
-  );
-  console.log(
-    chalk.green(
-      'You can link a remote repository with `git remote add origin [your-repo-url]`',
-    ),
-  );
-  console.log(
-    chalk.green(
-      'After linking, you can push your commits to the remote repository with `git push -u origin main`',
-    ),
-  );
-
   console.log(chalk.green(figlet.textSync('New Project Created!')));
   console.log(chalk.yellow(`\nProject is now created in ${newProjectPath}`));
   console.log(chalk.yellow('You can run the project with `npm run serve`'));
