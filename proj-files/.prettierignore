@@ -1,9 +1,0 @@
-# ignore artifacts
-node_modules
-dist
-
-# ignore design system
-src/assets/vendor/*
-
-# ignore njk files
-*.njk
