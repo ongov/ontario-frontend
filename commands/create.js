@@ -26,19 +26,15 @@ async function createNewProject(answers, options) {
 
   // Create the directory for the new project
   console.log(
-    chalk.green(
+    chalk.blueBright(
       `\nCreating a new Jamstack Eleventy project in ${newProjectPath}`,
     ),
   );
   createDirectory(newProjectPath);
 
   // Navigate to the newly created project directory
-  console.log(chalk.green('Navigating to project directory'));
+  console.log(chalk.blueBright('Navigating to project directory'));
   process.chdir(newProjectPath);
-
-  // Create all directories the new project requires
-  console.log(chalk.green(`Creating test folders`));
-  createDirectory('test');
 
   // Configuration for the new project
   const conf = {
@@ -105,11 +101,6 @@ async function createNewProject(answers, options) {
   console.log(chalk.blueBright('\nNavigating to _data directory'));
   process.chdir('_data');
   generateNunjucksFile('globals.njk', 'globals.js', conf);
-
-  // Navigate to test directory and generate test.js file
-  console.log(chalk.blueBright('\nNavigating to test directory'));
-  process.chdir('../../test');
-  generateNunjucksFile('test.njk', 'test.js', conf);
 
   // Navigate to project directory
   console.log(chalk.blueBright('\nNavigating to project directory'));
