@@ -2,7 +2,6 @@ const MarkdownIt = require('markdown-it');
 const fs = require('fs');
 const matter = require('gray-matter');
 
-const { version: toolkitPackageJSONVersion } = require('./package.json');
 const ontariocaLocaleStrings = require('./src/_data/locale-strings.json');
 
 function ontariocaMergeLocaleStrings(directory) {
