@@ -70,7 +70,6 @@ const ontariocaEleventyConfigObj = {
   templateFormats: [
     'njk',
     'html',
-    // Make a ticket for removing md from template formats
   ],
 
   // If using Nunjucks, add these directories for the template and data resolution
