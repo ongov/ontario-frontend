@@ -34,7 +34,7 @@ To create a new app, use the `create-ontario-app` command:
 create-ontario-app
 ```
 
-This will walk you through the project creation. It will also scaffold the project, set up all necessary files and configuration, initialize git, and install all necessary dependencies.
+This will walk you through the project creation. It will also scaffold the project, set up all necessary files and configuration, and install all necessary dependencies.
 
 For more information on the setup, visit the [Getting Started](https://github.com/ongov/Ontario.ca-Jamstack-Toolkit/wiki/Getting-started-with-the-Ontario.ca-Jamstack-Toolkit) guide.
 

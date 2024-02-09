@@ -2,7 +2,6 @@ const MarkdownIt = require('markdown-it');
 const fs = require('fs');
 const matter = require('gray-matter');
 
-const { version: toolkitPackageJSONVersion } = require('./package.json');
 const ontariocaLocaleStrings = require('./src/_data/locale-strings.json');
 
 function ontariocaMergeLocaleStrings(directory) {
@@ -71,7 +70,6 @@ const ontariocaEleventyConfigObj = {
   templateFormats: [
     'njk',
     'html',
-    // Make a ticket for removing md from template formats
   ],
 
   // If using Nunjucks, add these directories for the template and data resolution
