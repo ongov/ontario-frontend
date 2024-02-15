@@ -117,7 +117,7 @@ async function createNewProject(answers, options) {
 
   // Install toolkit dependency from local directory or npm
   const toolkitDependencyLocation = options.isLocal
-    ? path.join(__dirname, '../')
+    ? path.join(__dirname, '../../ontario-frontend')
     : '@ontario-digital-service/ontarioca-toolkit-core';
 
   console.log(
