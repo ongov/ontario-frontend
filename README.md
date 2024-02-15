@@ -1,6 +1,6 @@
-# Ontario.ca Jamstack Toolkit
+# Ontario Frontend
 
-The Ontario.ca Jamstack Toolkit is a command-line interface (CLI) tool that streamlines the creation and management of Jamstack projects for Ontario.ca. Inspired by tools like [Create React App](https://github.com/facebook/create-react-app) and built on top of [Eleventy](https://www.11ty.dev/), the toolkit provides a simple and efficient starting point for building accessible, performant, and scalable websites using the Eleventy static site generator.
+The Ontario Frontend is a web development kit that provides a framework and command-line interface (CLI) tool that streamlines the creation and management of Frontend projects for Ontario.ca. Inspired by tools like [Create React App](https://github.com/facebook/create-react-app) and built on top of [Eleventy](https://www.11ty.dev/), the toolkit provides a simple and efficient starting point for building accessible, performant, and scalable websites using the Eleventy static site generator.
 
 ## Features
 

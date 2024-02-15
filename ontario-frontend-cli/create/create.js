@@ -4,7 +4,7 @@ const path = require('path');
 const { spawn } = require('child_process');
 const inquirer = require('inquirer');
 const nunjucks = require('nunjucks');
-const questions = require('./questions/create-questions.js');
+const questions = require('./questions');
 const chalk = require('chalk');
 const figlet = require('figlet');
 
@@ -14,7 +14,7 @@ const figlet = require('figlet');
 // const __dirname = path.dirname(__filename);
 
 // Define the template directory
-const TEMPLATE_DIR = path.resolve(__dirname, '../proj-templates');
+const TEMPLATE_DIR = path.resolve(__dirname, './templates');
 
 // Configure Nunjucks with the template directory
 nunjucks.configure(TEMPLATE_DIR);
@@ -52,7 +52,7 @@ async function createNewProject(answers, options) {
   generateNunjucksFile('README.njk', 'README.md', conf);
 
   // Copy config files
-  const sourceDir = path.join(__dirname, '../proj-files');
+  const sourceDir = path.join(__dirname, './skeleton');
   try {
     console.log(chalk.blueBright('\nCopying config files'));
     fs.cpSync(sourceDir, newProjectPath, {
@@ -117,7 +117,7 @@ async function createNewProject(answers, options) {
 
   // Install toolkit dependency from local directory or npm
   const toolkitDependencyLocation = options.isLocal
-    ? path.join(__dirname, '../')
+    ? path.join(__dirname, '../../ontario-frontend')
     : '@ontario-digital-service/ontarioca-toolkit-core';
 
   console.log(
