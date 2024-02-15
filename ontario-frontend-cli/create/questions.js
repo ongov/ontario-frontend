@@ -1,7 +1,7 @@
 // Import the required modules
 const chalk = require('chalk');
 const figlet = require('figlet');
-const { validFileName, validPath } = require('./validate.js');
+const { validFileName, validPath } = require('../utils/validate-questions');
 
 // Print a header for the application in the terminal
 console.log(

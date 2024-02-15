@@ -1,7 +1,7 @@
 {
-  "name": "@ontario-digital-service/ontarioca-toolkit-core",
-  "version": "1.0.2",
-  "description": "Developer CLI for creating and managing projects with the Ontario.ca Jamstack Toolkit",
+  "name": "create-ontario-app",
+  "version": "1.1.0",
+  "description": "",
   "scripts": {
   },
   "author": "Ontario Digital Services",
@@ -12,9 +12,6 @@
     "ontario"
   ],
   "license": "Apache 2.0",
-  "bin": {
-    "create-ontario-app": "./bin/cli.js"
-  },
   "exports": {
     ".": "./lib/index.js",
     "./eleventy": "./eleventy.js"
