@@ -1,0 +1,17 @@
+{
+    "name": "ontario-frontend-project",
+    "version": "0.0.0",
+    "private": "true",
+    "workspaces": [
+        "packages/*"
+    ],
+    "scripts": {},
+    "devDependencies": {},
+    "resolutions": {},
+    "engines": {
+        "node": ">=18.17.0",
+        "pnpm": "8.15.1"
+    },
+    "packageManager": "pnpm@8.15.1"
+
+}
