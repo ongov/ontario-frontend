@@ -17,14 +17,14 @@ const createQuestions = [
     name: 'projectName',
     message:
       'Specify your project name for the package.json file (lowercase, hyphens, and underscores only):\n',
-    default: 'my-jamstack-project',
+    default: 'my-frontend-project',
     validate: (value) => validFileName(value),
   },
   {
     type: 'input',
     name: 'projectDescription',
     message: 'Specify a short description for your project:\n',
-    default: 'New Ontario.ca Jamstack Toolkit project',
+    default: 'New Ontario Frontend project',
   },
   {
     type: 'input',
