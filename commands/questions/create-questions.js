@@ -12,7 +12,7 @@ console.log(
 
 // Define the questions for the inquirer prompt
 const createQuestions = [
-  { // cursor problem
+  { // If a prompt exceeds 1 line and wraps it can cause the input cursor to be misaligned. Move input under question, instead of inline.
     type: 'input',
     name: 'projectName',
     message:
@@ -41,7 +41,7 @@ const createQuestions = [
       'What is the file name of the English-language page? (this will also be used for the path: ex. ontario.ca/my-english-page)\n',
     validate: (value) => validFileName(value),
   },
-  { // cursor problem
+  {
     type: 'input',
     name: 'frRoot',
     message:
