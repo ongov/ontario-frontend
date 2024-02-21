@@ -1,5 +1,5 @@
 {
-  "name": "create-ontario-app",
+  "name": "create-ontario",
   "version": "1.1.0",
   "description": "",
   "scripts": {
@@ -14,7 +14,7 @@
   ],
   "license": "Apache 2.0",
   "bin": {
-    "create-ontario-app": "./bin/cli.js"
+    "create-ontario": "./bin/cli.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",

@@ -136,7 +136,7 @@ async function createNewProject(answers, options) {
 
   console.log(chalk.green('Npm dependencies installed successfully.'));
 
-  console.log(chalk.green(figlet.textSync('New Project Created!')));
+  console.log(chalk.green(figlet.textSync('New Project\nCreated!')));
   console.log(chalk.yellow(`\nProject is now created in ${newProjectPath}`));
   console.log(chalk.yellow('You can run the project with `npm run serve`'));
   console.log(chalk.yellow('You can build the project with `npm run build`'));
