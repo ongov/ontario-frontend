@@ -7,7 +7,7 @@
     "build": "rm -rf dist && eleventy",
     "debug": "rm -rf dist && DEBUG=* eleventy",
     "serve": "eleventy --serve",
-    "validate": "html-validate --config ../packages/validate-config-ontario/lib/.htmlvalidate.json dist/**/*.html"
+    "validate": "if [ -f .htmlvalidate.json ]; then html-validate dist/**/*.html; else html-validate --config ../packages/validate-config-ontario/lib/.htmlvalidate.json dist/**/*.html; fi"
   },
   "author": "TODO changeme",
   "license": "Apache 2.0",
