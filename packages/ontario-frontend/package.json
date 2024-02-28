@@ -17,11 +17,7 @@
     "./eleventy": "./eleventy.js"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
-    "commander": "^11.0.0",
-    "figlet": "^1.6.0",
     "gray-matter": "^4.0.3",
-    "inquirer": "^8.2.6",
     "markdown-it": "^13.0.1",
     "nunjucks": "^3.2.4"
   }
