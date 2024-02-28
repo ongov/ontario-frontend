@@ -16,10 +16,10 @@ readPackageJson().then((packageJson) => {
     .description(packageJson.description);
 });
 
-// Define a new command for creating a Jamstack project
+// Define a new command for creating a Ontario Frontend project
 program
-  .description('Create a new Jamstack project')
-  .option('--local', 'Use a local version of the toolkit dependency')
+  .description('Create a new Ontario Frontend project')
+  .option('--local', 'Use a local version of the Ontario Frontend core dependency')
   .action((cmd) => {
     // The action to perform when the command is executed
     handleCreateCommand(cmd);

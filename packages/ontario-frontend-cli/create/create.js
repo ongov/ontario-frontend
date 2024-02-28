@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
-const inquirer = require('inquirer');
+const inquirer = require('inquirer');n
 const nunjucks = require('nunjucks');
 const questions = require('./questions');
 const chalk = require('chalk');
@@ -26,7 +26,7 @@ async function createNewProject(answers, options) {
   // Create the directory for the new project
   console.log(
     chalk.blueBright(
-      `\nCreating a new Jamstack Eleventy project in ${newProjectPath}`,
+      `\nCreating a new Ontario Frontend project in ${newProjectPath}`,
     ),
   );
   createDirectory(newProjectPath);

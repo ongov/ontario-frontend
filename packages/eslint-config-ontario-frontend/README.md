@@ -77,6 +77,20 @@ If you need to override any rules, you can do so within your project's .eslintrc
 
 This customization will change the handling of unused variables to a warning and remove the requirement for semicolons.
 
+## Documentation
+
+Explore the Documentation to learn about every aspect of the toolkit--from installation and file structure to adding analytics and preparing for deployment. The documentation is available at [our dev site](our dev site).
+
 ## Contributing
 
-We welcome contributions to improve the eslint-config-ontario-frontend package. Please feel free to submit a pull request or open an issue on our [GitHub repository](https://github.com/ongov/ontario-frontend/tree/main/packages/eslint-config-ontario-frontend).
+Contributions to the [Ontario Frontend ESLint Config](https://github.com/ongov/ontario-frontend/tree/main/packages/eslint-config-ontario-frontend) are welcome! Whether it's bug reports, feature requests, or contributions to code, we appreciate your input.
+
+Check out our [CONTRIBUTING.md](https://github.com/ongov/ontario-frontend/tree/main/CONTRIBUTING.md) file for guidelines on how to contribute.
+
+## License
+
+This project is licensed under the [Open Government Licence - Ontario](https://www.ontario.ca/page/open-government-licence-ontario). Feel free to use, modify, and distribute it as needed.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ongov/ontario-frontend/tags).
