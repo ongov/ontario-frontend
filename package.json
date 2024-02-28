@@ -1,17 +1,23 @@
 {
-    "name": "ontario-frontend-project",
-    "version": "1.3.0",
-    "private": "true",
-    "workspaces": [
-        "packages/*"
-    ],
-    "scripts": {},
-    "devDependencies": {},
-    "resolutions": {},
-    "engines": {
-        "node": ">=18.17.0",
-        "pnpm": "8.15.1"
-    },
-    "packageManager": "pnpm@8.15.1"
-
+  "name": "ontario-frontend-project",
+  "version": "1.3.0",
+  "private": "true",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "pnpm --filter './packages/*' run build",
+    "test": "pnpm --recursive run test",
+    "bootstrap": "node scripts/bootstrap.js",
+    "clean": "node scripts/clean.js",
+    "publish:specific": "node scripts/publish.js",
+    "update:version": "node scripts/update-version.js"
+  },
+  "devDependencies": {},
+  "resolutions": {},
+  "engines": {
+    "node": ">=18.17.0",
+    "pnpm": "8.15.1"
+  },
+  "packageManager": "pnpm@8.15.1"
 }
