@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
-const inquirer = require('inquirer');n
+const inquirer = require('inquirer');
 const nunjucks = require('nunjucks');
 const questions = require('./questions');
 const chalk = require('chalk');
