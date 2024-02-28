@@ -1,6 +1,18 @@
 # Ontario Frontend
 
-The Ontario Frontend is a web development kit that provides a framework and command-line interface (CLI) tool that streamlines the creation and management of Frontend projects for Ontario.ca. Inspired by tools like [Create React App](https://github.com/facebook/create-react-app) and built on top of [Eleventy](https://www.11ty.dev/), the toolkit provides a simple and efficient starting point for building accessible, performant, and scalable websites using the Eleventy static site generator.
+Welcome to the Ontario Frontend monorepo, the centralized codebase for the Ontario Frontend development toolkit. This monorepo contains a suite of packages and tools designed to accelerate the development of accessible, efficient, and consistent web experiences across the Ontario government digital platforms.
+
+## Monorepo Structure
+
+The monorepo is structured to include various packages:
+
+- **`/packages/ontario-frontend`**: The core frontend framework providing UI components, utilities, tools, and configurations tailored for building Ontario Frontend applications
+
+- **`/packages/ontario-frontend-cli`**: A command-line interface (CLI) tool for scaffolding new projects, streamlining development workflows, and managing project configurations efficiently
+
+- **`/packages/eslint-config-ontario-frontend`**: ESLint configurations tailored for the Ontario Frontend ecosystem, ensuring code quality and consistency across projects.
+
+- **`/packages/prettier-config-ontario-frontend`**: Prettier configurations designed to maintain a consistent coding style within the Ontario Frontend projects.
 
 ## Features
 
@@ -11,63 +23,58 @@ The Ontario Frontend is a web development kit that provides a framework and comm
 - **Ontario.ca standards**: Templating and styling designed to meet the guidelines and standards for Ontario.ca.
 - **Internationalization support**: Tools and structures to support English and French language sites, allowing for seamless content delivery across languages.
 
-## Getting started
+## Usage
 
-### Prerequisites
+Visit the [ontario-frontend-cli](packages/ontario-frontend-cli) package for instructions and information.
 
-- [Node.js](https://nodejs.org/en/) (version 12 or higher)
-- [npm](https://www.npmjs.com/) (version 6 or higher)
+## Development
 
-### Installation
+### Getting Started
 
-Install the toolkit globally using npm:
+1. **Clone the Repository**
 
-```bash
-npm install -g @ontario-digital-service/ontarioca-toolkit-core
-```
+   Clone this repository to your local machine to begin working with the Ontario Frontend Monorepo:
 
-### Creating a new application
+   ```bash
+   git clone https://github.com/ongov/ontario-frontend.git
+   cd ontario-frontend
+   ```
 
-To create a new app, use the `create-ontario-app` command:
+2. **Install Dependencies**
 
-```bash
-create-ontario-app
-```
+   This monorepo uses `pnpm` for efficient dependency management. Install `pnpm` if you haven't already, and then install all necessary dependencies:
 
-This will walk you through the project creation. It will also scaffold the project, set up all necessary files and configuration, and install all necessary dependencies.
+   ```bash
+   pnpm install
+   ```
 
-For more information on the setup, visit the [Getting Started](https://github.com/ongov/Ontario.ca-Jamstack-Toolkit/wiki/Getting-started-with-the-Ontario.ca-Jamstack-Toolkit) guide.
+3. **Explore and Develop**
 
-### Running the development server
+   Each package within the monorepo has its own specific setup and instructions. Navigate to the package directory of interest for more detailed information:
 
-To run the development server, use the `serve` command:
+   ```bash
+   cd packages/<package-name>
+   ```
 
-```bash
-cd my-ontario-project
-npm run serve
-```
+### Development Workflow
 
-This will start the development server on port 8080. You can then view your site at [http://localhost:8080](http://localhost:8080).
-
-### Building for production
-
-To build your site for production, use the `build` command:
-
-```bash
-cd my-ontario-project
-npm run build
-```
-
-This will build your site and output the static files to the `dist` directory.
+- **Local Development**: Refer to each package's README for commands to start development environments and for specific development instructions.
 
 ## Documentation
 
-Explore the Documentation to learn about every aspect of the toolkit--from installation and file structure to adding analytics and preparing for deployment. The documentation is available at [https://ontario-digital-service.github.io/ontarioca-toolkit-core/](https://ontario-digital-service.github.io/ontarioca-toolkit-core/).
+Explore the Documentation to learn about every aspect of the toolkit--from installation and file structure to adding analytics and preparing for deployment. The documentation is available at [our dev site](our dev site).
 
 ## Contributing
 
-We welcome contributions to the toolkit! Please read our [Contributing Guide](CONTRIBUTING.md) for guidelines on how to propose bugfixes, new features, and submit pull requests.
+Contributions to the [Ontario Frontend monorepo](https://github.com/ongov/ontario-frontend/tree/main) are welcome! Whether it's bug reports, feature requests, or contributions to code, we appreciate your input.
+
+Check out our [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to contribute.
 
 ## License
 
-The Ontario.ca Jamstack Toolkit is licensed under the Apache License 2.0 License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the [Open Government Licence - Ontario](https://www.ontario.ca/page/open-government-licence-ontario). Feel free to use, modify, and distribute it as needed.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ongov/ontario-frontend/tags).
+
