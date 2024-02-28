@@ -28,15 +28,31 @@ To integrate the Ontario Prettier configuration into your project, choose one of
 
 ### NPM
 
-```sh
-npm install @ongov/prettier-config-ontario-frontend --save-dev
-```
+1. First, you need to install [Prettier](https://prettier.io) if it's not already installed:
+
+    ```sh
+    npm install prettier --save-dev
+    ```
+
+2. Next, install the `@ongov/prettier-config-ontario-frontend` package:
+
+    ```sh
+    npm install @ongov/prettier-config-ontario-frontend --save-dev
+    ```
 
 ### PNPM
 
-```sh
-pnpm add @ongov/prettier-config-ontario-frontend -D
-```
+1. First, you need to install [Prettier](https://prettier.io) if it's not already installed:
+
+    ```sh
+    pnpm add prettier -D
+    ```
+
+2. Next. install the `@ongov/prettiers-config-ontario-frontend`
+
+    ```sh
+    pnpm add @ongov/prettier-config-ontario-frontend -D
+    ```
 
 ## Usage
 

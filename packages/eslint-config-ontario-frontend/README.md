@@ -1,4 +1,4 @@
-# @ontario-digital-service/eslint-config-ontario-frontend
+# @ongov/eslint-config-ontario-frontend
 
 This package provides the shared ESLint configuration used by Ontario Frontend projects. It enforces a consistent code style for JavaScript projects to help keep code clean and readable.
 
@@ -15,7 +15,7 @@ This package provides the shared ESLint configuration used by Ontario Frontend p
 
 ## Installation
 
-To use the @ontario-digital-service/eslint-config-ontario-frontend in your project, follow the steps for based on your package manager:
+To use the @ongov/eslint-config-ontario-frontend in your project, follow the steps for based on your package manager:
 
 ### NPM
 
@@ -25,10 +25,10 @@ To use the @ontario-digital-service/eslint-config-ontario-frontend in your proje
     npm install eslint --save-dev
     ```
 
-2. Next, install the `@ontario-digital-service/eslint-config-ontario-frontend` package:
+2. Next, install the `@ongov/eslint-config-ontario-frontend` package:
 
     ```sh
-    npm install @ontario-digital-service/eslint-config-ontario-frontend --save-dev
+    npm install @ongov/eslint-config-ontario-frontend --save-dev
     ```
 
 ### PNPM
@@ -39,10 +39,10 @@ To use the @ontario-digital-service/eslint-config-ontario-frontend in your proje
     pnpm add eslint -D
     ```
 
-2. Next, install the `@ontario-digital-service/eslint-config-ontario-frontend` package:
+2. Next, install the `@ongov/eslint-config-ontario-frontend` package:
 
     ```sh
-    pnpm add @ontario-digital-service/eslint-config-ontario-frontend -D
+    pnpm add @ongov/eslint-config-ontario-frontend -D
     ```
 
 ## Usage
@@ -51,15 +51,15 @@ After installation, you'll need to set up your ESLint configuration file if you 
 
 1. Create a file named `.eslintrc.json` in your project's root directory.
 
-2. Add the following content to .eslintrc.json to extend the @ontario-digital-service/eslint-config-ontario-frontend configuration:
+2. Add the following content to .eslintrc.json to extend the @ongov/eslint-config-ontario-frontend configuration:
 
     ```json
     {
-        "extends": "@ontario-digital-service/eslint-config-ontario-frontend"
+        "extends": "@ongov/eslint-config-ontario-frontend"
     }
     ```
 
-This line tells ESLint to use the `@ontario-digital-service/eslint-config-ontario-frontend` rules for your project.
+This line tells ESLint to use the `@ongov/eslint-config-ontario-frontend` rules for your project.
 
 ## Customizing
 
@@ -67,7 +67,7 @@ If you need to override any rules, you can do so within your project's .eslintrc
 
 ```json
 {
-  "extends": "@ontario-digital-service/eslint-config-ontario-frontend",
+  "extends": "@ongov/eslint-config-ontario-frontend",
   "rules": {
     "no-unused-vars": "warn",
     "semi": ["error", "never"]
@@ -79,4 +79,4 @@ This customization will change the handling of unused variables to a warning and
 
 ## Contributing
 
-We welcome contributions to improve the eslint-config-ontario-frontend package. Please feel free to submit a pull request or open an issue on our [GitHub repository](https://github.com/ongov/eslint-config-ontario-frontend).
+We welcome contributions to improve the eslint-config-ontario-frontend package. Please feel free to submit a pull request or open an issue on our [GitHub repository](https://github.com/ongov/ontario-frontend/tree/main/packages/eslint-config-ontario-frontend).
