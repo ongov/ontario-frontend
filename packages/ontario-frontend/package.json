@@ -1,6 +1,6 @@
 {
-  "name": "create-ontario-app",
-  "version": "1.1.0",
+  "name": "ontario-frontend",
+  "version": "1.0.0",
   "description": "",
   "scripts": {
   },
@@ -9,19 +9,15 @@
     "jamstack",
     "cli",
     "toolkit",
-    "ontario",
-    "frontend"
+    "ontario"
   ],
   "license": "Apache 2.0",
-  "bin": {
-    "create-ontario-app": "./bin/cli.js"
+  "exports": {
+    ".": "./lib/index.js",
+    "./eleventy": "./eleventy.js"
   },
   "dependencies": {
-    "chalk": "^4.1.2",
-    "commander": "^11.0.0",
-    "figlet": "^1.6.0",
     "gray-matter": "^4.0.3",
-    "inquirer": "^8.2.6",
     "markdown-it": "^13.0.1",
     "nunjucks": "^3.2.4"
   }
