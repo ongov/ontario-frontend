@@ -12,7 +12,7 @@ The monorepo is structured to include various packages:
 
 - **`/packages/eslint-config-ontario-frontend`**: ESLint configurations tailored for the Ontario Frontend ecosystem, ensuring code quality and consistency across projects.
 
-- **/`packages/prettier-config-ontario-frontend`**: Prettier configurations designed to maintain a consistent coding style within the Ontario Frontend projects.
+- **`/packages/prettier-config-ontario-frontend`**: Prettier configurations designed to maintain a consistent coding style within the Ontario Frontend projects.
 
 ## Features
 
