@@ -114,19 +114,19 @@ async function createNewProject(answers, options) {
     npmInstall.on('close', resolve);
   });
 
-  // Install toolkit dependency from local directory or npm
-  const toolkitDependencyLocation = options.isLocal
+  // Install core Frontend dependency from local directory or npm
+  const coreDependencyLocation = options.isLocal
     ? path.join(__dirname, '../../ontario-frontend')
-    : '@ontario-digital-service/ontarioca-toolkit-core';
+    : '@ongov/ontario-frontend';
 
   console.log(
     chalk.magentaBright(
-      `\nInstalling toolkit dependency from ${toolkitDependencyLocation}`,
+      `\nInstalling core Frontend dependency from ${coreDependencyLocation}`,
     ),
   );
   const ourInstall = spawn(
     'npm',
-    ['install', '-S', toolkitDependencyLocation],
+    ['install', '-S', coreDependencyLocation],
     { stdio: 'inherit' },
   );
   await new Promise((resolve) => {

@@ -33,7 +33,7 @@ function ontariocaEleventyConfigFunc(eleventyConfig, directory) {
     () => `${String(new Date().getFullYear()).slice(-2)}`,
   );
 
-  eleventyConfig.addShortcode('toolkitVersion', () => 'toolkitVersion');
+  eleventyConfig.addShortcode('coreVersion', () => 'coreVersion');
   
   const localeStrings = ontariocaMergeLocaleStrings(directory);
   /* eslint-disable func-names */
