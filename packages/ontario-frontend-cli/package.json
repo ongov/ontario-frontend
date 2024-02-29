@@ -1,0 +1,28 @@
+{
+  "name": "ontario-frontend-cli",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+  },
+  "author": "Ontario Digital Services",
+  "keywords": [
+    "jamstack",
+    "cli",
+    "toolkit",
+    "ontario",
+    "frontend",
+    "ontario-frontend",
+    "ontario-frontend-cli"
+  ],
+  "license": "Apache 2.0",
+  "bin": {
+    "create-ontario-app": "./bin/cli.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.0.0",
+    "figlet": "^1.6.0",
+    "inquirer": "^8.2.6",
+    "nunjucks": "^3.2.4"
+  }
+}

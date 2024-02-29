@@ -1,0 +1,26 @@
+{
+  "name": "ontario-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+  },
+  "author": "Ontario Digital Services",
+  "keywords": [
+    "jamstack",
+    "toolkit",
+    "ontario",
+    "framework",
+    "ontario-frontend",
+    "frontend"
+  ],
+  "license": "Apache 2.0",
+  "exports": {
+    ".": "./lib/index.js",
+    "./eleventy": "./eleventy.js"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "markdown-it": "^13.0.1",
+    "nunjucks": "^3.2.4"
+  }
+}
