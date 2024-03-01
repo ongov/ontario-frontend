@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const chalk = require('chalk');
 const figlet = require('figlet');
-const { validFileName, validPath } = require('../utils/validate-questions');
+const { validFileName, validPath, validYes } = require('../utils/validate-questions');
 
 // Print a header for the application in the terminal
 console.log(
@@ -48,6 +48,13 @@ const createQuestions = [
       'What is the file name of the French-language page? (this will also be used for the path: ex. ontario.ca/ma-page-francaise)\n',
     validate: (value) => validFileName(value),
   },
+  {
+    type: 'confirm',
+    name: 'ESLint',
+    message: 'Do you want to use ESLint?\nType "y" or "yes" if you want ESLint\n',
+    default: false,
+    validate: (value) => validYes(value)
+  }
 ];
 
 // Add color to the questions

@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -rf dist && eleventy",
     "debug": "rm -rf dist && DEBUG=* eleventy",
-    "serve": "eleventy --serve"
+    "serve": "eleventy --serve",
+    {% for scriptName, scriptValue in addScripts %}"{{ scriptName }}": "{{ scriptValue | safe }}"{% endfor %}
   },
   "author": "TODO changeme",
   "license": "Apache 2.0",
