@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const chalk = require('chalk');
 const figlet = require('figlet');
-const { validFileName, validPath, validYes } = require('../utils/validate-questions');
+const { validFileName, validPath } = require('../utils/validate-questions');
 
 // Print a header for the application in the terminal
 console.log(
@@ -49,11 +49,14 @@ const createQuestions = [
     validate: (value) => validFileName(value),
   },
   {
-    type: 'confirm',
+    type: 'list',
     name: 'ESLint',
-    message: 'Do you want to use ESLint?\nType "y" or "yes" if you want ESLint\n',
-    default: false,
-    validate: (value) => validYes(value)
+    message: 'Want to add ESLint for fixing code problems?',
+    choices: ['Yes', 'No'],
+    default: 'No',
+    filter: function(value) {
+      return value === 'Yes' ? true : false;
+    }
   }
 ];
 

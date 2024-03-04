@@ -28,18 +28,7 @@ const validPath = (value) => {
   }
 };
 
-// Validate questions such as (install ESLint?)
-// The function checks if the input is "yes", only then will ESLint be installed
-// leaving the input empty or enterting any other value will resort to the default false value
-const validYes = (value) => {
-  value = value.trim().toLowerCase();
-  if (value === 'yes' || value === 'y') {
-    return true;
-  }
-}
-
 module.exports = {
   validFileName,
-  validPath,
-  validYes
+  validPath
 };
