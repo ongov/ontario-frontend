@@ -4,7 +4,7 @@ const { spawn } = require('child_process');
 const inquirer = require('inquirer');
 const nunjucks = require('nunjucks');
 const questions = require('./questions');
-const chalk = require('chalk');
+const colours = require('../utils/chalkColours');
 const figlet = require('figlet');
 
 // Define the __filename and __dirname variables
@@ -25,14 +25,14 @@ async function createNewProject(answers, options) {
 
   // Create the directory for the new project
   console.log(
-    chalk.blueBright(
+    colours.info(
       `\nCreating a new Ontario Frontend project in ${newProjectPath}`,
     ),
   );
   createDirectory(newProjectPath);
 
   // Navigate to the newly created project directory
-  console.log(chalk.blueBright('Navigating to project directory'));
+  console.log(colours.info('Navigating to project directory'));
   process.chdir(newProjectPath);
 
   // Configuration for the new project
@@ -42,6 +42,7 @@ async function createNewProject(answers, options) {
     createDate: new Date().toISOString(),
     projectName: answers.projectName,
     projectDescription: answers.projectDescription,
+    ESLint: answers.ESLint,
   };
 
   // Generate package.json file
@@ -50,24 +51,29 @@ async function createNewProject(answers, options) {
   // Generate README.md file
   generateNunjucksFile('README.njk', 'README.md', conf);
 
+  // Generate README.md file
+  if (answers.ESLint) {
+    generateNunjucksFile('eslintrc.njk', '.eslintrc.json', conf);
+  }
+
   // Copy config files
   const sourceDir = path.join(__dirname, './skeleton');
   try {
-    console.log(chalk.blueBright('\nCopying config files'));
+    console.log(colours.info('\nCopying config files'));
     fs.cpSync(sourceDir, newProjectPath, {
       recursive: true,
     });
   } catch (error) {
-    console.log(chalk.red(error.message));
+    console.log(colours.error(error.message));
   }
 
   // Generate .eleventy.js file
   generateNunjucksFile('eleventy.njk', `.eleventy.js`, conf);
 
   // Navigate to src directory and generate template files
-  console.log(chalk.blueBright('\nNavigating to src directory'));
+  console.log(colours.info('\nNavigating to src directory'));
   process.chdir('src');
-  console.log(chalk.blueBright('Generating and writing template files'));
+  console.log(colours.info('Generating and writing template files'));
 
   // Generate main English-language page
   generateNunjucksFile('en.njk', `${answers.enRoot}.njk`, conf);
@@ -87,29 +93,31 @@ async function createNewProject(answers, options) {
     '/* Add your script here */',
     (err) => {
       if (err) {
-        console.error(chalk.red(err));
+        console.error(colours.error(err));
       } else {
         console.log(
-          chalk.green('Wrote script.js file at src/assets/js/script.js'),
+          colours.success('Wrote script.js file at src/assets/js/script.js'),
         );
       }
     },
   );
 
   // Navigate to _data directory and generate globals.js file
-  console.log(chalk.blueBright('\nNavigating to _data directory'));
+  console.log(colours.info('\nNavigating to _data directory'));
   process.chdir('_data');
   generateNunjucksFile('globals.njk', 'globals.js', conf);
 
   // Navigate to project directory
-  console.log(chalk.blueBright('\nNavigating to project directory'));
+  console.log(colours.info('\nNavigating to project directory'));
   process.chdir(newProjectPath);
 
   // Install npm dependencies
   console.log(
-    chalk.blueBright('Installing npm dependencies. This may take a minute.'),
+    colours.info('Installing npm dependencies. This may take a minute.'),
   );
+
   const npmInstall = spawn('npm', ['install'], { stdio: 'inherit' });
+
   await new Promise((resolve) => {
     npmInstall.on('close', resolve);
   });
@@ -120,32 +128,30 @@ async function createNewProject(answers, options) {
     : '@ongov/ontario-frontend';
 
   console.log(
-    chalk.magentaBright(
+    colours.info(
       `\nInstalling core Frontend dependency from ${coreDependencyLocation}`,
     ),
   );
-  const ourInstall = spawn(
-    'npm',
-    ['install', '-S', coreDependencyLocation],
-    { stdio: 'inherit' },
-  );
+  const ourInstall = spawn('npm', ['install', '-S', coreDependencyLocation], {
+    stdio: 'inherit',
+  });
   await new Promise((resolve) => {
     ourInstall.on('close', resolve);
   });
 
-  console.log(chalk.green('Npm dependencies installed successfully.'));
+  console.log(colours.success('Npm dependencies installed successfully.'));
 
-  console.log(chalk.green(figlet.textSync('New Project\nCreated!')));
-  console.log(chalk.yellow(`\nProject is now created in ${newProjectPath}`));
-  console.log(chalk.yellow('You can run the project with `npm run serve`'));
-  console.log(chalk.yellow('You can build the project with `npm run build`'));
+  console.log(colours.success(figlet.textSync('New Project\nCreated!')));
+  console.log(colours.info(`\nProject is now created in ${newProjectPath}`));
+  console.log(colours.info('You can run the project with `npm run serve`'));
+  console.log(colours.info('You can build the project with `npm run build`'));
 }
 
 // Function to create a directory
 function createDirectory(path) {
   if (!fs.existsSync(path)) {
     fs.mkdirSync(path, { recursive: true });
-    console.log(chalk.green(`Created directory: ${path}`));
+    console.log(colours.success(`Created directory: ${path}`));
   }
 }
 
@@ -156,9 +162,9 @@ const generateNunjucksFile = (template, fileName, conf) => {
   // Write the rendered content to a file
   try {
     fs.writeFileSync(fileName, content);
-    console.log(chalk.green(`File (${fileName}) written successfully!`));
+    console.log(colours.success(`File (${fileName}) written successfully!`));
   } catch (err) {
-    console.error(chalk.red(err));
+    console.error(colours.error(err));
   }
 };
 

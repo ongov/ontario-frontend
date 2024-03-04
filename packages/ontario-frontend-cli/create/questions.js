@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-const chalk = require('chalk');
+const colours = require('../utils/chalkColours');
 const figlet = require('figlet');
 const { validFileName, validPath } = require('../utils/validate-questions');
 
 // Print a header for the application in the terminal
 console.log(
-  chalk.yellow(
+  colours.banner(
     figlet.textSync('Ontario\nFrontend', { horizontalLayout: 'full' }),
   ),
 );
@@ -48,11 +48,21 @@ const createQuestions = [
       'What is the file name of the French-language page? (this will also be used for the path: ex. ontario.ca/ma-page-francaise)\n',
     validate: (value) => validFileName(value),
   },
+  {
+    type: 'list',
+    name: 'ESLint',
+    message: 'Want to add ESLint for fixing code problems?',
+    choices: ['Yes', 'No'],
+    default: 'No',
+    filter: function(value) {
+      return value === 'Yes' ? true : false;
+    }
+  }
 ];
 
 // Add color to the questions
 createQuestions.forEach((question) => {
-  question.message = chalk.cyan(question.message);
+  question.message = colours.question(question.message);
 });
 
 // Export the 'createQuestions' array
