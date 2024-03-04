@@ -6,12 +6,14 @@
   "scripts": {
     "build": "rm -rf dist && eleventy",
     "debug": "rm -rf dist && DEBUG=* eleventy",
-    "serve": "eleventy --serve",
-    {% for scriptName, scriptValue in addScripts %}"{{ scriptName }}": "{{ scriptValue | safe }}"{% endfor %}
+    "serve": "eleventy --serve"{% if ESLint %},
+    "lint": "./node_modules/.bin/eslint '**/*.js'"{% endif %}
   },
   "author": "TODO changeme",
   "license": "Apache 2.0",
   "devDependencies": {
-    "@11ty/eleventy": "^1.0.1"
+      "@11ty/eleventy": "^1.0.1"{% if ESLint %},
+      "eslint": "latest",
+      "eslint-config-ontario-frontend": "latest"{% endif %}
   }
 }

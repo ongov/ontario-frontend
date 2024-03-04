@@ -42,19 +42,9 @@ async function createNewProject(answers, options) {
     createDate: new Date().toISOString(),
     projectName: answers.projectName,
     projectDescription: answers.projectDescription,
+    ESLint: answers.ESLint,
   };
 
-  // If the user wants ESLint,
-  // will add the lint script to project's package.json file
-  if (answers.ESLint) {
-    conf.addScripts = conf.addScripts || {};
-    conf.addScripts.lint = `./node_modules/.bin/eslint '**/*.js'`; 
-    // ^ might need to add custom config and change the command here
-    // Where should we look for the config?
-    // eslint will probably by default look in the root directory
-    // might need to add specificity, firstly take from the root directory,
-    // secondly take from --config ./node_modules/eslint-config-ontario/.eslintrc.json
-  }
   // Generate package.json file
   generateNunjucksFile('package.njk', 'package.json', conf);
 
@@ -127,15 +117,6 @@ async function createNewProject(answers, options) {
   );
 
   const npmInstall = spawn('npm', ['install'], { stdio: 'inherit' });
-  // Install ESLint Config only if the user chooses the option
-  // switch the 'placeholder-package' with eslint-config-ontario once live on NPM
-  if (answers.ESLint) {
-    spawn('npm', ['init', '@eslint/config'], { stdio: 'inherit' });
-    spawn('npm', ['install', 'placeholder-package'], { stdio: 'inherit' });
-    console.log(
-      chalk.green('Installing ESLint and eslint-config-ontario package\n')
-    );
-  }
 
   await new Promise((resolve) => {
     npmInstall.on('close', resolve);
