@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-const chalk = require('chalk');
+const colours = require('../utils/chalkColours');
 const figlet = require('figlet');
 const { validFileName, validPath } = require('../utils/validate-questions');
 
 // Print a header for the application in the terminal
 console.log(
-  chalk.yellow(
+  colours.banner(
     figlet.textSync('Ontario\nFrontend', { horizontalLayout: 'full' }),
   ),
 );
@@ -62,7 +62,7 @@ const createQuestions = [
 
 // Add color to the questions
 createQuestions.forEach((question) => {
-  question.message = chalk.cyan(question.message);
+  question.message = colours.question(question.message);
 });
 
 // Export the 'createQuestions' array
