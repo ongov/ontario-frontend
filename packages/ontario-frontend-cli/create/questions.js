@@ -50,8 +50,18 @@ const createQuestions = [
   },
   {
     type: 'list',
-    name: 'ESLint',
+    name: 'esLint',
     message: 'Want to add ESLint for fixing code problems?',
+    choices: ['Yes', 'No'],
+    default: 'No',
+    filter: function(value) {
+      return value === 'Yes' ? true : false;
+    }
+  },
+  {
+    type: 'list',
+    name: 'prettier',
+    message: 'Want to add Prettier for code formatting?',
     choices: ['Yes', 'No'],
     default: 'No',
     filter: function(value) {

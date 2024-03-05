@@ -42,7 +42,8 @@ async function createNewProject(answers, options) {
     createDate: new Date().toISOString(),
     projectName: answers.projectName,
     projectDescription: answers.projectDescription,
-    ESLint: answers.ESLint,
+    esLint: answers.esLint,
+    prettier: answers.prettier,
   };
 
   // Generate package.json file
@@ -51,9 +52,17 @@ async function createNewProject(answers, options) {
   // Generate README.md file
   generateNunjucksFile('README.njk', 'README.md', conf);
 
-  // Generate README.md file
-  if (answers.ESLint) {
-    generateNunjucksFile('eslintrc.njk', '.eslintrc.json', conf);
+  // Generate ES Lint config file
+  if (answers.esLint) {
+    generateNunjucksFile('eslintrc.njk', '.eslintrc.js', conf);
+  }
+  // Generate Prettier config file
+  if (answers.prettier) {
+    generateNunjucksFile('prettier.config.njk', 'prettier.config.js', conf);
+  }
+  // Generate Prettier ignore file
+  if (answers.prettier) {
+    generateNunjucksFile('prettierignore.njk', '.prettierignore', conf);
   }
 
   // Copy config files
