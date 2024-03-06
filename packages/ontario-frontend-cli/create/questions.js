@@ -22,12 +22,6 @@ const createQuestions = [
   },
   {
     type: 'input',
-    name: 'projectDescription',
-    message: 'Specify a short description for your project:\n',
-    default: 'New Ontario Frontend project',
-  },
-  {
-    type: 'input',
     name: 'enRoot',
     message:
       'What is the file name of the English-language page? (this will also be used for the path: ex. ontario.ca/my-english-page)\n',
