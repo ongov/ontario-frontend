@@ -21,7 +21,7 @@ nunjucks.configure(TEMPLATE_DIR);
 async function createNewProject(answers, options) {
   // Store some user answers necessary for the subsequent steps
   const projectName = answers.projectName;
-  const newProjectPath = path.resolve(answers.destination, projectName);
+  const newProjectPath = path.resolve(process.cwd(), projectName);
 
   // Create the directory for the new project
   console.log(

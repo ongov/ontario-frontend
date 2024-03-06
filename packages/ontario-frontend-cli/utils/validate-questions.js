@@ -18,17 +18,6 @@ const validFileName = (value) => {
   return true;
 };
 
-// Validate the path
-// The function checks if the path exists
-const validPath = (value) => {
-  if (fs.existsSync(value)) {
-    return true;
-  } else {
-    return 'The provided path does not exist. Please enter a valid path.';
-  }
-};
-
 module.exports = {
-  validFileName,
-  validPath
+  validFileName
 };
