@@ -7,11 +7,6 @@ const questions = require('./questions');
 const colours = require('../utils/chalkColours');
 const figlet = require('figlet');
 
-// Define the __filename and __dirname variables
-// In CommonJS, these variables are automatically defined, but in ES modules, we need to define them ourselves
-// const __filename = require.main.filename;
-// const __dirname = path.dirname(__filename);
-
 // Define the template directory
 const TEMPLATE_DIR = path.resolve(__dirname, './templates');
 
@@ -52,7 +47,6 @@ async function createNewProject(answers, options) {
 
   // Generate README.md file
   if (answers.ESLint) {
-    // generateNunjucksFile('eslintrc.njk', '.eslintrc.json', conf);
     console.log(colours.info('\nOpted in to ESLint'));
     const sharedDir = path.join(__dirname, '../shared/eslint');
     try {
