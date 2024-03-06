@@ -41,7 +41,6 @@ async function createNewProject(answers, options) {
     frenchRoot: answers.frRoot,
     createDate: new Date().toISOString(),
     projectName: answers.projectName,
-    projectDescription: answers.projectDescription,
     ESLint: answers.ESLint,
   };
 

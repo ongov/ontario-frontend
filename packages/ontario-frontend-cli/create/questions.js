@@ -22,12 +22,6 @@ const createQuestions = [
   },
   {
     type: 'input',
-    name: 'projectDescription',
-    message: 'Specify a short description for your project:\n',
-    default: 'New Ontario Frontend project',
-  },
-  {
-    type: 'input',
     name: 'destination',
     message:
       'Specify an alternative location to create your project (or press enter to use the current directory):\n',
