@@ -16,7 +16,7 @@
   ],
   "license": "Apache 2.0",
   "bin": {
-    "create-ontario-app": "./bin/cli.js"
+    "create-ontario-app": "./bin/create-ontario-app.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
