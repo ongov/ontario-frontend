@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-const handleCreateCommand = require('../create/create.js');
+const handleCreateCommand = require('../create-ontario-app/handleCreate.js');
 
 // Import necessary modules
 const Command = require('commander').Command;
