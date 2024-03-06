@@ -52,7 +52,18 @@ async function createNewProject(answers, options) {
 
   // Generate README.md file
   if (answers.ESLint) {
-    generateNunjucksFile('eslintrc.njk', '.eslintrc.json', conf);
+    // generateNunjucksFile('eslintrc.njk', '.eslintrc.json', conf);
+    console.log(colours.info('\nOpted in to ESLint'));
+    const sharedDir = path.join(__dirname, '../shared/eslint');
+    try {
+      console.log(colours.info('\nCopying ESLint config'));
+      fs.cpSync(sharedDir, newProjectPath, {
+        recursive: true,
+      });
+      console.log(colours.success('ESLint config copied successfully!'));
+    } catch (error) {
+      console.log(colours.error(error.message));
+    }
   }
 
   // Copy config files
@@ -62,6 +73,7 @@ async function createNewProject(answers, options) {
     fs.cpSync(sourceDir, newProjectPath, {
       recursive: true,
     });
+    console.log(colours.success('Config files copied successfully!'));
   } catch (error) {
     console.log(colours.error(error.message));
   }
