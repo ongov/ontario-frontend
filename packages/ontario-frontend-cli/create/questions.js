@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 const colours = require('../utils/chalkColours');
 const figlet = require('figlet');
-const { validFileName, validPath } = require('../utils/validate-questions');
+const { validFileName } = require('../utils/validate-questions');
 
 // Print a header for the application in the terminal
 console.log(
@@ -25,14 +25,6 @@ const createQuestions = [
     name: 'projectDescription',
     message: 'Specify a short description for your project:\n',
     default: 'New Ontario Frontend project',
-  },
-  {
-    type: 'input',
-    name: 'destination',
-    message:
-      'Specify an alternative location to create your project (or press enter to use the current directory):\n',
-    default: process.cwd(),
-    validate: (value) => validPath(value),
   },
   {
     type: 'input',
