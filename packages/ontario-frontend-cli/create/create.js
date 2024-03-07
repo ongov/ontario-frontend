@@ -35,6 +35,18 @@ async function createNewProject(answers, options) {
   console.log(colours.info('Navigating to project directory'));
   process.chdir(newProjectPath);
 
+  const coreDependencyLocation = options.isLocal
+    ? `"file:${path.join(__dirname, '../../ontario-frontend')}"`
+    : '"latest"';
+
+    const prettierDependencyLocation = options.isLocal
+    ? `"file:${path.join(__dirname, '../../prettier-config-ontario-frontend')}"`
+    : '"latest"';
+
+    const esLintDependencyLocation = options.isLocal
+    ? `"file:${path.join(__dirname, '../../eslint-config-ontario-frontend')}"`
+    : '"latest"';
+
   // Configuration for the new project
   const conf = {
     englishRoot: answers.enRoot,
@@ -42,8 +54,12 @@ async function createNewProject(answers, options) {
     createDate: new Date().toISOString(),
     projectName: answers.projectName,
     projectDescription: answers.projectDescription,
+    coreDependencyLocation: coreDependencyLocation,
     addESLint: answers.esLint,
-    addPrettier: answers.prettier
+    esLintDependencyLocation: esLintDependencyLocation,
+    addPrettier: answers.prettier,
+    isLocal: options.isLocal,
+    prettierDependencyLocation: prettierDependencyLocation
   };
 
   // Generate package.json file
@@ -141,21 +157,10 @@ async function createNewProject(answers, options) {
     npmInstall.on('close', resolve);
   });
 
-  // Install core Frontend dependency from local directory or npm
-  const coreDependencyLocation = options.isLocal
-    ? path.join(__dirname, '../../ontario-frontend')
-    : '@ongov/ontario-frontend';
+  const esLintInstall = spawn('npm', ['install', 'eslint', '-g'], { stdio: 'inherit' });
 
-  console.log(
-    colours.info(
-      `\nInstalling core Frontend dependency from ${coreDependencyLocation}`,
-    ),
-  );
-  const ourInstall = spawn('npm', ['install', '-S', coreDependencyLocation], {
-    stdio: 'inherit',
-  });
   await new Promise((resolve) => {
-    ourInstall.on('close', resolve);
+    esLintInstall.on('close', resolve);
   });
 
   console.log(colours.success('Npm dependencies installed successfully.'));
