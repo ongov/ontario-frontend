@@ -157,12 +157,6 @@ async function createNewProject(answers, options) {
     npmInstall.on('close', resolve);
   });
 
-  const esLintInstall = spawn('npm', ['install', 'eslint', '-g'], { stdio: 'inherit' });
-
-  await new Promise((resolve) => {
-    esLintInstall.on('close', resolve);
-  });
-
   console.log(colours.success('Npm dependencies installed successfully.'));
 
   console.log(colours.success(figlet.textSync('New Project\nCreated!')));
