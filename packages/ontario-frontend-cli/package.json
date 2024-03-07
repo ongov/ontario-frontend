@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
+    "trace:warning": "node --trace-warnings ./bin/create-ontario-app.js",
+    "trace:deprecation": "node --trace-deprecation ./bin/create-ontario-app.js",
+    "throw:deprecation": "node --throw-deprecation ./bin/create-ontario-app.js"
   },
   "author": "Ontario Digital Services",
   "keywords": [
@@ -16,7 +19,9 @@
   ],
   "license": "Apache 2.0",
   "bin": {
-    "create-ontario-app": "./bin/create-ontario-app.js"
+    "create-ontario-app": "./bin/create-ontario-app.js",
+    "add-ontario-package": "./bin/add-ontario-package.js",
+    "remove-ontario-package": "./bin/remove-ontario-package.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
