@@ -6,16 +6,16 @@
   "scripts": {
     "build": "rm -rf dist && eleventy",
     "debug": "rm -rf dist && DEBUG=* eleventy",
-    "serve": "eleventy --serve"{% if esLint %},
-    "lint": "./node_modules/.bin/eslint '**/*.js'"{% endif %}{% if prettier %},
+    "serve": "eleventy --serve"{% if addESLint %},
+    "lint": "./node_modules/.bin/eslint '**/*.js'"{% endif %}{% if addPrettier %},
     "format": "npx prettier --write ."{% endif %}
   },
   "author": "TODO changeme",
   "license": "Apache 2.0",
   "devDependencies": {
-      "@11ty/eleventy": "^1.0.1"{% if esLint %},
+      "@11ty/eleventy": "^1.0.1"{% if addESLint %},
       "eslint": "latest",
-      "eslint-config-ontario-frontend": "latest"{% endif %}{% if prettier %},
+      "eslint-config-ontario-frontend": "latest"{% endif %}{% if addPrettier %},
       "prettier": "latest",
       "prettier-config-ontario-frontend": "latest"{% endif %}
   }

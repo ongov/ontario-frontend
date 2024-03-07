@@ -42,8 +42,8 @@ async function createNewProject(answers, options) {
     createDate: new Date().toISOString(),
     projectName: answers.projectName,
     projectDescription: answers.projectDescription,
-    esLint: answers.esLint,
-    prettier: answers.prettier,
+    addESLint: answers.esLint,
+    addPrettier: answers.prettier
   };
 
   // Generate package.json file
@@ -51,19 +51,6 @@ async function createNewProject(answers, options) {
 
   // Generate README.md file
   generateNunjucksFile('README.njk', 'README.md', conf);
-
-  // Generate ES Lint config file
-  if (answers.esLint) {
-    generateNunjucksFile('eslintrc.njk', '.eslintrc.js', conf);
-  }
-  // Generate Prettier config file
-  if (answers.prettier) {
-    generateNunjucksFile('prettier.config.njk', 'prettier.config.js', conf);
-  }
-  // Generate Prettier ignore file
-  if (answers.prettier) {
-    generateNunjucksFile('prettierignore.njk', '.prettierignore', conf);
-  }
 
   // Copy config files
   const sourceDir = path.join(__dirname, './skeleton');
@@ -74,6 +61,29 @@ async function createNewProject(answers, options) {
     });
   } catch (error) {
     console.log(colours.error(error.message));
+  }
+
+  const sharedDir = path.join(__dirname, './shared');
+
+  if(conf.addESLint) {
+    try {
+      console.log(colours.info('Copying ESLint config file'));
+      fs.cpSync(`${sharedDir}/eslint-config`, newProjectPath, {
+        recursive: true,
+      });
+    } catch (error) {
+      console.log(colours.error(error.message));
+    }
+  }
+  if(conf.addPrettier) {
+    try {
+      console.log(colours.info('Copying Prettier config and ignore files'));
+      fs.cpSync(`${sharedDir}/prettier-config`, newProjectPath, {
+        recursive: true,
+      });
+    } catch (error) {
+      console.log(colours.error(error.message));
+    }
   }
 
   // Generate .eleventy.js file
