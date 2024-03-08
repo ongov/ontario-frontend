@@ -1,0 +1,24 @@
+{
+  "name": "{{ projectName }}",
+  "version": "0.0.1",
+  "description": "Ontario Frontend Project (TODO: Replace with a description of your project)",
+  "main": "index.js",
+  "scripts": {
+    "build": "rm -rf dist && eleventy",
+    "debug": "rm -rf dist && DEBUG=* eleventy",
+    "serve": "eleventy --serve"{% if addESLint %},
+    "lint": "eslint . --ext .js"{% endif %}{% if addPrettier %},
+    "format": "prettier --write ."{% endif %}
+  },
+  "author": "TODO changeme",
+  "license": "Apache 2.0",
+  "devDependencies": {
+      "@ongov/ontario-frontend": {{ coreDependencyLocation | safe }},
+      "@11ty/eleventy": "^1.0.1"{% if addESLint %},
+      "eslint": "^8.57.0",
+      "eslint-plugin-import": "^2.0.1",
+      "@ongov/eslint-config-ontario-frontend": {{ esLintDependencyLocation | safe }}{% endif %}{% if addPrettier %},
+      "prettier": "^3.2.5",
+      "@ongov/prettier-config-ontario-frontend": {{ prettierDependencyLocation | safe }}{% endif %}
+  }
+}
