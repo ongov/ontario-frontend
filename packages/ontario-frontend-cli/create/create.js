@@ -26,7 +26,7 @@ async function createNewProject(answers, options) {
   // Create the directory for the new project
   console.log(
     colours.info(
-      `\nCreating a new Ontario Frontend project in ${newProjectPath}`,
+      `\nCreating a new Ontario.ca Frontend project in ${newProjectPath}`,
     ),
   );
   createDirectory(newProjectPath);

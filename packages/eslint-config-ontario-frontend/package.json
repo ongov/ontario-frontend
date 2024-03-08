@@ -1,7 +1,7 @@
 {
   "name": "@ongov/eslint-config-ontario-frontend",
   "version": "1.0.0",
-  "description": "ESLint configuration for Ontario Frontend projects",
+  "description": "ESLint configuration for Ontario.ca Frontend projects",
   "keywords": [
     "prettier",
     "config",
@@ -12,7 +12,7 @@
     "eslint",
     "javascript"
   ],
-  "author": "Ontario Frontend",
+  "author": "Ontario.ca Frontend",
   "license": "Apache-2.0",
   "main": "lib/.eslintrc.js",
   "peerDependencies": {
