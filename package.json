@@ -1,7 +1,8 @@
 {
-  "name": "ontario-frontend-project",
+  "name": "@ongov/ontario-frontend-project",
   "version": "1.3.0",
   "private": "true",
+  "author": "Ontario Frontend",
   "workspaces": [
     "packages/*"
   ],

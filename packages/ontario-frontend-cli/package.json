@@ -1,10 +1,10 @@
 {
-  "name": "ontario-frontend-cli",
+  "name": "@ongov/ontario-frontend-cli",
   "version": "1.0.0",
   "description": "",
   "scripts": {
   },
-  "author": "Ontario Digital Services",
+  "author": "Ontario Frontend",
   "keywords": [
     "jamstack",
     "cli",
