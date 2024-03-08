@@ -16,10 +16,10 @@ readPackageJson().then((packageJson) => {
     .description(packageJson.description);
 });
 
-// Define a new command for creating a Ontario Frontend project
+// Define a new command for creating a Ontario.ca Frontend project
 program
-  .description('Create a new Ontario Frontend project')
-  .option('--local', 'Use a local version of the Ontario Frontend core dependency')
+  .description('Create a new Ontario.ca Frontend project')
+  .option('--local', 'Use a local version of the Ontario.ca Frontend core dependency')
   .action((cmd) => {
     // The action to perform when the command is executed
     handleCreateCommand(cmd);
