@@ -35,13 +35,31 @@ async function createNewProject(answers, options) {
   console.log(colours.info('Navigating to project directory'));
   process.chdir(newProjectPath);
 
+  const coreDependencyLocation = options.isLocal
+    ? `"file:${path.join(__dirname, '../../ontario-frontend')}"`
+    : '"latest"';
+
+    const prettierDependencyLocation = options.isLocal
+    ? `"file:${path.join(__dirname, '../../prettier-config-ontario-frontend')}"`
+    : '"latest"';
+
+    const esLintDependencyLocation = options.isLocal
+    ? `"file:${path.join(__dirname, '../../eslint-config-ontario-frontend')}"`
+    : '"latest"';
+
   // Configuration for the new project
   const conf = {
     englishRoot: answers.enRoot,
     frenchRoot: answers.frRoot,
     createDate: new Date().toISOString(),
     projectName: answers.projectName,
-    ESLint: answers.ESLint,
+    projectDescription: answers.projectDescription,
+    coreDependencyLocation: coreDependencyLocation,
+    addESLint: answers.esLint,
+    esLintDependencyLocation: esLintDependencyLocation,
+    addPrettier: answers.prettier,
+    isLocal: options.isLocal,
+    prettierDependencyLocation: prettierDependencyLocation
   };
 
   // Generate package.json file
@@ -49,11 +67,6 @@ async function createNewProject(answers, options) {
 
   // Generate README.md file
   generateNunjucksFile('README.njk', 'README.md', conf);
-
-  // Generate README.md file
-  if (answers.ESLint) {
-    generateNunjucksFile('eslintrc.njk', '.eslintrc.json', conf);
-  }
 
   // Copy config files
   const sourceDir = path.join(__dirname, './skeleton');
@@ -64,6 +77,29 @@ async function createNewProject(answers, options) {
     });
   } catch (error) {
     console.log(colours.error(error.message));
+  }
+
+  const sharedDir = path.join(__dirname, './shared');
+
+  if(conf.addESLint) {
+    try {
+      console.log(colours.info('Copying ESLint config file'));
+      fs.cpSync(`${sharedDir}/eslint-config`, newProjectPath, {
+        recursive: true,
+      });
+    } catch (error) {
+      console.log(colours.error(error.message));
+    }
+  }
+  if(conf.addPrettier) {
+    try {
+      console.log(colours.info('Copying Prettier config and ignore files'));
+      fs.cpSync(`${sharedDir}/prettier-config`, newProjectPath, {
+        recursive: true,
+      });
+    } catch (error) {
+      console.log(colours.error(error.message));
+    }
   }
 
   // Generate .eleventy.js file
@@ -119,23 +155,6 @@ async function createNewProject(answers, options) {
 
   await new Promise((resolve) => {
     npmInstall.on('close', resolve);
-  });
-
-  // Install core Frontend dependency from local directory or npm
-  const coreDependencyLocation = options.isLocal
-    ? path.join(__dirname, '../../ontario-frontend')
-    : '@ongov/ontario-frontend';
-
-  console.log(
-    colours.info(
-      `\nInstalling core Frontend dependency from ${coreDependencyLocation}`,
-    ),
-  );
-  const ourInstall = spawn('npm', ['install', '-S', coreDependencyLocation], {
-    stdio: 'inherit',
-  });
-  await new Promise((resolve) => {
-    ourInstall.on('close', resolve);
   });
 
   console.log(colours.success('Npm dependencies installed successfully.'));

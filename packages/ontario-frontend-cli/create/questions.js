@@ -36,8 +36,18 @@ const createQuestions = [
   },
   {
     type: 'list',
-    name: 'ESLint',
-    message: 'Want to add ESLint for fixing code problems?',
+    name: 'esLint',
+    message: 'Add and configure ESLint for finding and fixing code problems?',
+    choices: ['Yes', 'No'],
+    default: 'No',
+    filter: function(value) {
+      return value === 'Yes' ? true : false;
+    }
+  },
+  {
+    type: 'list',
+    name: 'prettier',
+    message: 'Add and configure Prettier for opinionated code formatting?',
     choices: ['Yes', 'No'],
     default: 'No',
     filter: function(value) {
