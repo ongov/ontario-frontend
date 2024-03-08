@@ -1,16 +1,16 @@
-# Contributing to Ontario Frontend
+# Contributing to Ontario.ca Frontend
 
-Thank you for your interest in contributing to the Ontario Frontend project! We appreciate your desire to enhance the digital services provided to the people of Ontario. This document provides guidelines for contributions to ensure a seamless collaboration process.
+Thank you for your interest in contributing to Ontario.ca Frontend. We appreciate your desire to enhance the digital services provided to the people of Ontario. This document provides guidelines for contributions to ensure a seamless collaboration process.
 
-Before jumping into a PR be sure to search [existing PRs](https://github.com/ongov/ontario-frontend/pulls) or [issues](https://github.com/ongov/ontario-frontend/issues) for an open or closed item that relates to your submission.
+Before jumping into a PR, be sure to search [existing PRs](https://github.com/ongov/ontario-frontend/pulls) or [issues](https://github.com/ongov/ontario-frontend/issues) for an open or closed item that relates to your submission.
 
-## Code of Conduct
+## Code of conduct
 
-Our community is committed to providing a welcoming and inclusive experience for everyone. We expect all contributors to adhere to the [Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
+We are committed to providing a welcoming and inclusive experience for everyone. We expect all contributors to adhere to the [code of conduct](CODE_OF_CONDUCT.md). By participating in this project, you agree to abide by its terms.
 
-## Getting Started
+## Getting started
 
-### Reporting Bugs
+### Reporting bugs
 
 Before submitting a bug report, please ensure that your issue hasn't already been reported by searching through the [issue tracker](https://github.com/ongov/ontario-frontend/issues). When reporting a bug, include as many details as possible, such as:
 
@@ -20,17 +20,17 @@ Before submitting a bug report, please ensure that your issue hasn't already bee
 - Actual behavior
 - Any relevant screenshots or logs
 
-### Suggesting Enhancements
+### Suggesting enhancements
 
 Enhancement suggestions are welcome! Please submit them as new issues in the issue tracker, with a clear and detailed explanation of the feature you would like to see, its benefits, and any potential implementation details you might have in mind.
 
-## Making Contributions
+## Making contributions
 
-### Pull Requests
+### Pull requests
 
-1. **Fork the Repository**: Start by forking the repository to your GitHub account.
+1. **Fork the repository**: Start by forking the repository to your GitHub account.
 
-2. **Clone Your Fork**: Clone your fork to your local machine, and set up the upstream remote:
+2. **Clone your fork**: Clone your fork to your local machine, and set up the upstream remote:
 
    ```bash
    git clone https://github.com/your-username/ontario-frontend.git
@@ -38,25 +38,25 @@ Enhancement suggestions are welcome! Please submit them as new issues in the iss
    git remote add upstream https://github.com/ongov/ontario-frontend.git
    ```
 
-3. **Create a Branch**: Create a new branch for your contribution:
+3. **Create a branch**: Create a new branch for your contribution:
 
    ```bash
    git checkout -b feature/my-new-feature
    ```
 
-4. **Make Your Changes**: Implement your changes, adhering to the coding standards and guidelines provided.
+4. **Make your changes**: Implement your changes, adhering to the coding standards and guidelines provided.
 
-5. **Commit Your Changes**: Write clear, concise commit messages, explaining the reasoning behind the changes made.
+5. **Commit your changes**: Write clear, concise commit messages, explaining the reasoning behind the changes made.
 
-6. **Push to Your Fork**: Push your changes to your fork:
+6. **Push to your fork**: Push your changes to your fork:
 
    ```bash
    git push origin feature/my-new-feature
    ```
 
-7. **Submit a Pull Request**: Go to the original `ontario-frontend` repository, and you'll see a prompt to submit a pull request from your new branch.
+7. **Submit a pull request**: Go to the original `ontario-frontend` repository, and you'll see a prompt to submit a pull request from your new branch.
 
-### Pull Request Checklist
+### Pull request checklist
 
 Ensure your pull request adheres to the following guidelines:
 
@@ -66,9 +66,9 @@ Ensure your pull request adheres to the following guidelines:
 - Update any relevant documentation.
 - Include tests for new functionalities or fixes.
 
-## Additional Resources
+## Additional resources
 
-- [How to Contribute to Open Source](https://opensource.guide/how-to-contribute/)
+- [How to contribute to open source](https://opensource.guide/how-to-contribute/)
 - [GitHub Flow](https://guides.github.com/introduction/flow/)
 
 ## Questions?

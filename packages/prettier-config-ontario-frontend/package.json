@@ -2,7 +2,7 @@
     "name": "@ongov/prettier-config-ontario-frontend",
     "version": "1.0.0",
     "prettier": "@ongov/prettier-config-ontario-frontend",
-    "description": "Prettier configuration based on Ontario Frontend's coding standards",
+    "description": "Prettier configuration based on Ontario.ca Frontend's coding standards",
     "keywords": [
         "prettier",
         "config",
@@ -11,7 +11,7 @@
         "coding",
         "standards"
     ],
-    "author": "Ontario Frontend",
+    "author": "Ontario.ca Frontend",
     "license": "MIT",
     "main": "lib/.prettierrc.json"
 }

@@ -2,7 +2,7 @@
   "name": "@ongov/ontario-frontend-project",
   "version": "3.0.0",
   "private": "true",
-  "author": "Ontario Frontend",
+  "author": "Ontario.ca Frontend",
   "workspaces": [
     "packages/*"
   ],
