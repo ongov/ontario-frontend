@@ -79,7 +79,7 @@ Check out our [CONTRIBUTING.md](CONTRIBUTING.md) file for guidelines on how to c
 
 ## License
 
-This project is licensed under the [Open Government Licence - Ontario](https://www.ontario.ca/page/open-government-licence-ontario). Feel free to use, modify, and distribute it as needed.
+Licensed under Apache License 2.0.
 
 ## Versioning
 
