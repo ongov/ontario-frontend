@@ -16,7 +16,9 @@ This repository includes several Ontario.ca Frontend packages:
 ## Features
 
 - **Simple to use**: A single command creates and configures a new project structure with sensible defaults and best practices in place.
+
 - **Automated project scaffolding**: Generates all necessary files, from configs to templates, to get you up and running quickly.
+
 - **Built-in development server**: A built-in development server with live reloading allows you to preview your site as you work.
 - **Ontario Design System**: The toolkit comes pre-configured with the [Ontario Design System](https://design.ontario.ca/) and the Ontario.ca Branding Kit.
 - **Ontario.ca standards**: Templating and styling designed to meet the guidelines and standards for Ontario.ca.
