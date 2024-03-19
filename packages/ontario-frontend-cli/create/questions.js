@@ -6,7 +6,7 @@ const { validFileName } = require('../utils/validate-questions');
 // Print a header for the application in the terminal
 console.log(
   colours.banner(
-    figlet.textSync('Ontario\nFrontend', { horizontalLayout: 'full' }),
+    figlet.textSync('Ontario.ca\nFrontend', { horizontalLayout: 'full' }),
   ),
 );
 
@@ -16,7 +16,7 @@ const createQuestions = [
     type: 'input',
     name: 'projectName',
     message:
-      'Specify your project name for the package.json file (lowercase, hyphens, and underscores only):\n',
+      'What is your project named?\n',
     default: 'my-frontend-project',
     validate: (value) => validFileName(value),
   },
@@ -24,14 +24,14 @@ const createQuestions = [
     type: 'input',
     name: 'enRoot',
     message:
-      'What is the file name of the English-language page? (this will also be used for the path: ex. ontario.ca/my-english-page)\n',
+      'What is the file name for the English-language page? (This will be used for the path, e.g. ontario.ca/my-english-page):\n',
     validate: (value) => validFileName(value),
   },
   {
     type: 'input',
     name: 'frRoot',
     message:
-      'What is the file name of the French-language page? (this will also be used for the path: ex. ontario.ca/ma-page-francaise)\n',
+      'What is the file name for the French-language page? (This will be used for the path, e.g. ontario.ca/ma-page-francaise):\n',
     validate: (value) => validFileName(value),
   },
   {
