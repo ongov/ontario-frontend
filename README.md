@@ -9,25 +9,17 @@ This monorepo serves as the central codebase for Ontario.ca Frontend. It contain
 This repository includes several Ontario.ca Frontend packages:
 
 - **`/packages/ontario-frontend`**: The core frontend framework, providing UI components, utilities, tools, and configurations tailored for building Ontario.ca Frontend applications.
-
 - **`/packages/ontario-frontend-cli`**: A command-line interface tool for scaffolding new projects, streamlining development workflows, and managing project configurations efficiently.
-
 - **`/packages/eslint-config-ontario-frontend`**: ESLint configurations tailored for the Ontario.ca Frontend ecosystem, ensuring code quality and consistency across projects.
-
 - **`/packages/prettier-config-ontario-frontend`**: Prettier configurations designed to maintain a consistent coding style within the Ontario.ca Frontend projects.
 
 ## Features
 
 - **Simple to use**: A single command creates and configures a new project structure with sensible defaults and best practices in place.
-
 - **Automated project scaffolding**: Generates all necessary files, from configs to templates, to get you up and running quickly.
-
 - **Built-in development server**: A built-in development server with live reloading allows you to preview your site as you work.
-
 - **Ontario Design System**: The toolkit comes pre-configured with the [Ontario Design System](https://design.ontario.ca/) and the Ontario.ca Branding Kit.
-
 - **Ontario.ca standards**: Templating and styling designed to meet the guidelines and standards for Ontario.ca.
-
 - **Internationalization support**: Tools and structures to support English and French language sites, allowing for seamless content delivery across languages.
 
 ## Usage
