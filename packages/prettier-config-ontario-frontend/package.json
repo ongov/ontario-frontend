@@ -1,6 +1,6 @@
 {
     "name": "@ongov/prettier-config-ontario-frontend",
-    "version": "1.0.0-beta.1",
+    "version": "1.0.0",
     "prettier": "@ongov/prettier-config-ontario-frontend",
     "description": "Prettier configuration based on Ontario.ca Frontend's coding standards",
     "keywords": [
