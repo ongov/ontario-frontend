@@ -1,6 +1,6 @@
 {
   "name": "@ongov/eslint-config-ontario-frontend",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ESLint configuration for Ontario.ca Frontend projects",
   "keywords": [
     "prettier",
