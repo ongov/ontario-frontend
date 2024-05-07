@@ -4,7 +4,8 @@
 
 A developer toolkit designed for teams that want to create maintainable, performant and dynamic user experiences for Ontario.ca.
 
-Table of Contents
+## Table of Contents
+
 - [Monorepo Structure](#monorepo-structure)
 - [Features](#features)
 - [Usage](#usage)

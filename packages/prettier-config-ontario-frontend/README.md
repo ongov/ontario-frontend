@@ -4,10 +4,12 @@
 
 This package provides the [Prettier](https://prettier.io) configuration adhering to the Ontario.ca Frontend JavaScript style guide, which will be released in the future. This configuration aims to ensure consistency and readability in Ontario.ca Frontend projects.
 
-Table of Contents
+## Table of Contents
+
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Customizing](#customizing)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 - [License](#license)
@@ -75,7 +77,7 @@ To quickly apply the Ontario.ca Frontend Prettier configuration, create a `.pret
 "prettier-config-ontario-frontend"
 ```
 
-### Customizing configuration
+## Customizing
 
 For projects that require customization beyond the base configuration, you can extend and override specific settings. Create a `.prettierrc.js` file in your project's root directory, import the Ontario configuration, and then add your modifications:
 

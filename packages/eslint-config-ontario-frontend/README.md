@@ -4,6 +4,17 @@
 
 This package provides the shared ESLint configuration used by Ontario.ca Frontend projects. It enforces a consistent code style for JavaScript projects to help keep code clean and readable.
 
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Customizing](#customizing)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Versioning](#versioning)
+
 ## Features
 
 - **Print width**: Set to 80 characters to maintain readability across various devices and editors.

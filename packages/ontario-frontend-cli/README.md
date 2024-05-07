@@ -4,7 +4,8 @@
 
 The `ontario-frontend-cli` package is part of the Ontario.ca Frontend monorepo. It is a command line tool designed to streamline the creation and development of Ontario.ca Frontend applications and projects. It provides a simple interface to scaffold new projects, configure them with essential dependencies, and prepare them for development using Ontario.ca Frontend.
 
-Table of Contents
+## Table of Contents
+
 - [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)

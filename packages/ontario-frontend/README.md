@@ -4,7 +4,8 @@
 
 The `ontario-frontend` package is a part of the Ontario.ca Frontend monorepo and a core dependency for developing digital services within the Ontario Government's digital ecosystem. It provides developers with a robust set of tools, configurations, and templates aimed at facilitating the creation of accessible, efficient, and consistent web experiences. Built on top of popular web development tools such as [Eleventy](https://www.11ty.dev/) and [Nunjucks](https://mozilla.github.io/nunjucks/), this framework offers a comprehensive solution for rapid development without sacrificing quality or performance.
 
-Table of Contents
+## Table of Contents
+
 - [Features](#features)
 - [Usage](#usage)
 - [Installation](#installation)
