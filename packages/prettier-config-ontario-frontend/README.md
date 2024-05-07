@@ -1,17 +1,36 @@
+<img src="../ontario-frontend/src/assets/img/ontario_ogp_image.png" alt="Ontario.ca Logo" width="200"/>
+
 # @ongov/prettier-config-ontario-frontend
 
 This package provides the [Prettier](https://prettier.io) configuration adhering to the Ontario.ca Frontend JavaScript style guide, which will be released in the future. This configuration aims to ensure consistency and readability in Ontario.ca Frontend projects.
 
+Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Versioning](#versioning)
+
 ## Features
 
 - **Print width**: Limits lines to 80 characters to enhance readability across various devices and editors, ensuring code does not stretch too far horizontally.
+
 - **Tab width**: Utilizes 2 spaces for indentation, promoting a clean and consistent visual structure across the codebase.
+
 - **Semicolons**: Enforces the use of semicolons at the end of statements, reducing the potential for parsing errors and improving code clarity.
+
 - **Single quotes**: Prefers single quotes for strings to maintain consistency and readability, except where overridden by specific file type configurations.
+
 - **Trailing commas**: Requires trailing commas in multi-line objects, arrays, function parameters, etc., facilitating easier version control diffs and cleaner code addition or removal.
+
 - **Bracket spacing**: Ensures spaces are present inside object literal braces, {}, improving readability by visually separating blocks of code.
+
 - **Bracket same line**: Configures the closing angle bracket of elements to be placed on the same line as the last prop, aligning with common formatting practices.
+
 - **Arrow parens**: Always requires parentheses around arrow function parameters, ensuring clarity and consistency, especially in functions with single parameters.
+
 - **Overrides for markdown**: Specifically for .md files, double quotes are allowed, acknowledging the different stylistic and functional requirements of markdown content.
 
 ## Installation
@@ -71,4 +90,18 @@ This approach allows you to maintain the foundational style guide while tweaking
 
 ## Documentation
 
-Explore our docs to learn more about Ontario.ca Frontend: [developer.ontario.ca](https://developer.ontario.ca).
+Explore the documentation to learn about every aspect of the toolkit--from installation and file structure to adding analytics and preparing for deployment. The documentation is available at [developer.ontario.ca](https://developer.ontario.ca).
+
+## Contributing
+
+Contributions to the [Ontario.ca Frontend Prettier Config](https://github.com/ongov/ontario-frontend/tree/main/packages/ontario-frontend) are welcome. Whether it's bug reports, feature requests, or contributions to code, we appreciate your input.
+
+Check out our [CONTRIBUTING.md](https://github.com/ongov/ontario-frontend/tree/main/CONTRIBUTING.md) file for guidelines on how to contribute.
+
+## License
+
+This project is licensed under the [Open Government Licence - Ontario](https://www.ontario.ca/page/open-government-licence-ontario). Feel free to use, modify, and distribute it as needed.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ongov/ontario-frontend/tags).

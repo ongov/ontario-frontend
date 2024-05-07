@@ -10,7 +10,11 @@
     {
       "files": "*.md",
       "options": {
-        "singleQuote": false
+        "proseWrap": "always",
+        "singleQuote": false,
+        "tabWidth": 4,
+        "useTabs": false,
+        "printWidth": 80
       }
     }
   ]

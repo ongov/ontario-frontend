@@ -1,6 +1,17 @@
+<img src="../ontario-frontend/src/assets/img/ontario_ogp_image.png" alt="Ontario.ca Logo" width="200"/>
+
 # @ongov/ontario-frontend-cli
 
 The `ontario-frontend-cli` package is part of the Ontario.ca Frontend monorepo. It is a command line tool designed to streamline the creation and development of Ontario.ca Frontend applications and projects. It provides a simple interface to scaffold new projects, configure them with essential dependencies, and prepare them for development using Ontario.ca Frontend.
+
+Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Versioning](#versioning)
 
 ## Features
 
@@ -61,4 +72,18 @@ This command initializes a new project and links it to a local version of the On
 
 ## Documentation
 
-Explore our docs to learn more about Ontario.ca Frontend: [developer.ontario.ca](https://developer.ontario.ca).
+Explore the documentation to learn about every aspect of the toolkit--from installation and file structure to adding analytics and preparing for deployment. The documentation is available at [developer.ontario.ca](https://developer.ontario.ca).
+
+## Contributing
+
+Contributions to the [Ontario.ca Frontend](https://github.com/ongov/ontario-frontend/tree/main/packages/ontario-frontend) are welcome. Whether it's bug reports, feature requests, or contributions to code, we appreciate your input.
+
+Check out our [CONTRIBUTING.md](https://github.com/ongov/ontario-frontend/tree/main/CONTRIBUTING.md) file for guidelines on how to contribute.
+
+## License
+
+This project is licensed under the [Open Government Licence - Ontario](https://www.ontario.ca/page/open-government-licence-ontario). Feel free to use, modify, and distribute it as needed.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ongov/ontario-frontend/tags).
