@@ -3,7 +3,7 @@ const { ensureDirectory } = require('./file/ensureDirectory');
 const { generate } = require('./file/generate');
 const { remove } = require('./file/remove');
 const { write } = require('./file/write');
-const { installPackage, installAllDependencies } = require('./npm/install');
+const { installPackages, installAllPackages } = require('./npm/install');
 
 module.exports = {
   // File operations
@@ -13,6 +13,6 @@ module.exports = {
   remove,
   write,
   // NPM operations
-  installPackage,
-  installAllDependencies
+  installPackages,
+  installAllPackages
 };

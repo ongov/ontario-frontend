@@ -4,8 +4,9 @@ const inquirer = require('inquirer');
 const {
   ensureDirectory,
   copy,
-  installAllDependencies,
+  installAllPackages,
 } = require('../../core/operations');
+const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
 const { textStyling } = require('../../core/utils');
 const logger = require('../../core/utils/logger');
 const {
@@ -91,13 +92,6 @@ async function generateProjectFiles(newProjectPath, conf) {
   logger.success('Generated project files');
 }
 
-async function handlePackageCopy(newProjectPath, packageName, outputFile) {
-  const packagePath = path.join(SHARED_BOILERPLATE_DIR, packageName);
-  const outputPath = path.join(newProjectPath, outputFile);
-  copy(packagePath, outputPath);
-  logger.success(`${packagePath} package copied successfully.`);
-}
-
 async function copyBoilerplateFiles(newProjectPath) {
   logger.info('Copying boilerplate files');
   copy(CREATE_BOILERPLATE_DIR, newProjectPath);
@@ -107,7 +101,7 @@ async function copyBoilerplateFiles(newProjectPath) {
 async function installDependencies(newProjectPath) {
   try {
     logger.info('Installing NPM dependencies...');
-    await installAllDependencies(newProjectPath);
+    await installAllPackages(newProjectPath);
     logger.success('NPM dependencies installed successfully.');
   } catch (error) {
     logger.error(`Failed to install NPM dependencies: ${error.message}`);

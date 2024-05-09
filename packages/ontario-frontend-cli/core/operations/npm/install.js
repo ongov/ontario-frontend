@@ -1,8 +1,21 @@
 const { spawn } = require('child_process');
 
-function installPackage(packageName, { cwd = '' } = {}) {
+/**
+ * Install a list of packages using npm.
+ * 
+ * @param {Array<String>} packageNames - An array of the packages you wish to install.
+ * @param {boolean} devFlag - Whether or not you want the installed packages to be devDependencies.
+ * @param {Object} cwd (current working directory) - TODO - better describe this.
+ * 
+ * @returns {Promise<void>} A promise that resolves when the installation is complete or rejects on failure.
+ * 
+ * @example
+ * // Install 2 packages relating to eslint as devDependencies.
+ * await installPackages(['eslint', '@ongov/eslint-config-ontario-frontend'], true);
+ */ 
+function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
   return new Promise((resolve, reject) => {
-    const process = spawn('npm', ['install', packageName], {
+    const process = spawn('npm', ['install', devFlag ? '--save-dev' : '', ...packageNames], {
       stdio: 'inherit',
       cwd,
     });
@@ -10,7 +23,7 @@ function installPackage(packageName, { cwd = '' } = {}) {
       if (code === 0) resolve();
       else
         reject(
-          new Error(`npm install for ${packageName} failed with code ${code}`),
+          new Error(`npm install for ${packageNames} failed with code ${code}`),
         );
     });
   });
@@ -22,7 +35,7 @@ function installPackage(packageName, { cwd = '' } = {}) {
  * @param {string} projectPath - The path to the project directory where package.json is located.
  * @returns {Promise<void>} A promise that resolves when the installation is complete or rejects on failure.
  */
-function installAllDependencies(projectPath) {
+function installAllPackages(projectPath) {
   return new Promise((resolve, reject) => {
     const npmInstall = spawn('npm', ['install'], {
       stdio: 'inherit',
@@ -39,4 +52,4 @@ function installAllDependencies(projectPath) {
   });
 }
 
-module.exports = { installPackage, installAllDependencies };
+module.exports = { installPackages, installAllPackages };

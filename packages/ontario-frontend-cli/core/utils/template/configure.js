@@ -9,6 +9,7 @@ function configureTemplates(templatesPath) {
   nunjucks.configure(templatesPath, { autoescape: true });
 }
 
+// TODO: Document this
 // Map templates to its correct output location
 const createOntarioAppTemplates = (answers) => [
   { template: 'package.njk', outputDir: '', outputFile: 'package.json' },
