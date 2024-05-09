@@ -1,0 +1,18 @@
+{
+  "default": true,
+  "MD013": false,
+  "MD022": { "lines_above": 1, "lines_below": 1 },
+  "MD032": false,
+  "MD033": false,
+  "MD046": { "style": "fenced" },
+  "MD047": true,
+  "MD048": { "style": "backtick" },
+  "no-hard-tabs": true,
+  "fenced-code-language": true,
+  "first-line-h1": false,
+  "single-title": true,
+  "no-duplicate-header": true,
+  "header-increment": false,
+  "no-trailing-spaces": true,
+  "no-multiple-blanks": true
+}

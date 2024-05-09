@@ -1,32 +1,45 @@
+<img src="../ontario-frontend/src/assets/img/ontario_ogp_image.png" alt="Ontario.ca Logo" width="200"/>
+
 # @ongov/prettier-config-ontario-frontend
 
-This package provides the [Prettier](https://prettier.io) configuration adhering to the Ontario Frontend JavaScript style guide, which will be released in the future. This configuration aims to ensure consistency and readability in Ontario Frontend projects.
+This package provides the [Prettier](https://prettier.io) configuration adhering to the Ontario.ca Frontend JavaScript style guide, which will be released in the future. This configuration aims to ensure consistency and readability in Ontario.ca Frontend projects.
+
+## Table of Contents
+
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Customizing](#customizing)
+- [Documentation](#documentation)
+- [Contributing](#contributing)
+- [License](#license)
+- [Versioning](#versioning)
 
 ## Features
 
-- **Print Width**: Limits lines to 80 characters to enhance readability across various devices and editors, ensuring code does not stretch too far horizontally.
+- **Print width**: Limits lines to 80 characters to enhance readability across various devices and editors, ensuring code does not stretch too far horizontally.
 
-- **Tab Width**: Utilizes 2 spaces for indentation, promoting a clean and consistent visual structure across the codebase.
+- **Tab width**: Utilizes 2 spaces for indentation, promoting a clean and consistent visual structure across the codebase.
 
 - **Semicolons**: Enforces the use of semicolons at the end of statements, reducing the potential for parsing errors and improving code clarity.
 
-- **Single Quotes**: Prefers single quotes for strings to maintain consistency and readability, except where overridden by specific file type configurations.
+- **Single quotes**: Prefers single quotes for strings to maintain consistency and readability, except where overridden by specific file type configurations.
 
-- **Trailing Commas**: Requires trailing commas in multi-line objects, arrays, function parameters, etc., facilitating easier version control diffs and cleaner code addition or removal.
+- **Trailing commas**: Requires trailing commas in multi-line objects, arrays, function parameters, etc., facilitating easier version control diffs and cleaner code addition or removal.
 
-- **Bracket Spacing**: Ensures spaces are present inside object literal braces, {}, improving readability by visually separating blocks of code.
+- **Bracket spacing**: Ensures spaces are present inside object literal braces, {}, improving readability by visually separating blocks of code.
 
-- **Bracket Same Line**: Configures the closing angle bracket of elements to be placed on the same line as the last prop, aligning with common formatting practices.
+- **Bracket same line**: Configures the closing angle bracket of elements to be placed on the same line as the last prop, aligning with common formatting practices.
 
-- **Arrow Parens**: Always requires parentheses around arrow function parameters, ensuring clarity and consistency, especially in functions with single parameters.
+- **Arrow parens**: Always requires parentheses around arrow function parameters, ensuring clarity and consistency, especially in functions with single parameters.
 
-- **Overrides for Markdown**: Specifically for .md files, double quotes are allowed, acknowledging the different stylistic and functional requirements of markdown content.
+- **Overrides for markdown**: Specifically for .md files, double quotes are allowed, acknowledging the different stylistic and functional requirements of markdown content.
 
 ## Installation
 
-To integrate the Ontario Prettier configuration into your project, choose one of the following methods based on your package manager:
+To integrate the Ontario.ca Frontend Prettier configuration into your project, choose one of the following methods based on your package manager:
 
-### NPM
+### Using npm
 
 1. First, you need to install [Prettier](https://prettier.io) if it's not already installed:
 
@@ -40,7 +53,7 @@ To integrate the Ontario Prettier configuration into your project, choose one of
     npm install @ongov/prettier-config-ontario-frontend --save-dev
     ```
 
-### PNPM
+### Using pnpm
 
 1. First, you need to install [Prettier](https://prettier.io) if it's not already installed:
 
@@ -56,15 +69,15 @@ To integrate the Ontario Prettier configuration into your project, choose one of
 
 ## Usage
 
-### Basic Configuration
+### Basic configuration
 
-To quickly apply the Ontario Prettier configuration, create a `.prettierrc` file in your project's root directory and specify the name of the package as its value:
+To quickly apply the Ontario.ca Frontend Prettier configuration, create a `.prettierrc` file in your project's root directory and specify the name of the package as its value:
 
 ```json
 "prettier-config-ontario-frontend"
 ```
 
-### Customizing Configuration
+## Customizing
 
 For projects that require customization beyond the base configuration, you can extend and override specific settings. Create a `.prettierrc.js` file in your project's root directory, import the Ontario configuration, and then add your modifications:
 
@@ -79,11 +92,11 @@ This approach allows you to maintain the foundational style guide while tweaking
 
 ## Documentation
 
-Explore the Documentation to learn about every aspect of the toolkit--from installation and file structure to adding analytics and preparing for deployment. The documentation is available at [our dev site](our dev site).
+Explore the documentation to learn about every aspect of the toolkit--from installation and file structure to adding analytics and preparing for deployment. The documentation is available at [developer.ontario.ca](https://developer.ontario.ca).
 
 ## Contributing
 
-Contributions to the [Ontario Frontend Prettier Config](https://github.com/ongov/ontario-frontend/tree/main/packages/ontario-frontend) are welcome! Whether it's bug reports, feature requests, or contributions to code, we appreciate your input.
+Contributions to the [Ontario.ca Frontend Prettier Config](https://github.com/ongov/ontario-frontend/tree/main/packages/ontario-frontend) are welcome. Whether it's bug reports, feature requests, or contributions to code, we appreciate your input.
 
 Check out our [CONTRIBUTING.md](https://github.com/ongov/ontario-frontend/tree/main/CONTRIBUTING.md) file for guidelines on how to contribute.
 

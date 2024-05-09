@@ -1,10 +1,9 @@
 {
-  "name": "ontario-frontend",
-  "version": "1.0.0",
+  "name": "@ongov/ontario-frontend",
+  "version": "1.0.1",
   "description": "",
-  "scripts": {
-  },
-  "author": "Ontario Digital Services",
+  "scripts": {},
+  "author": "Ontario.ca Frontend",
   "keywords": [
     "jamstack",
     "toolkit",

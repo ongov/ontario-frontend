@@ -1,6 +1,6 @@
 {
-  "name": "ontario-frontend-cli",
-  "version": "1.0.0",
+  "name": "@ongov/ontario-frontend-cli",
+  "version": "1.0.1",
   "description": "",
   "scripts": {
     "trace:warning": "node --trace-warnings ./bin/create-ontario-app.js",
