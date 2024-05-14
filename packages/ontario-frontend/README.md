@@ -27,7 +27,7 @@ The `ontario-frontend` package is a part of the Ontario.ca Frontend monorepo and
 
 ## Usage
 
-This package is a core dependency for Ontario.ca Frontend applications and projects. As such, it is best to create a new Ontario.ca Frontend project using the [ontario-frontend-cli's](https://github.com/ongov/ontario-frontend/tree/main/packages/ontario-frontend-cli) `create-ontario-app` command. This package will be automatically added to your Ontario.ca Frontend project when it is created that way.
+This package is a core dependency for Ontario.ca Frontend applications and projects. As such, it is best to create a new Ontario.ca Frontend project using the [ontario-frontend-cli's](https://github.com/ongov/ontario-frontend/tree/main/packages/ontario-frontend-cli) `ontario-create-app` command. This package will be automatically added to your Ontario.ca Frontend project when it is created that way.
 
 It is possible to include this package and leverage the Eleventy configurations in an existing project not created with the Ontario.ca Frontend, but this is an unsupported method.
 

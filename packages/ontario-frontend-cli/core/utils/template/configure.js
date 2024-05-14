@@ -11,7 +11,7 @@ function configureTemplates(templatesPath) {
 
 // TODO: Document this
 // Map templates to its correct output location
-const createOntarioAppTemplates = (answers) => [
+const ontarioCreateAppTemplates = (answers) => [
   { template: 'package.njk', outputDir: '', outputFile: 'package.json' },
   { template: 'README.njk', outputDir: '', outputFile: 'README.md' },
   { template: 'eleventy.njk', outputDir: '', outputFile: '.eleventy.js' },
@@ -22,4 +22,4 @@ const createOntarioAppTemplates = (answers) => [
   { template: 'globals.njk', outputDir: 'src/_data', outputFile: 'globals.js' },
 ];
 
-module.exports = { configureTemplates, createOntarioAppTemplates };
+module.exports = { configureTemplates, ontarioCreateAppTemplates };

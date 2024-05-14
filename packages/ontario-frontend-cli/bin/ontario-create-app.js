@@ -2,8 +2,8 @@
 
 const Command = require('commander').Command;
 const {
-  handleCreateOntarioAppCommand,
-} = require('../commands/create-ontario-app/handleCreateOntarioApp');
+  handleCreateAppCommand,
+} = require('../commands/ontario-create-app/handleCreateApp');
 const { readPackageJson } = require('../core/utils');
 const logger = require('../core/utils/logger');
 
@@ -12,7 +12,7 @@ const packageJson = readPackageJson();
 const program = new Command();
 
 program
-  .name('create-ontario-app')
+  .name('ontario-create-app')
   .version(packageJson.version, '-v, --version', 'Output the current version')
   .description(packageJson.description);
 
@@ -29,7 +29,7 @@ program
   )
   .action(async (options) => {
     try {
-      await handleCreateOntarioAppCommand(options);
+      await handleCreateAppCommand(options);
     } catch (error) {
       logger.error(`Error creating project: ${error.message}`);
       process.exit(1);

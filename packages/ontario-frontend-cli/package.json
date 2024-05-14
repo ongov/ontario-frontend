@@ -1,11 +1,11 @@
 {
   "name": "@ongov/ontario-frontend-cli",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "",
   "scripts": {
-    "trace:warning": "node --trace-warnings ./bin/create-ontario-app.js",
-    "trace:deprecation": "node --trace-deprecation ./bin/create-ontario-app.js",
-    "throw:deprecation": "node --throw-deprecation ./bin/create-ontario-app.js"
+    "trace:warning": "node --trace-warnings ./bin/ontario-create-app.js",
+    "trace:deprecation": "node --trace-deprecation ./bin/ontario-create-app.js",
+    "throw:deprecation": "node --throw-deprecation ./bin/ontario-create-app.js"
   },
   "author": "Ontario Digital Services",
   "keywords": [
@@ -19,7 +19,7 @@
   ],
   "license": "Apache 2.0",
   "bin": {
-    "create-ontario-app": "./bin/create-ontario-app.js",
+    "ontario-create-app": "./bin/ontario-create-app.js",
     "ontario-add-package": "./bin/ontario-add-package.js",
     "ontario-remove-package": "./bin/ontario-remove-package.js"
   },

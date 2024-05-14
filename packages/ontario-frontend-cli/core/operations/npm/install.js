@@ -36,6 +36,8 @@ function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
  * @returns {Promise<void>} A promise that resolves when the installation is complete or rejects on failure.
  */
 function installAllPackages(projectPath) {
+  console.log('----- installAllPackages -----');
+  console.log(projectPath);
   return new Promise((resolve, reject) => {
     const npmInstall = spawn('npm', ['install'], {
       stdio: 'inherit',

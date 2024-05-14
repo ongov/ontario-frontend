@@ -8,13 +8,13 @@ module.exports = {
     rootDir,
     'resources',
     'templates',
-    'create-ontario-app',
+    'ontario-create-app',
   ),
   CREATE_BOILERPLATE_DIR: path.join(
     rootDir,
     'resources',
     'boilerplate',
-    'create-ontario-app',
+    'ontario-create-app',
   ),
   SHARED_BOILERPLATE_DIR: path.join(
     rootDir,

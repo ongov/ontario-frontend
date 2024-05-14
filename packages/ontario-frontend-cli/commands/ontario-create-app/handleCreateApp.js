@@ -12,7 +12,7 @@ const logger = require('../../core/utils/logger');
 const {
   configureTemplates,
   renderAndWrite,
-  createOntarioAppTemplates,
+  ontarioCreateAppTemplates,
 } = require('../../core/utils');
 const {
   CREATE_TEMPLATE_DIR,
@@ -50,8 +50,8 @@ async function createNewProject(answers, options) {
   await generateProjectFiles(newProjectPath, conf);
 
   // Copy ESLint config if opted-in
-  if (conf.ESLint) {
-    await handlePackageCopy(newProjectPath, 'eslint-config', '.eslintrc.js');
+  if (conf.addESLint) {
+    await handlePackageCopy(newProjectPath, 'eslint-config/.eslintrc.js', '.eslintrc.js');
   }
 
   // Install npm dependencies, including the core Frontend dependency
@@ -65,7 +65,7 @@ async function createNewProject(answers, options) {
 
 async function generateProjectFiles(newProjectPath, conf) {
   logger.info('Generating project files');
-  const templates = createOntarioAppTemplates(conf);
+  const templates = ontarioCreateAppTemplates(conf);
   for (let { template, outputDir, outputFile } of templates) {
     const outputPath = path.join(newProjectPath, outputDir, outputFile);
     const directoryPath = path.dirname(outputPath); // Get the directory path for the current file
@@ -110,7 +110,7 @@ async function installDependencies(newProjectPath) {
   }
 }
 
-async function handleCreateOntarioAppCommand(cmd = {}) {
+async function handleCreateAppCommand(cmd = {}) {
   try {
     const options = {
       isLocal: cmd.local, // Check if the user indicated they want to use a local version of the toolkit
@@ -131,4 +131,4 @@ async function handleCreateOntarioAppCommand(cmd = {}) {
   }
 }
 
-module.exports = { handleCreateOntarioAppCommand };
+module.exports = { handleCreateAppCommand };
