@@ -17,7 +17,6 @@ const {
 const {
   CREATE_TEMPLATE_DIR,
   CREATE_BOILERPLATE_DIR,
-  SHARED_BOILERPLATE_DIR,
   LOCAL_CORE_DEPENDENCY_DIR,
 } = require('../../core/config');
 
@@ -51,8 +50,17 @@ async function createNewProject(answers, options) {
 
   // Copy ESLint config if opted-in
   if (conf.addESLint) {
+    // TODO: maybe this should be turned into a config constant since this is
+    // likely going to be done by the "handleAddPackage" too
+    // Probably excessive abstraction though, idk
     await handlePackageCopy(newProjectPath, 'eslint-config/.eslintrc.js', '.eslintrc.js');
   }
+
+  // TODO: add condition for prettier opted-in
+  // TODO: add prettier question to core/questions, very similar to the esLint question
+  // TODO: export prettier question from core/questions/index.js
+  // TODO: add code to actually copy the package, consider the TODO about using constants
+  // if this may be done by handleAddPackage too
 
   // Install npm dependencies, including the core Frontend dependency
   await installDependencies(newProjectPath);
@@ -98,6 +106,8 @@ async function copyBoilerplateFiles(newProjectPath) {
   logger.success('Project boilerplate files copied successfully.');
 }
 
+// TODO: Should we move the try/catch with appropriate logging to "installAllPackages"? Other utilities are handling try/catch/logging
+// TODO: If we move the try/catch, then this method can probably just be scrapped
 async function installDependencies(newProjectPath) {
   try {
     logger.info('Installing NPM dependencies...');

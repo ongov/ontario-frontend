@@ -17,9 +17,10 @@ program
   .version(packageJson.version, '-v, --version', 'Output the current version')
   .description(packageJson.description);
 
+// TODO: program.addHelpText like in ontario-create-app
+
 program
   .addArgument(new Argument('<package>', 'An Ontario package').choices(['eslint', 'prettier']))
-
 
 program
   .description('Add additional Ontario packages to your project.')
