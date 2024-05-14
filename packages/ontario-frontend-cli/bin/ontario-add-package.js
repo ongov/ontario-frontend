@@ -4,7 +4,7 @@ const Command = require('commander').Command;
 const Argument = require('commander').Argument;
 const {
   handleAddOntarioPackageCommand,
-} = require('../commands/add-ontario-package/handleAddOntarioPackage');
+} = require('../commands/ontario-add-package/handleAddPackage');
 const { readPackageJson } = require('../core/utils');
 const logger = require('../core/utils/logger');
 

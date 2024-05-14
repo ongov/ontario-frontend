@@ -18,17 +18,17 @@ async function handleAddOntarioPackageCommand(cmd = {}) {
     try {
       switch (cmd) {
         case 'eslint':
-          console.log('eslint selected');
-          await installPackages(['eslint', '@ongov/eslint-config-ontario-frontend'], true);
+          logger.info('eslint selected');
+          await installPackages(['eslint', 'eslint-plugin-import', '@ongov/eslint-config-ontario-frontend'], true);
           if (fs.existsSync(".eslintrc.js"))
             throw new Error('A configuration file for ESLint already exists.');
           await handlePackageCopy(path.resolve(process.cwd()), 'eslint-config/.eslintrc.js', '.eslintrc.js');
           break;
         case 'prettier':
-          console.log('prettier selected');
+          logger.info('prettier selected');
           break;
         default:
-          console.log('Invalid package option');
+          logger.error('Invalid package option');
       }
     } catch (error) {
       const errorMessage = error.message ? error.message : 'Failed to install package.';
