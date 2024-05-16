@@ -1,19 +1,22 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
-const { ROOT_DIR } = require('../../config');
 
 /**
- * Synchronously reads the package.json file at the project root and parses its JSON content.
- * @returns {Object} The parsed package.json content as an object.
+ * Asynchronously reads the package.json file from the specified directory and parses its JSON content.
+ * 
+ * @param {string} dir - The directory to read the package.json from.
+ * 
+ * @returns {Promise<Object>} A promise that resolves to the parsed package.json content as an object.
+ * 
+ * @throws {Error} Throws an error if the file cannot be read or parsed.
  */
-function readPackageJson() {
-  const packageJsonPath = path.join(ROOT_DIR, 'package.json');
+async function readPackageJson(dir) {
+  const packageJsonPath = path.join(dir, 'package.json');
   try {
-    // Use readFileSync for synchronous file reading
-    const data = fs.readFileSync(packageJsonPath, 'utf8');
+    const data = await fs.readFile(packageJsonPath, 'utf8');
     return JSON.parse(data);
   } catch (error) {
-    throw new Error(`Failed to read package.json: ${error.message}`);
+    throw new Error(`Failed to read package.json from ${dir}: ${error.message}`);
   }
 }
 

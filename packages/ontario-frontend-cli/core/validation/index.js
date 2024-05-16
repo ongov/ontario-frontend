@@ -5,6 +5,10 @@ const {
   isUrlSafe,
   doesNotStartWithDotOrUnderscore,
 } = require('./validationUtils');
+const {
+  doesPackageJsonExist,
+  isOntarioFrontendProject
+} = require('./validatePackageJson');
 
 module.exports = {
   validFileName,
@@ -12,4 +16,6 @@ module.exports = {
   isLowercase,
   isUrlSafe,
   doesNotStartWithDotOrUnderscore,
+  doesPackageJsonExist,
+  isOntarioFrontendProject
 };

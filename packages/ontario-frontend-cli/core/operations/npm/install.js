@@ -1,4 +1,5 @@
 const { spawn } = require('child_process');
+const logger = require('../../utils/logger');
 
 /**
  * Install a list of packages using npm.
@@ -36,8 +37,7 @@ function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
  * @returns {Promise<void>} A promise that resolves when the installation is complete or rejects on failure.
  */
 function installAllPackages(projectPath) {
-  console.log('----- installAllPackages -----');
-  console.log(projectPath);
+  logger.info('Installing NPM dependencies...');
   return new Promise((resolve, reject) => {
     const npmInstall = spawn('npm', ['install'], {
       stdio: 'inherit',
@@ -46,6 +46,7 @@ function installAllPackages(projectPath) {
 
     npmInstall.on('close', (code) => {
       if (code === 0) {
+        logger.success('NPM dependencies installed successfully.');
         resolve();
       } else {
         reject(new Error(`npm install failed with code ${code}`));

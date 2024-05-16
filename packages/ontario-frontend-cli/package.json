@@ -7,7 +7,7 @@
     "trace:deprecation": "node --trace-deprecation ./bin/ontario-create-app.js",
     "throw:deprecation": "node --throw-deprecation ./bin/ontario-create-app.js"
   },
-  "author": "Ontario Digital Services",
+  "author": "Ontario.ca Frontend",
   "keywords": [
     "jamstack",
     "cli",

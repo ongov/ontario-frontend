@@ -63,7 +63,7 @@ async function createNewProject(answers, options) {
   // if this may be done by handleAddPackage too
 
   // Install npm dependencies, including the core Frontend dependency
-  await installDependencies(newProjectPath);
+  await installAllPackages(newProjectPath);
 
   logger.success('New Project Created!');
   logger.info(`Project is now created in ${newProjectPath}`);
@@ -108,17 +108,8 @@ async function copyBoilerplateFiles(newProjectPath) {
 
 // TODO: Should we move the try/catch with appropriate logging to "installAllPackages"? Other utilities are handling try/catch/logging
 // TODO: If we move the try/catch, then this method can probably just be scrapped
-async function installDependencies(newProjectPath) {
-  try {
-    logger.info('Installing NPM dependencies...');
-    await installAllPackages(newProjectPath);
-    logger.success('NPM dependencies installed successfully.');
-  } catch (error) {
-    logger.error(`Failed to install NPM dependencies: ${error.message}`);
-    // Re-throw the error so the calling function can handle it too
-    throw error;
-  }
-}
+
+// removed await installAllPackages(newProjectPath); now listed above
 
 async function handleCreateAppCommand(cmd = {}) {
   try {
