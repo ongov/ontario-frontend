@@ -1,0 +1,16 @@
+{
+  "eslintTest": {
+    "configFiles": [
+      {
+        "source": "eslint-config/.eslintrc.js",
+        "destination": ".eslintrc.js"
+      }
+    ],
+    "packages": [
+      "eslint",
+      "eslint-plugin-import",
+      "@ongov/eslint-config-ontario-frontend"
+    ]
+  }
+}
+  

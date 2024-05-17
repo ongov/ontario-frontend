@@ -1,7 +1,7 @@
 const path = require('path');
 
 const logger = require('../logger');
-const { SHARED_BOILERPLATE_DIR } = require('../../config');
+const { SHARED_BOILERPLATE_DIR, PACKAGES_CONFIG } = require('../../config');
 const { copy } = require('../../operations');
 
 /**
@@ -11,18 +11,26 @@ const { copy } = require('../../operations');
  * @async
  * 
  * @param {string} outputPath - The path inside your project that you wish to execute the copy into.
- * @param {string} packagePath - The path inside the shared directory to the file that you wish to copy.
- * @param {string} outputFile - The name of the file after it has been copied.
+ * @param {string} packageName - The name of the package you wish to copy config for (e.g. eslint, prettier).
  * 
  * @example
  * // In the current directory, copy the .eslintrc.js file from the shared directory.
- * await handlePackageCopy(path.resolve(process.cwd()), 'eslint-config/.eslintrc.js', '.eslintrc.js');
+ * await handlePackageCopy(path.resolve(process.cwd()), 'eslint');
  */ 
-async function handlePackageCopy(outputPath, packagePath, outputFile) {
-    const fullPackagePath = path.join(SHARED_BOILERPLATE_DIR, packagePath);
-    const fullOutputPath = path.join(outputPath, outputFile);
-    copy(fullPackagePath, fullOutputPath);
-    logger.success(`${fullPackagePath} package copied successfully.`);
+async function handlePackageCopy(outputPath, packageName) {
+  const packageFiles = PACKAGES_CONFIG[packageName]?.configFiles; // Get our packageFiles from the config
+  
+  if ( !Array.isArray(packageFiles) ) {
+    // This condition fails as expected BUT this error is not getting propogated
+    throw new Error(`Package configuration for ${packageName} not found.`);
+  }
+
+  for (const file of packageFiles) {
+    const fullPackagePath = path.join(SHARED_BOILERPLATE_DIR, file.source);
+    const fullOutputPath = path.join(outputPath, file.destination);
+    await copy(fullPackagePath, fullOutputPath);
+    logger.success(`${fullPackagePath} copied successfully to ${fullOutputPath}.`);
+  }
 }
 
 module.exports = { handlePackageCopy };

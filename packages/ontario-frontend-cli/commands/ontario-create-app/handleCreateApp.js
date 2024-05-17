@@ -50,10 +50,11 @@ async function createNewProject(answers, options) {
 
   // Copy ESLint config if opted-in
   if (conf.addESLint) {
-    // TODO: maybe this should be turned into a config constant since this is
-    // likely going to be done by the "handleAddPackage" too
-    // Probably excessive abstraction though, idk
-    await handlePackageCopy(newProjectPath, 'eslint-config/.eslintrc.js', '.eslintrc.js');
+    try {
+      await handlePackageCopy(newProjectPath, 'eslint');
+    } catch (err) {
+      throw err
+    }
   }
 
   // TODO: add condition for prettier opted-in
@@ -73,6 +74,7 @@ async function createNewProject(answers, options) {
 
 async function generateProjectFiles(newProjectPath, conf) {
   logger.info('Generating project files');
+  
   const templates = ontarioCreateAppTemplates(conf);
   for (let { template, outputDir, outputFile } of templates) {
     const outputPath = path.join(newProjectPath, outputDir, outputFile);
@@ -106,11 +108,6 @@ async function copyBoilerplateFiles(newProjectPath) {
   logger.success('Project boilerplate files copied successfully.');
 }
 
-// TODO: Should we move the try/catch with appropriate logging to "installAllPackages"? Other utilities are handling try/catch/logging
-// TODO: If we move the try/catch, then this method can probably just be scrapped
-
-// removed await installAllPackages(newProjectPath); now listed above
-
 async function handleCreateAppCommand(cmd = {}) {
   try {
     const options = {
@@ -128,7 +125,7 @@ async function handleCreateAppCommand(cmd = {}) {
 
     logger.success('Project creation successful!');
   } catch (error) {
-    logger.error('Failed to create a new project:', error);
+    logger.error('Failed to create a new project:', error.message);
   }
 }
 
