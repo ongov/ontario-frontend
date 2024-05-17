@@ -57,11 +57,14 @@ async function createNewProject(answers, options) {
     }
   }
 
-  // TODO: add condition for prettier opted-in
-  // TODO: add prettier question to core/questions, very similar to the esLint question
-  // TODO: export prettier question from core/questions/index.js
-  // TODO: add code to actually copy the package, consider the TODO about using constants
-  // if this may be done by handleAddPackage too
+  // Copy Prettier config if opted-in
+  if (conf.addPrettier) {
+    try {
+      await handlePackageCopy(newProjectPath, 'prettier');
+    } catch (err) {
+      throw err
+    }
+  }
 
   // Install npm dependencies, including the core Frontend dependency
   await installAllPackages(newProjectPath);
@@ -74,7 +77,7 @@ async function createNewProject(answers, options) {
 
 async function generateProjectFiles(newProjectPath, conf) {
   logger.info('Generating project files');
-  
+
   const templates = ontarioCreateAppTemplates(conf);
   for (let { template, outputDir, outputFile } of templates) {
     const outputPath = path.join(newProjectPath, outputDir, outputFile);

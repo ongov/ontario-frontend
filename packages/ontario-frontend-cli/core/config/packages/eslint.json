@@ -1,5 +1,5 @@
 {
-  "eslintTest": {
+  "eslint": {
     "configFiles": [
       {
         "source": "eslint-config/.eslintrc.js",
