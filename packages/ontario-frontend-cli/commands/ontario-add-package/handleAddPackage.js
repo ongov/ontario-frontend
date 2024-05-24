@@ -23,8 +23,8 @@ async function handleAddOntarioPackageCommand(cmd = {}) {
 
         await installPackages(PACKAGES_CONFIG[cmd]?.packages, true);
 
-        if (fs.existsSync("prettier.config.js"))
-          logger.warning(".prettier.config.js file already present. Please add \"extends\": \"@ongov/prettier-config-ontario-frontend\" to your existing file.");
+        if (fs.existsSync(".prettierrc.js"))
+          logger.warning(".prettierrc.js file already present. Please add \"...@ongov/prettier-config-ontario-frontend\" to your existing file.");
 
         if (fs.existsSync(".prettierignore"))
           logger.warning(".prettierignore file already present. Please ignore the following directories and files: node_modules/, dist/, src/assets/vendor/* and *.njk");

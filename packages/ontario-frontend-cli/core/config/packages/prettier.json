@@ -6,8 +6,8 @@
         "destination": ".prettierignore"
       },
       {
-        "source": "prettier-config/prettier.config.js",
-        "destination": "prettier.config.js"
+        "source": "prettier-config/.prettierrc.js",
+        "destination": ".prettierrc.js"
       }
     ],
     "packages": [
