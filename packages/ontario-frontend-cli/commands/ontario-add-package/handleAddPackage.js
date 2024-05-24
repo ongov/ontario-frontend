@@ -16,7 +16,7 @@ async function handleAddOntarioPackageCommand(cmd = {}) {
         if (fs.existsSync(".eslintrc.js"))
           logger.warning(".eslint.js file already present. Please add \"extends\": \"@ongov/eslint-config-ontario-frontend\" to your existing file.");
 
-        await handlePackageCopy(path.resolve(process.cwd()), 'eslint');
+        await handlePackageCopy(path.resolve(process.cwd()), cmd);
         break;
       case 'prettier':
         logger.info('prettier selected');
@@ -29,7 +29,7 @@ async function handleAddOntarioPackageCommand(cmd = {}) {
         if (fs.existsSync(".prettierignore"))
           logger.warning(".prettierignore file already present. Please ignore the following directories and files: node_modules/, dist/, src/assets/vendor/* and *.njk");
 
-        await handlePackageCopy(path.resolve(process.cwd()), 'prettier');
+        await handlePackageCopy(path.resolve(process.cwd()), cmd);
         break;
       default:
         logger.error('Invalid package option selected. Please select either "eslint" or "prettier".');

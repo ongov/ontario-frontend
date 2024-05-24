@@ -9,8 +9,11 @@ function configureTemplates(templatesPath) {
   nunjucks.configure(templatesPath, { autoescape: true });
 }
 
-// TODO: Document this
-// Map templates to its correct output location
+/**
+ * Map application templates to their correct output location in new projects.
+ * 
+ * @param {Array<string>} answers - The user answers from the CLI prompts.
+ */
 const ontarioCreateAppTemplates = (answers) => [
   { template: 'package.njk', outputDir: '', outputFile: 'package.json' },
   { template: 'README.njk', outputDir: '', outputFile: 'README.md' },

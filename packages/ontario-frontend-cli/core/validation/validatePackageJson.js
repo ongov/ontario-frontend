@@ -10,7 +10,7 @@ const { readPackageJson } = require('../utils/project/readPackageJson');
  */
 async function doesPackageJsonExist(dir = process.cwd()) {
     try {
-      await readPackageJson(dir);
+      await fs.access(path.join(dir, 'package.json'));
       return true;
     } catch (err) {
       logger.error(`Error checking for package.json in ${dir}: ${err.message}`);
@@ -28,13 +28,16 @@ async function doesPackageJsonExist(dir = process.cwd()) {
 async function isOntarioFrontendProject(dir = process.cwd()) {
     try {
       const packageJson = await readPackageJson(dir);
-      if (!packageJson.dependencies || !packageJson.dependencies['@ongov/ontario-frontend']) {
-        logger.error(`@ongov/ontario-frontend not found within package dependencies inside of ${dir}.`);
+      if (
+        !packageJson.dependencies || 
+        !packageJson.dependencies['@ongov/ontario-frontend']
+      ) {
+        logger.error('No \'@ongov/ontario-frontend\' dependency found inside of package.json. Ensure you are performing this command within an Ontario.ca Frontend project');
         return false;
       }
       return true;
     } catch (err) {
-      logger.error(`Error reading package.json in ${dir}: ${err.message}`);
+      logger.error('No package.json found in the targetted directory. Ensure you are performing this command within your Ontario.ca Frontend project');
       return false;
     }
   }

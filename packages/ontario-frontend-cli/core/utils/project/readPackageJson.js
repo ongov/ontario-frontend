@@ -10,7 +10,7 @@ const path = require('path');
  * 
  * @throws {Error} Throws an error if the file cannot be read or parsed.
  */
-async function readPackageJson(dir) {
+async function readPackageJson(dir=process.cwd()) {
   const packageJsonPath = path.join(dir, 'package.json');
   try {
     const data = await fs.readFile(packageJsonPath, 'utf8');

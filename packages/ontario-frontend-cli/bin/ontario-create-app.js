@@ -7,6 +7,14 @@ const logger = require('../core/utils/logger');
 
 const program = new Command();
 
+/**
+ * readPackageJson() is an async function that is used to read the contents of the package.json file.
+ * 
+ * These contents are checked against in several places in the below code, therefore the all of the 
+ * program commands should be wrapped in a self-executing async function.
+ * 
+ * Without this async wrapper function, the program will exit unexpectedly after user input.
+ */ 
 (
   async () => {
     const packageJson = await readPackageJson(ROOT_DIR);
