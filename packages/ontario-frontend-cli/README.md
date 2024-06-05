@@ -44,7 +44,7 @@ pnpm add -g @ongov/ontario-frontend-cli
 If you'd rather not install the CLI tool globally, you can run it directly with npx:
 
 ```sh
-npx @ongov/ontario-frontend-cli create-ontario-app
+npx @ongov/ontario-frontend-cli ontario-create-app
 ```
 
 This method is useful for a one-off execution where you don't need to (or don't want to) keep the CLI tool installed globally on your system.
@@ -54,7 +54,7 @@ This method is useful for a one-off execution where you don't need to (or don't 
 Once installed, you can create a new project by running:
 
 ```sh
-create-ontario-app
+ontario-create-app
 ```
 
 Follow the interactive prompts to configure your project's settings, such as project name and paths.
@@ -66,7 +66,7 @@ Follow the interactive prompts to configure your project's settings, such as pro
 Example:
 
 ```sh
-create-ontario-app --local
+ontario-create-app --local
 ```
 
 This command initializes a new project and links it to a local version of the Ontario.ca Frontend framework.

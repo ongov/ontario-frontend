@@ -1,0 +1,19 @@
+{
+  "prettier": {
+    "configFiles": [
+      {
+        "source": "prettier-config/.prettierignore",
+        "destination": ".prettierignore"
+      },
+      {
+        "source": "prettier-config/.prettierrc.js",
+        "destination": ".prettierrc.js"
+      }
+    ],
+    "packages": [
+      "prettier",
+      "@ongov/prettier-config-ontario-frontend"
+    ]
+  }
+}
+  
