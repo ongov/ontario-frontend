@@ -32,6 +32,10 @@ const program = new Command();
         '--local',
         'Use a local version of the Ontario Frontend core dependency',
       )
+      .option(
+        '--appName <name>',
+        'Specify the project name (lowercase, hyphens, underscores allowed)'
+      )
       .action(async (options) => {
         try {
           await handleCreateAppCommand(options);
