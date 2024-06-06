@@ -31,13 +31,15 @@ async function createNewProject(answers, options) {
   logger.info(`Creating a new Ontario Frontend project in ${newProjectPath}`);
   ensureDirectory(newProjectPath);
 
-  const ontarioFrontendDependency = options.isLocal ? `"file:${LOCAL_CORE_DEPENDENCY_DIR}/"` : '"latest"';
+  const ontarioFrontendDependency = options.isLocal
+    ? `"file:${LOCAL_CORE_DEPENDENCY_DIR}/"`
+    : '"latest"';
 
   // Configuration for the new project
   const conf = {
     ...answers, //Directly spread relevant answers
     createDate: new Date().toISOString(),
-    ontarioFrontendDependency: ontarioFrontendDependency
+    ontarioFrontendDependency: ontarioFrontendDependency,
   };
 
   logger.success('Created project context');
@@ -53,7 +55,7 @@ async function createNewProject(answers, options) {
     try {
       await handlePackageCopy(newProjectPath, 'eslint');
     } catch (err) {
-      throw err
+      throw new Error(`Failed to copy ESLint configuration: ${err.message}`);
     }
   }
 
@@ -62,7 +64,7 @@ async function createNewProject(answers, options) {
     try {
       await handlePackageCopy(newProjectPath, 'prettier');
     } catch (err) {
-      throw err
+      throw new Error(`Failed to copy Prettier configuration: ${err.message}`);
     }
   }
 
@@ -113,6 +115,7 @@ async function copyBoilerplateFiles(newProjectPath) {
 
 async function handleCreateAppCommand(cmd = {}) {
   try {
+    // Extract options from the command
     const options = {
       isLocal: cmd.local, // Check if the user indicated they want to use a local version of the toolkit
       projectName: cmd.projectName, // Add projectName to options
@@ -121,17 +124,19 @@ async function handleCreateAppCommand(cmd = {}) {
     // Print a header for the application in the terminal
     console.log(textStyling.banner('Ontario\nFrontend'));
 
-    // Use async/await syntax for getting answers from inquirer
-    let answers = await inquirer.prompt(createOntarioAppQuestions(!options.projectName));
-    if (options.appName) {
-      answers = {
-        ...answers,
-        projectName: options.projectName
-      };
-    }
+    // If appName is provided, skip the project name question
+    // Otherwise, prompt the user with all questions
+    const answers = await inquirer.prompt(
+      createOntarioAppQuestions(!options.projectName),
+    );
 
-    // Proceed to create the new project with the provided answers and options
-    await createNewProject(answers, options);
+    // Merge the answers with the provided appName, if any
+    const finalAnswers = options.projectName
+      ? { ...answers, projectName: options.projectName }
+      : answers;
+
+    // Create the new project with the collected answers and options
+    await createNewProject(finalAnswers, options);
 
     logger.success('Project creation successful!');
   } catch (error) {
