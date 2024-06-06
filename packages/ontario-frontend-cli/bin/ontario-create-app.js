@@ -36,11 +36,24 @@ const program = new Command();
       .option(
         '--projectName <name>',
         'Specify the project name (lowercase, hyphens, underscores allowed)',
-        validFileName
+        (value) => {
+          const validationResult = validFileName(value);
+          if (validationResult !== true) {
+            logger.error('Invalid project name - ',validationResult);
+            process.exit(1);
+          }
+          return value;
+        }
       )
-      .action(async (options) => {
+      .option(
+        '--debug', 'Enable debug output'
+      )
+      .action(async (cmd) => {
+        logger.setDebug(cmd.debug);
+        logger.debug('CLI options:', cmd);
+
         try {
-          await handleCreateAppCommand(options);
+          await handleCreateAppCommand(cmd);
         } catch (error) {
           logger.error(`Error creating project: ${error.message}`);
           process.exit(1);
