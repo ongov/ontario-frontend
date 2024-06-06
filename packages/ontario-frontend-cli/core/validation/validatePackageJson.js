@@ -1,5 +1,7 @@
 const logger = require('../utils/logger');
 const { readPackageJson } = require('../utils/project/readPackageJson');
+const fs = require('fs').promises;
+const path = require('path');
 
 /**
  * Checks if a package.json file exists in the given directory.
