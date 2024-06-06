@@ -36,7 +36,6 @@ async function createNewProject(answers, options) {
   // Configuration for the new project
   const conf = {
     ...answers, //Directly spread relevant answers
-    projectName: options.projectName || answers.projectName, // Use CLI parameter or interactive answer
     createDate: new Date().toISOString(),
     ontarioFrontendDependency: ontarioFrontendDependency
   };
@@ -123,7 +122,13 @@ async function handleCreateAppCommand(cmd = {}) {
     console.log(textStyling.banner('Ontario\nFrontend'));
 
     // Use async/await syntax for getting answers from inquirer
-    const answers = await inquirer.prompt(createOntarioAppQuestions);
+    let answers = await inquirer.prompt(createOntarioAppQuestions(!options.projectName));
+    if (options.appName) {
+      answers = {
+        ...answers,
+        projectName: options.projectName
+      };
+    }
 
     // Proceed to create the new project with the provided answers and options
     await createNewProject(answers, options);
