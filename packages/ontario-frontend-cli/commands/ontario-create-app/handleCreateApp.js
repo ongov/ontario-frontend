@@ -130,7 +130,9 @@ async function copyBoilerplateFiles(newProjectPath) {
 }
 
 async function handleCreateAppCommand(cmd = {}) {
+  // Enable debug logging if --debug option is set
   logger.setDebug(cmd.debug);
+  
   try {
     // Extract options from the command
     const options = {

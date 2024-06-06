@@ -22,17 +22,8 @@ const program = new Command();
 
     program
       .name('ontario-create-app')
-      .version(packageJson.version, '-v, --version', 'Output the current version');
-      // TODO: Add a description to package.json
-      // .description(packageJson.description);
-
-    program
-      // TODO: Can make this more descriptive
+      .version(packageJson.version, '-v, --version', 'Output the current version')
       .description('Create a new Ontario Frontend project')
-      .option(
-        '--local',
-        'Use a local version of the Ontario Frontend core dependency',
-      )
       .option(
         '--projectName <name>',
         'Specify the project name (lowercase, hyphens, underscores allowed)',
@@ -51,6 +42,10 @@ const program = new Command();
       )
       .option(
         '--debug', 'Enable debug output'
+      )
+      .option(
+        '--local',
+        'Use a local version of the Ontario Frontend core dependency',
       )
       .action(async (cmd) => {
         logger.setDebug(cmd.debug);
