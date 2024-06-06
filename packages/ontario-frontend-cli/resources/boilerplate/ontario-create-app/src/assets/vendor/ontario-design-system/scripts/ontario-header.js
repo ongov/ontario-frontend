@@ -1,6 +1,8 @@
-// run asynchronously
+// Run asynchronously
 function deferInFn(fn) {
-	if (typeof fn === 'function') setTimeout(fn, 0);
+	if (typeof fn === 'function') {
+		setTimeout(fn, 0);
+	}
 }
 
 /*
@@ -9,113 +11,130 @@ function deferInFn(fn) {
 (function () {
 	'use strict';
 
-	if (!('addEventListener' in window) || !document.documentElement.classList) return;
+	if (!('addEventListener' in window) || !document.documentElement.classList) {
+		return;
+	}
 
-	var navPanelSelector = 'ontario-navigation',
-		isReadyClass = 'ontario-navigation--is-ready',
-		isActiveClass = 'ontario-navigation--open',
-		mobileMenuActiveClass = 'ontario-navigation--open';
+	const navPanelSelector = 'ontario-navigation';
+	const isReadyClass = 'ontario-navigation--is-ready';
+	const isActiveClass = 'ontario-navigation--open';
+	const mobileMenuActiveClass = 'ontario-mobile-navigation--open';
 
-	var header = document.getElementById('ontario-header'),
-		nav = document.getElementById(navPanelSelector),
-		openBttnToggler = document.getElementById('ontario-header-menu-toggler'),
-		closeBttnToggler = document.getElementById('ontario-header-nav-toggler'),
-		body = document.getElementsByTagName('body')[0];
+	const nav = document.getElementById(navPanelSelector);
+	const openBttnToggler = document.getElementById('ontario-header-menu-toggler');
+	const closeBttnToggler = document.getElementById('ontario-header-nav-toggler');
+	const menuIcon = document.getElementById('ontario-header-menu-icon');
+	const body = document.body;
 
-	if (!nav) return;
+	if (!nav || !openBttnToggler || !closeBttnToggler || !menuIcon || !body) {
+		return;
+	}
 
-	var currentTogger = null,
-		currentDomEl = null;
+	let currentToggler = null;
+	let currentNavPanel = null;
 
-	function showNavPanel(navpanel) {
+	function showNavPanel(navPanel) {
 		body.classList.add(mobileMenuActiveClass);
-		header.parentNode.classList.add(isActiveClass);
-
-		navpanel.classList.add('ontario-navigation--open');
-
-		addA11yVisibility(navpanel);
-
-		focusUser({
-			element: navpanel,
-			callbackOnEscape: hideNavPanel,
-		});
-
-		closeBttnToggler.focus();
-
+		navPanel.classList.add(isActiveClass);
+		openBttnToggler.setAttribute('aria-expanded', 'true');
+		closeBttnToggler.setAttribute('aria-expanded', 'true');
+		menuIcon.setAttribute('xlink:href', '#ontario-icon-close');
+		document.addEventListener('keydown', onKeyboardHandler);
+		trapFocus(navPanel);
 		deferInFn(unbindOpenBttnToggler);
-
-		// bind clickables: document, closebttn - asynchronously
 		deferInFn(bindDocumentKeydown);
 		deferInFn(bindDocumentClick);
 		deferInFn(bindCloseBttnToggler);
 	}
 
-	function hideNavPanel(navpanel, returnToToggler) {
-		var navpanelDomEl = navpanel ? navpanel : currentDomEl;
-		var returnFocusToToggler = returnToToggler !== undefined;
+	function hideNavPanel(navPanel, returnToToggler) {
+		const navPanelDomEl = navPanel ? navPanel : currentNavPanel;
+		const returnFocusToToggler = returnToToggler !== undefined;
 
 		body.classList.remove(mobileMenuActiveClass);
-		header.parentNode.classList.remove(isActiveClass);
-
-		var navigation = navpanelDomEl.querySelector('.ontario-navigation') ? navpanelDomEl.querySelector('.ontario-navigation') : navpanelDomEl;
-
-		navpanelDomEl.querySelector('.ontario-navigation').classList.remove('ontario-navigation--open');
-
-		removeA11yVisibility(navigation);
-
-		// unbind clickables: document, closebttn
+		navPanelDomEl.classList.remove(isActiveClass);
+		openBttnToggler.setAttribute('aria-expanded', 'false');
+		closeBttnToggler.setAttribute('aria-expanded', 'false');
+		menuIcon.setAttribute('xlink:href', '#ontario-icon-menu');
+		document.removeEventListener('keydown', onKeyboardHandler);
+		releaseFocus(navPanelDomEl);
 		unbindCloseBttnToggler();
 		unbindDocumentClick();
 		unbindDocumentKeydown();
-
-		bindOpenBttnToggler();
-
-		// return focus to toggler
 		if (returnFocusToToggler) {
-			currentTogger.focus();
-			currentTogger = null;
+			currentToggler.focus();
+			currentToggler = null;
+		}
+		bindOpenBttnToggler();
+	}
+
+	function toggleNavPanel() {
+		if (nav.classList.contains(isActiveClass)) {
+			hideNavPanel();
+		} else {
+			const navPanelId = openBttnToggler.getAttribute('aria-controls');
+			const navPanel = document.getElementById(navPanelId);
+			if (currentNavPanel && currentNavPanel !== navPanel) {
+				hideNavPanel(currentNavPanel, false);
+			}
+			currentToggler = openBttnToggler;
+			currentNavPanel = navPanel;
+			showNavPanel(navPanel);
 		}
 	}
 
-	function openMenu(e) {
-		var navpanelId = e.currentTarget.getAttribute('aria-controls');
-		var navpanel = document.getElementById(navpanelId);
-
-		if (currentDomEl) {
-			hideNavPanel(currentDomEl, false);
+	function onKeyboardHandler(event) {
+		if (event.key === 'Escape') {
+			hideNavPanel();
 		}
-		currentTogger = e.currentTarget;
-		currentDomEl = document.querySelector('.ontario-header__container');
-		showNavPanel(navpanel);
 	}
 
-	function closeMenu() {
-		hideNavPanel(currentDomEl);
+	function trapFocus(element) {
+		const focusableElements = element.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+		const firstFocusableElement = focusableElements[0];
+		const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+		function handleFocusTrap(event) {
+			if (event.key === 'Tab') {
+				if (event.shiftKey) {
+					if (document.activeElement === firstFocusableElement) {
+						lastFocusableElement.focus();
+						event.preventDefault();
+					}
+				} else {
+					if (document.activeElement === lastFocusableElement) {
+						firstFocusableElement.focus();
+						event.preventDefault();
+					}
+				}
+			}
+		}
+
+		element.addEventListener('keydown', handleFocusTrap);
+		firstFocusableElement.focus();
+
+		return handleFocusTrap;
 	}
 
-	function onClickHandler(e) {
-		hideNavPanel();
+	function releaseFocus(element) {
+		const handleFocusTrap = trapFocus(element);
+		element.removeEventListener('keydown', handleFocusTrap);
 	}
 
-	function onKeyboardHandler(e) {
-		if (e.key === 'Escape' || e.keyCode === KEYCODE.ESCAPE) hideNavPanel();
-	}
-
-	//  bind-unbind events
 	function bindOpenBttnToggler() {
-		openBttnToggler.addEventListener('click', openMenu);
+		openBttnToggler.addEventListener('click', toggleNavPanel);
 	}
 
 	function unbindOpenBttnToggler() {
-		openBttnToggler.removeEventListener('click', openMenu);
+		openBttnToggler.removeEventListener('click', toggleNavPanel);
 	}
 
 	function bindCloseBttnToggler() {
-		closeBttnToggler.addEventListener('click', closeMenu);
+		closeBttnToggler.addEventListener('click', hideNavPanel);
 	}
 
 	function unbindCloseBttnToggler() {
-		closeBttnToggler.removeEventListener('click', closeMenu);
+		closeBttnToggler.removeEventListener('click', hideNavPanel);
 	}
 
 	function bindDocumentClick() {
@@ -134,9 +153,21 @@ function deferInFn(fn) {
 		document.removeEventListener('keydown', onKeyboardHandler);
 	}
 
+	function onClickHandler(event) {
+		const isNavPanel = event.target === currentNavPanel;
+		const isElementInsideNav = currentNavPanel.contains(event.target);
+		if (!isNavPanel && !isElementInsideNav) {
+			hideNavPanel();
+		}
+	}
+
 	function init() {
-		addA11y(nav);
-		bindOpenBttnToggler(nav);
+		const navPanelId = openBttnToggler.getAttribute('aria-controls');
+		const navPanel = document.getElementById(navPanelId);
+		if (navPanel) {
+			addA11y(navPanel);
+		}
+		bindOpenBttnToggler();
 		nav.classList.add(isReadyClass);
 	}
 
