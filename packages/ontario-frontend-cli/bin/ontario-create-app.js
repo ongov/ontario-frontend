@@ -4,6 +4,7 @@ const { handleCreateAppCommand } = require('../commands/ontario-create-app/handl
 const { ROOT_DIR } = require('../core/config');
 const { readPackageJson } = require('../core/utils');
 const logger = require('../core/utils/logger');
+const { validFileName } = require('../core/validation');
 
 const program = new Command();
 
@@ -33,8 +34,9 @@ const program = new Command();
         'Use a local version of the Ontario Frontend core dependency',
       )
       .option(
-        '--appName <name>',
-        'Specify the project name (lowercase, hyphens, underscores allowed)'
+        '--projectName <name>',
+        'Specify the project name (lowercase, hyphens, underscores allowed)',
+        validFileName
       )
       .action(async (options) => {
         try {

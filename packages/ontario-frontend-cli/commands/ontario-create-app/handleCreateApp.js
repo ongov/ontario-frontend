@@ -36,6 +36,7 @@ async function createNewProject(answers, options) {
   // Configuration for the new project
   const conf = {
     ...answers, //Directly spread relevant answers
+    projectName: options.projectName || answers.projectName, // Use CLI parameter or interactive answer
     createDate: new Date().toISOString(),
     ontarioFrontendDependency: ontarioFrontendDependency
   };
@@ -115,6 +116,7 @@ async function handleCreateAppCommand(cmd = {}) {
   try {
     const options = {
       isLocal: cmd.local, // Check if the user indicated they want to use a local version of the toolkit
+      projectName: cmd.projectName, // Add projectName to options
     };
 
     // Print a header for the application in the terminal
