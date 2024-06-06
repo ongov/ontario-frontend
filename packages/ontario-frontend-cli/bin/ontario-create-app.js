@@ -37,6 +37,9 @@ const program = new Command();
         '--projectName <name>',
         'Specify the project name (lowercase, hyphens, underscores allowed)',
         (value) => {
+          // Leverage the validation used with Commander for prompted questions
+          // The validation result is either True if the value is valid, or
+          // it is a string representing the error and remedy
           const validationResult = validFileName(value);
           if (validationResult !== true) {
             logger.error('Invalid project name - ',validationResult);
