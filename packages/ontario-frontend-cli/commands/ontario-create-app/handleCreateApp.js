@@ -126,10 +126,10 @@ async function copyBoilerplateFiles(newProjectPath) {
  */
 async function copyOptionalConfig(newProjectPath, conf) {
   if (conf.addESLint) {
-    await safelyCopyPackage(newProjectPath, 'eslint');
+    await handlePackageCopy(newProjectPath, 'eslint');
   }
   if (conf.addPrettier) {
-    await safelyCopyPackage(newProjectPath, 'prettier');
+    await handlePackageCopy(newProjectPath, 'prettier');
   }
 }
 
