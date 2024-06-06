@@ -42,6 +42,7 @@ const program = new Command();
             logger.error('Invalid project name - ',validationResult);
             process.exit(1);
           }
+          logger.info('Using project name: ', value);
           return value;
         }
       )
