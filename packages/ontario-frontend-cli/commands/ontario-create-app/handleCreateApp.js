@@ -84,7 +84,6 @@ async function createNewProject(answers, options) {
 
   // Install npm dependencies, including the core Frontend dependency
   await installAllPackages(newProjectPath);
-  logger.debug('npm dependencies installed successfully');
 
   logger.success('New Project Created!');
   logger.info(`Project is now created in ${newProjectPath}`);
