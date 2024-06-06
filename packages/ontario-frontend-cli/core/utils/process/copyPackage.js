@@ -1,7 +1,7 @@
 const path = require('path');
 const logger = require('../logger');
 const { SHARED_BOILERPLATE_DIR, PACKAGES_CONFIG } = require('../../config');
-const { copyFiles } = require('../operations/copy');
+const { copyFiles } = require('../../operations/file/copy');
 
 /**
  * Copies package configuration files from the shared directory to the specified output path.

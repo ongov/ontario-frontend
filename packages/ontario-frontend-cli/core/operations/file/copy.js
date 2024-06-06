@@ -1,5 +1,5 @@
 const fs = require('fs');
-const logger = require('../logger');
+const logger = require('../../utils/logger');
 
 /**
  * Copies files and directories from the source path to the destination path.
