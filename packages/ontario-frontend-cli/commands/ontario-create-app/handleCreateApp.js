@@ -25,35 +25,49 @@ const { createOntarioAppQuestions } = require('../../core/questions');
 configureTemplates(CREATE_TEMPLATE_DIR);
 
 async function createNewProject(answers, options) {
+  logger.debug('Answers received:', answers);
+  logger.debug('Options received:', options);
+
   const newProjectPath = path.resolve(process.cwd(), answers.projectName);
 
   // Create the directory for the new project
   logger.info(`Creating a new Ontario Frontend project in ${newProjectPath}`);
-  ensureDirectory(newProjectPath);
+  logger.debug(`Project path resolved to: ${newProjectPath}`);
 
-  const ontarioFrontendDependency = options.isLocal ? `"file:${LOCAL_CORE_DEPENDENCY_DIR}/"` : '"latest"';
+  ensureDirectory(newProjectPath);
+  logger.debug(`Directory created: ${newProjectPath}`);
+
+  const ontarioFrontendDependency = options.isLocal
+    ? `"file:${LOCAL_CORE_DEPENDENCY_DIR}/"`
+    : '"latest"';
 
   // Configuration for the new project
   const conf = {
     ...answers, //Directly spread relevant answers
     createDate: new Date().toISOString(),
-    ontarioFrontendDependency: ontarioFrontendDependency
+    ontarioFrontendDependency: ontarioFrontendDependency,
   };
+
+  logger.debug('Project configuration:', conf);
 
   logger.success('Created project context');
 
   // Copy boilerplate files
   await copyBoilerplateFiles(newProjectPath);
+  logger.debug('Boilerplate files copied successfully');
 
   // Generate project files
   await generateProjectFiles(newProjectPath, conf);
+  logger.debug('Project files generated successfully');
 
   // Copy ESLint config if opted-in
   if (conf.addESLint) {
     try {
       await handlePackageCopy(newProjectPath, 'eslint');
+
+      logger.debug('ESLint configuration copied successfully');
     } catch (err) {
-      throw err
+      throw new Error(`Failed to copy ESLint configuration: ${err.message}`);
     }
   }
 
@@ -61,8 +75,10 @@ async function createNewProject(answers, options) {
   if (conf.addPrettier) {
     try {
       await handlePackageCopy(newProjectPath, 'prettier');
+
+      logger.debug('Prettier configuration copied successfully');
     } catch (err) {
-      throw err
+      throw new Error(`Failed to copy Prettier configuration: ${err.message}`);
     }
   }
 
@@ -77,6 +93,7 @@ async function createNewProject(answers, options) {
 
 async function generateProjectFiles(newProjectPath, conf) {
   logger.info('Generating project files');
+  logger.debug('Configuration for project files:', conf);
 
   const templates = ontarioCreateAppTemplates(conf);
   for (let { template, outputDir, outputFile } of templates) {
@@ -112,23 +129,45 @@ async function copyBoilerplateFiles(newProjectPath) {
 }
 
 async function handleCreateAppCommand(cmd = {}) {
+  // Enable debug logging if --debug option is set
+  logger.setDebug(cmd.debug);
+  
   try {
+    // Extract options from the command
     const options = {
-      isLocal: cmd.local, // Check if the user indicated they want to use a local version of the toolkit
+      isLocal: cmd.local || false, // Check if the user indicated they want to use a local version of the toolkit
+      projectName: cmd.projectName || '',
     };
+
+    logger.debug('Command options:', options);
 
     // Print a header for the application in the terminal
     console.log(textStyling.banner('Ontario\nFrontend'));
 
-    // Use async/await syntax for getting answers from inquirer
-    const answers = await inquirer.prompt(createOntarioAppQuestions);
+    // If projectName is provided, skip the project name question
+    // Otherwise, prompt the user with all questions
+    const answers = await inquirer.prompt(
+      createOntarioAppQuestions(!options.projectName),
+    );
 
-    // Proceed to create the new project with the provided answers and options
-    await createNewProject(answers, options);
+    logger.debug('User answers:', answers);
+
+    // Merge the answers with the provided projectName, if any
+    const finalAnswers = options.projectName
+      ? { ...answers, projectName: options.projectName }
+      : answers;
+
+    logger.debug('Final answers:', finalAnswers);
+
+    // Create the new project with the collected answers and options
+    await createNewProject(finalAnswers, options);
 
     logger.success('Project creation successful!');
   } catch (error) {
     logger.error('Failed to create a new project:', error.message);
+    if (cmd.debug) {
+      console.error(error.stack); // Print the stack trace for debugging only if debug is enabled
+    }
   }
 }
 

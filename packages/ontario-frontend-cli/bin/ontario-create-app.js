@@ -4,6 +4,7 @@ const { handleCreateAppCommand } = require('../commands/ontario-create-app/handl
 const { ROOT_DIR } = require('../core/config');
 const { readPackageJson } = require('../core/utils');
 const logger = require('../core/utils/logger');
+const { validFileName } = require('../core/validation');
 
 const program = new Command();
 
@@ -21,20 +22,37 @@ const program = new Command();
 
     program
       .name('ontario-create-app')
-      .version(packageJson.version, '-v, --version', 'Output the current version');
-      // TODO: Add a description to package.json
-      // .description(packageJson.description);
-
-    program
-      // TODO: Can make this more descriptive
+      .version(packageJson.version, '-v, --version', 'Output the current version')
       .description('Create a new Ontario Frontend project')
+      .option(
+        '--projectName <name>',
+        'Specify the project name (lowercase, hyphens, underscores allowed)',
+        (value) => {
+          // Leverage the validation used with Commander for prompted questions
+          // The validation result is either True if the value is valid, or
+          // it is a string representing the error and remedy
+          const validationResult = validFileName(value);
+          if (validationResult !== true) {
+            logger.error('Invalid project name - ',validationResult);
+            process.exit(1);
+          }
+          logger.info('Using project name: ', value);
+          return value;
+        }
+      )
+      .option(
+        '--debug', 'Enable debug output'
+      )
       .option(
         '--local',
         'Use a local version of the Ontario Frontend core dependency',
       )
-      .action(async (options) => {
+      .action(async (cmd) => {
+        logger.setDebug(cmd.debug);
+        logger.debug('CLI options:', cmd);
+
         try {
-          await handleCreateAppCommand(options);
+          await handleCreateAppCommand(cmd);
         } catch (error) {
           logger.error(`Error creating project: ${error.message}`);
           process.exit(1);

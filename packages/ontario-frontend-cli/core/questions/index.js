@@ -3,9 +3,9 @@ const languagePageQuestions = require('./languagePageQuestions');
 const eslintQuestion = require('./eslintQuestion');
 const prettierQuestion = require('./prettierQuestion');
 
-const createOntarioAppQuestions = [
-  projectNameQuestion,
-  ...languagePageQuestions, // Spread operator to include both questions
+const createOntarioAppQuestions = (askProjectName) => [
+  projectNameQuestion(askProjectName),
+  ...languagePageQuestions,
   eslintQuestion,
   prettierQuestion,
 ];
