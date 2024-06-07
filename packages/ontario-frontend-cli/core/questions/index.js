@@ -10,6 +10,8 @@ const prettierQuestion = require('./prettierQuestion');
  * @param {boolean} askQuestions.askProjectName - Whether to ask for the project name.
  * @param {boolean} askQuestions.askEnPage - Whether to ask for the English page name.
  * @param {boolean} askQuestions.askFrPage - Whether to ask for the French page name.
+ * @param {boolean} askQuestions.askESLint - Whether to ask for ESLint configuration.
+ * @param {boolean} askQuestions.askPrettier - Whether to ask for Prettier configuration.
  * @returns {Array<Object>} An array of question objects to be used with inquirer.prompt.
  *
  * The function conditionally includes questions based on the provided `askQuestions` object.
@@ -18,8 +20,8 @@ const prettierQuestion = require('./prettierQuestion');
 const createOntarioAppQuestions = (askQuestions) => [
   projectNameQuestion(askQuestions.askProjectName),
   ...languagePageQuestions(askQuestions.askEnPage, askQuestions.askFrPage),
-  eslintQuestion,
-  prettierQuestion,
+  eslintQuestion(askQuestions.askESLint),
+  prettierQuestion(askQuestions.askPrettier),
 ];
 
 module.exports = {
