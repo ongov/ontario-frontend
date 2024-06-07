@@ -148,8 +148,10 @@ async function handleCreateAppCommand(cmd = {}) {
       projectName: cmd.projectName || '',
       enPage: cmd.enPage || '',
       frPage: cmd.frPage || '',
-      addESLint: cmd.eslint || false,
-      addPrettier: cmd.prettier || false,
+      // Determine whether to add ESLint based on the command line argument; undefined means the question will be asked
+      addESLint: typeof cmd.eslint === 'boolean' ? cmd.eslint : undefined,
+      // Determine whether to add Prettier based on the command line argument; undefined means the question will be asked
+      addPrettier: typeof cmd.prettier === 'boolean' ? cmd.prettier : undefined,
     };
 
     logger.debug('Command options:', options);
@@ -162,8 +164,8 @@ async function handleCreateAppCommand(cmd = {}) {
       askProjectName: !options.projectName,
       askEnPage: !options.enPage,
       askFrPage: !options.frPage,
-      askESLint: !options.addESLint,
-      askPrettier: !options.addPrettier,
+      askESLint: options.addESLint === undefined,
+      askPrettier: options.addPrettier === undefined,
     };
 
     const questions = createOntarioAppQuestions(askQuestions);
@@ -172,14 +174,14 @@ async function handleCreateAppCommand(cmd = {}) {
 
     logger.debug('User answers:', answers);
 
-    // Merge the answers with the provided projectName, enPage, and frPage if any
+    // Merge the answers with the provided options, giving priority to the options
     const finalAnswers = {
       ...answers,
       projectName: options.projectName || answers.projectName,
       enPage: options.enPage || answers.enPage,
       frPage: options.frPage || answers.frPage,
-      addESLint: options.addESLint || answers.addESLint,
-      addPrettier: options.addPrettier || answers.addPrettier,
+      addESLint: options.addESLint !== undefined ? options.addESLint : answers.addESLint,
+      addPrettier: options.addPrettier !== undefined ? options.addPrettier : answers.addPrettier,
     };
 
     logger.debug('Final answers:', finalAnswers);
