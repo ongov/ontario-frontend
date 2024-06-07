@@ -11,14 +11,14 @@ const { question } = require('../utils/styling/textStyling');
 const languagePageQuestions = (askEnPage, askFrPage) => [
   {
     type: 'input',
-    name: 'enRoot',
+    name: 'enPage',
     message: question('English-language page name (for URL path; lowercase, hyphens, underscores allowed):\n'),
     validate: validFileName,
     when: askEnPage,
   },
   {
     type: 'input',
-    name: 'frRoot',
+    name: 'frPage',
     message: question('French-language page name (for URL path; lowercase, hyphens, underscores allowed):\n'),
     validate: validFileName,
     when: askFrPage,

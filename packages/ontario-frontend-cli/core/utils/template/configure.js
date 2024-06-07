@@ -18,9 +18,9 @@ const ontarioCreateAppTemplates = (answers) => [
   { template: 'package.njk', outputDir: '', outputFile: 'package.json' },
   { template: 'README.njk', outputDir: '', outputFile: 'README.md' },
   { template: 'eleventy.njk', outputDir: '', outputFile: '.eleventy.js' },
-  { template: 'en.njk', outputDir: 'src', outputFile: `${answers.enRoot}.njk` },
+  { template: 'en.njk', outputDir: 'src', outputFile: `${answers.enPage}.njk` },
   { template: 'index.njk', outputDir: 'src', outputFile: 'index.njk' },
-  { template: 'fr.njk', outputDir: 'src', outputFile: `${answers.frRoot}.njk` },
+  { template: 'fr.njk', outputDir: 'src', outputFile: `${answers.frPage}.njk` },
   { template: 'sitemap.njk', outputDir: 'src', outputFile: 'sitemap.njk' },
   { template: 'globals.njk', outputDir: 'src/_data', outputFile: 'globals.js' },
 ];

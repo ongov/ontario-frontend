@@ -10,9 +10,9 @@ const logger = require('../logger');
  */
 async function renderAndWrite(templatePath, outputPath, context) {
   try {
-    logger.info('Rendering the template');
+    logger.debug('Rendering the template: ', templatePath);
     const content = nunjucks.render(templatePath, context);
-    logger.info('Writing the file');
+    logger.debug('Writing the file: ', outputPath);
     await write(outputPath, content);
   } catch (error) {
     logger.error(`Failed to render and write ${outputPath}: ${error.message}`);

@@ -2,7 +2,7 @@ const toolkit = require('@ongov/ontario-frontend');
 
 function configFunc(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
-    'src/assets': '{{ enRoot }}/assets',
+    'src/assets': '{{ enPage }}/assets',
   });
 
   eleventyConfig.addLayoutAlias('ontariocaLayout', 'vendor/ontario-ca/layout.njk');

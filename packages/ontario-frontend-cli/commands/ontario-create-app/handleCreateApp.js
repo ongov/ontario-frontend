@@ -84,6 +84,7 @@ async function generateProjectFiles(newProjectPath, conf) {
   logger.debug('Configuration for project files:', conf);
 
   const templates = ontarioCreateAppTemplates(conf);
+  logger.debug('ontarioCreateAppTemplates(conf): ', templates);
   for (let { template, outputDir, outputFile } of templates) {
     const outputPath = path.join(newProjectPath, outputDir, outputFile);
     const directoryPath = path.dirname(outputPath); // Get the directory path for the current file
@@ -93,6 +94,7 @@ async function generateProjectFiles(newProjectPath, conf) {
 
     try {
       logger.info(`Generating ${template}`);
+      logger.debug(`Rendering ${template} and writing to ${outputPath}`);
       await renderAndWrite(
         path.join(CREATE_TEMPLATE_DIR, template),
         outputPath,
