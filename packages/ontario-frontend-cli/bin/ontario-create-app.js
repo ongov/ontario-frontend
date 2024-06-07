@@ -67,8 +67,16 @@ const program = new Command();
         return value;
       },
     )
-    .option('--eslint', 'Include ESLint configuration')
-    .option('--prettier', 'Include Prettier configuration')
+    .option(
+      '--eslint [value]',
+      'Include ESLint configuration (true/false)',
+      (value) => (value === 'false' ? false : true),
+    )
+    .option(
+      '--prettier [value]',
+      'Include Prettier configuration (true/false)',
+      (value) => (value === 'false' ? false : true),
+    )
     .option('--debug', 'Enable debug output')
     .option(
       '--local',
