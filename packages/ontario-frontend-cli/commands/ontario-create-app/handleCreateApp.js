@@ -148,6 +148,8 @@ async function handleCreateAppCommand(cmd = {}) {
       projectName: cmd.projectName || '',
       enPage: cmd.enPage || '',
       frPage: cmd.frPage || '',
+      addESLint: cmd.eslint || false,
+      addPrettier: cmd.prettier || false,
     };
 
     logger.debug('Command options:', options);
@@ -160,6 +162,8 @@ async function handleCreateAppCommand(cmd = {}) {
       askProjectName: !options.projectName,
       askEnPage: !options.enPage,
       askFrPage: !options.frPage,
+      askESLint: !options.addESLint,
+      askPrettier: !options.addPrettier,
     };
 
     const questions = createOntarioAppQuestions(askQuestions);
@@ -174,6 +178,8 @@ async function handleCreateAppCommand(cmd = {}) {
       projectName: options.projectName || answers.projectName,
       enPage: options.enPage || answers.enPage,
       frPage: options.frPage || answers.frPage,
+      addESLint: options.addESLint || answers.addESLint,
+      addPrettier: options.addPrettier || answers.addPrettier,
     };
 
     logger.debug('Final answers:', finalAnswers);
