@@ -67,6 +67,8 @@ const program = new Command();
         return value;
       },
     )
+    .option('--eslint', 'Include ESLint configuration')
+    .option('--prettier', 'Include Prettier configuration')
     .option('--debug', 'Enable debug output')
     .option(
       '--local',
