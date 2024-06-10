@@ -1,6 +1,5 @@
 const path = require('path');
 const inquirer = require('inquirer');
-
 const {
   ensureDirectory,
   copy,
@@ -19,11 +18,15 @@ const {
   CREATE_BOILERPLATE_DIR,
   LOCAL_CORE_DEPENDENCY_DIR,
 } = require('../../core/config');
-
 const { createOntarioAppQuestions } = require('../../core/questions');
 
 configureTemplates(CREATE_TEMPLATE_DIR);
 
+/**
+ * Function to create a new Ontario Frontend project.
+ * @param {Object} answers - The answers provided by the user.
+ * @param {Object} options - Additional options for project creation.
+ */
 async function createNewProject(answers, options) {
   logger.debug('Answers received:', answers);
   logger.debug('Options received:', options);
@@ -43,7 +46,7 @@ async function createNewProject(answers, options) {
 
   // Configuration for the new project
   const conf = {
-    ...answers, //Directly spread relevant answers
+    ...answers,
     createDate: new Date().toISOString(),
     ontarioFrontendDependency: ontarioFrontendDependency,
   };
@@ -52,35 +55,15 @@ async function createNewProject(answers, options) {
 
   logger.success('Created project context');
 
-  // Copy boilerplate files
+  // Perform steps to set up the project
   await copyBoilerplateFiles(newProjectPath);
   logger.debug('Boilerplate files copied successfully');
 
-  // Generate project files
   await generateProjectFiles(newProjectPath, conf);
   logger.debug('Project files generated successfully');
 
-  // Copy ESLint config if opted-in
-  if (conf.addESLint) {
-    try {
-      await handlePackageCopy(newProjectPath, 'eslint');
-
-      logger.debug('ESLint configuration copied successfully');
-    } catch (err) {
-      throw new Error(`Failed to copy ESLint configuration: ${err.message}`);
-    }
-  }
-
-  // Copy Prettier config if opted-in
-  if (conf.addPrettier) {
-    try {
-      await handlePackageCopy(newProjectPath, 'prettier');
-
-      logger.debug('Prettier configuration copied successfully');
-    } catch (err) {
-      throw new Error(`Failed to copy Prettier configuration: ${err.message}`);
-    }
-  }
+  // Copy ESLint and Prettier configurations if opted-in
+  await copyOptionalConfig(newProjectPath, conf);
 
   // Install npm dependencies, including the core Frontend dependency
   await installAllPackages(newProjectPath);
@@ -91,11 +74,17 @@ async function createNewProject(answers, options) {
   logger.info('You can build the project with `npm run build`');
 }
 
+/**
+ * Function to generate project files.
+ * @param {string} newProjectPath - The path to the new project directory.
+ * @param {Object} conf - The configuration object for the project.
+ */
 async function generateProjectFiles(newProjectPath, conf) {
   logger.info('Generating project files');
   logger.debug('Configuration for project files:', conf);
 
   const templates = ontarioCreateAppTemplates(conf);
+  logger.debug('ontarioCreateAppTemplates(conf): ', templates);
   for (let { template, outputDir, outputFile } of templates) {
     const outputPath = path.join(newProjectPath, outputDir, outputFile);
     const directoryPath = path.dirname(outputPath); // Get the directory path for the current file
@@ -105,6 +94,7 @@ async function generateProjectFiles(newProjectPath, conf) {
 
     try {
       logger.info(`Generating ${template}`);
+      logger.debug(`Rendering ${template} and writing to ${outputPath}`);
       await renderAndWrite(
         path.join(CREATE_TEMPLATE_DIR, template),
         outputPath,
@@ -115,28 +105,51 @@ async function generateProjectFiles(newProjectPath, conf) {
       logger.error(
         `Failed to render and write ${outputPath}: ${error.message}`,
       );
-      // Throw the error to halt the execution if one file fails to generate
       throw error;
     }
   }
   logger.success('Generated project files');
 }
 
+/**
+ * Function to copy boilerplate files.
+ * @param {string} newProjectPath - The path to the new project directory.
+ */
 async function copyBoilerplateFiles(newProjectPath) {
   logger.info('Copying boilerplate files');
   copy(CREATE_BOILERPLATE_DIR, newProjectPath);
   logger.success('Project boilerplate files copied successfully.');
 }
 
+/**
+ * Function to copy optional ESLint and Prettier configurations.
+ * @param {string} newProjectPath - The path to the new project directory.
+ * @param {Object} conf - The configuration object for the project.
+ */
+async function copyOptionalConfig(newProjectPath, conf) {
+  if (conf.addESLint) {
+    await handlePackageCopy(newProjectPath, 'eslint');
+  }
+  if (conf.addPrettier) {
+    await handlePackageCopy(newProjectPath, 'prettier');
+  }
+}
+
+/**
+ * Command handler for creating a new Ontario Frontend project.
+ * @param {Object} cmd - The command object containing user inputs and options.
+ */
 async function handleCreateAppCommand(cmd = {}) {
   // Enable debug logging if --debug option is set
   logger.setDebug(cmd.debug);
-  
+
   try {
     // Extract options from the command
     const options = {
       isLocal: cmd.local || false, // Check if the user indicated they want to use a local version of the toolkit
       projectName: cmd.projectName || '',
+      enPage: cmd.enPage || '',
+      frPage: cmd.frPage || '',
     };
 
     logger.debug('Command options:', options);
@@ -144,18 +157,26 @@ async function handleCreateAppCommand(cmd = {}) {
     // Print a header for the application in the terminal
     console.log(textStyling.banner('Ontario\nFrontend'));
 
-    // If projectName is provided, skip the project name question
-    // Otherwise, prompt the user with all questions
-    const answers = await inquirer.prompt(
-      createOntarioAppQuestions(!options.projectName),
-    );
+    // Determine which questions to ask based on options passed to command
+    const askQuestions = {
+      askProjectName: !options.projectName,
+      askEnPage: !options.enPage,
+      askFrPage: !options.frPage,
+    };
+
+    const questions = createOntarioAppQuestions(askQuestions);
+
+    const answers = await inquirer.prompt(questions);
 
     logger.debug('User answers:', answers);
 
-    // Merge the answers with the provided projectName, if any
-    const finalAnswers = options.projectName
-      ? { ...answers, projectName: options.projectName }
-      : answers;
+    // Merge the answers with the provided projectName, enPage, and frPage if any
+    const finalAnswers = {
+      ...answers,
+      projectName: options.projectName || answers.projectName,
+      enPage: options.enPage || answers.enPage,
+      frPage: options.frPage || answers.frPage,
+    };
 
     logger.debug('Final answers:', finalAnswers);
 
