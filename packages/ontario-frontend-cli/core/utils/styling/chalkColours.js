@@ -1,7 +1,9 @@
 const chalk = require('chalk');
 
+/**
+ * Color definitions using hex codes from the Ontario Design System.
+ */
 const colours = {
-  // Define colours using hex codes from the Ontario Design System
   question: chalk.hex('#FFFFFF'), // Ontario White
   success: chalk.hex('#DDEDC7'), // Ontario Light Green
   error: chalk.hex('#CD0000'), // Ontario Alert Red

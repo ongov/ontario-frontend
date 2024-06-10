@@ -19,12 +19,9 @@ const setDebug = (debug) => {
  */
 const formatMessages = (...messages) => {
   return messages
-    .map((message) => {
-      if (typeof message === 'object') {
-        return JSON.stringify(message, null, 2);
-      }
-      return message;
-    })
+    .map((message) =>
+      typeof message === 'object' ? JSON.stringify(message, null, 2) : message,
+    )
     .join(' ');
 };
 

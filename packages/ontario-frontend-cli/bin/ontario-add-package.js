@@ -19,7 +19,7 @@ const program = new Command();
  */ 
 (
   async () => {
-    const packageJson = async() => await readPackageJson(ROOT_DIR);
+    const packageJson = await readPackageJson(ROOT_DIR);
 
     program
       .name('add-ontario-package')

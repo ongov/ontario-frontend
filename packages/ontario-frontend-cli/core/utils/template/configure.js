@@ -13,6 +13,7 @@ function configureTemplates(templatesPath) {
  * Map application templates to their correct output location in new projects.
  * 
  * @param {Array<string>} answers - The user answers from the CLI prompts.
+ * @returns {Array<Object>} An array of template mappings.
  */
 const ontarioCreateAppTemplates = (answers) => [
   { template: 'package.njk', outputDir: '', outputFile: 'package.json' },

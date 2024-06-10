@@ -1,3 +1,4 @@
+const { withErrorHandling } = require('../utils/errorHandler');
 const logger = require('../utils/logger');
 const { readPackageJson } = require('../utils/project/readPackageJson');
 const fs = require('fs').promises;
@@ -10,15 +11,10 @@ const path = require('path');
  * 
  * @returns {Promise<boolean>} - Returns a promise that resolves to true if the package.json file exists, false otherwise.
  */
-async function doesPackageJsonExist(dir = process.cwd()) {
-    try {
-      await fs.access(path.join(dir, 'package.json'));
-      return true;
-    } catch (err) {
-      logger.error(`Error checking for package.json in ${dir}: ${err.message}`);
-      return false;
-    }
-  }
+const doesPackageJsonExist = withErrorHandling(async (dir = process.cwd()) => {
+  await fs.access(path.join(dir, 'package.json'));
+  return true;
+});
 
 /**
  * Checks if the package.json file contains reference to @ongov/ontario-frontend.
@@ -27,21 +23,15 @@ async function doesPackageJsonExist(dir = process.cwd()) {
  * 
  * @returns {Promise<boolean>} - Returns a promise that resolves to true if reference to @ongov/ontario-frontend is found within the package.json file, false otherwise.
  */
-async function isOntarioFrontendProject(dir = process.cwd()) {
-    try {
-      const packageJson = await readPackageJson(dir);
-      if (
-        !packageJson.dependencies || 
-        !packageJson.dependencies['@ongov/ontario-frontend']
-      ) {
-        logger.error('No \'@ongov/ontario-frontend\' dependency found inside of package.json. Ensure you are performing this command within an Ontario.ca Frontend project');
-        return false;
-      }
-      return true;
-    } catch (err) {
-      logger.error('No package.json found in the targetted directory. Ensure you are performing this command within your Ontario.ca Frontend project');
-      return false;
-    }
+const isOntarioFrontendProject = withErrorHandling(async (dir = process.cwd()) => {
+  const packageJson = await readPackageJson(dir);
+  if (!packageJson.dependencies || !packageJson.dependencies['@ongov/ontario-frontend']) {
+    logger.error(
+      "No '@ongov/ontario-frontend' dependency found inside of package.json. Ensure you are performing this command within an Ontario.ca Frontend project"
+    );
+    return false;
   }
+  return true;
+});
 
 module.exports = { doesPackageJsonExist, isOntarioFrontendProject };

@@ -37,8 +37,7 @@ async function createNewProject(answers, options) {
   logger.info(`Creating a new Ontario Frontend project in ${newProjectPath}`);
   logger.debug(`Project path resolved to: ${newProjectPath}`);
 
-  ensureDirectory(newProjectPath);
-  logger.debug(`Directory created: ${newProjectPath}`);
+  await ensureDirectory(newProjectPath);
 
   const ontarioFrontendDependency = options.isLocal
     ? `"file:${LOCAL_CORE_DEPENDENCY_DIR}/"`
@@ -53,19 +52,12 @@ async function createNewProject(answers, options) {
 
   logger.debug('Project configuration:', conf);
 
-  logger.success('Created project context');
+  logger.debug('Created project context');
 
   // Perform steps to set up the project
   await copyBoilerplateFiles(newProjectPath);
-  logger.debug('Boilerplate files copied successfully');
-
   await generateProjectFiles(newProjectPath, conf);
-  logger.debug('Project files generated successfully');
-
-  // Copy ESLint and Prettier configurations if opted-in
   await copyOptionalConfig(newProjectPath, conf);
-
-  // Install npm dependencies, including the core Frontend dependency
   await installAllPackages(newProjectPath);
 
   logger.success('New Project Created!');
@@ -89,24 +81,16 @@ async function generateProjectFiles(newProjectPath, conf) {
     const outputPath = path.join(newProjectPath, outputDir, outputFile);
     const directoryPath = path.dirname(outputPath); // Get the directory path for the current file
 
-    // Ensure the directory exists before trying to write the file
-    ensureDirectory(directoryPath);
+    await ensureDirectory(directoryPath);
 
-    try {
-      logger.info(`Generating ${template}`);
-      logger.debug(`Rendering ${template} and writing to ${outputPath}`);
-      await renderAndWrite(
-        path.join(CREATE_TEMPLATE_DIR, template),
-        outputPath,
-        conf,
-      );
-      logger.success(`Generated ${outputPath}`);
-    } catch (error) {
-      logger.error(
-        `Failed to render and write ${outputPath}: ${error.message}`,
-      );
-      throw error;
-    }
+    logger.info(`Generating ${template}`);
+    logger.debug(`Rendering ${template} and writing to ${outputPath}`);
+    await renderAndWrite(
+      path.join(CREATE_TEMPLATE_DIR, template),
+      outputPath,
+      conf,
+    );
+    logger.success(`Generated ${outputPath}`);
   }
   logger.success('Generated project files');
 }
@@ -117,7 +101,7 @@ async function generateProjectFiles(newProjectPath, conf) {
  */
 async function copyBoilerplateFiles(newProjectPath) {
   logger.info('Copying boilerplate files');
-  copy(CREATE_BOILERPLATE_DIR, newProjectPath);
+  await copy(CREATE_BOILERPLATE_DIR, newProjectPath);
   logger.success('Project boilerplate files copied successfully.');
 }
 
@@ -128,9 +112,11 @@ async function copyBoilerplateFiles(newProjectPath) {
  */
 async function copyOptionalConfig(newProjectPath, conf) {
   if (conf.addESLint) {
+    logger.info('Copying ESLint config files');
     await handlePackageCopy(newProjectPath, 'eslint');
   }
   if (conf.addPrettier) {
+    logger.info('Copying Prettier config files');
     await handlePackageCopy(newProjectPath, 'prettier');
   }
 }
@@ -144,17 +130,10 @@ async function handleCreateAppCommand(cmd = {}) {
   logger.setDebug(cmd.debug);
 
   try {
-    // Extract options from the command
-    const options = {
-      isLocal: cmd.local || false, // Check if the user indicated they want to use a local version of the toolkit
-      projectName: cmd.projectName || '',
-      enPage: cmd.enPage || '',
-      frPage: cmd.frPage || '',
-    };
+    const options = parseOptions(cmd);
 
     logger.debug('Command options:', options);
 
-    // Print a header for the application in the terminal
     console.log(textStyling.banner('Ontario\nFrontend'));
 
     // Determine which questions to ask based on options passed to command
@@ -165,7 +144,6 @@ async function handleCreateAppCommand(cmd = {}) {
     };
 
     const questions = createOntarioAppQuestions(askQuestions);
-
     const answers = await inquirer.prompt(questions);
 
     logger.debug('User answers:', answers);
@@ -180,7 +158,6 @@ async function handleCreateAppCommand(cmd = {}) {
 
     logger.debug('Final answers:', finalAnswers);
 
-    // Create the new project with the collected answers and options
     await createNewProject(finalAnswers, options);
 
     logger.success('Project creation successful!');
@@ -190,6 +167,20 @@ async function handleCreateAppCommand(cmd = {}) {
       console.error(error.stack); // Print the stack trace for debugging only if debug is enabled
     }
   }
+}
+
+/**
+ * Parses the command options.
+ * @param {Object} cmd - The command object containing user inputs and options.
+ * @returns {Object} The parsed options.
+ */
+function parseOptions(cmd) {
+  return {
+    isLocal: cmd.local || false,
+    projectName: cmd.projectName || '',
+    enPage: cmd.enPage || '',
+    frPage: cmd.frPage || '',
+  };
 }
 
 module.exports = { handleCreateAppCommand };
