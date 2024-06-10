@@ -4,6 +4,7 @@ const { generate } = require('./file/generate');
 const { remove } = require('./file/remove');
 const { write } = require('./file/write');
 const { installPackages, installAllPackages } = require('./npm/install');
+const { uninstallPackages } = require('./npm/uninstall');
 
 module.exports = {
   // File operations
@@ -14,5 +15,6 @@ module.exports = {
   write,
   // NPM operations
   installPackages,
-  installAllPackages
+  installAllPackages,
+  uninstallPackages
 };
