@@ -70,12 +70,12 @@ const program = new Command();
     .option(
       '--eslint [value]',
       'Include ESLint configuration (true/false)',
-      (value) => (value === 'false' ? false : true),
+      (value) => (value !== 'false'),
     )
     .option(
       '--prettier [value]',
       'Include Prettier configuration (true/false)',
-      (value) => (value === 'false' ? false : true),
+      (value) => (value !== 'false'),
     )
     .option('--debug', 'Enable debug output')
     .option(
