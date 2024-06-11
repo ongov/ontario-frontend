@@ -4,7 +4,7 @@ const isPresent = (value) => value && value.trim() !== '';
 // Checks if the value is entirely lowercase
 const isLowercase = (value) => value === value.toLowerCase();
 
-// Checks if the value is URL-safe (alphanumeric, hyphens, underscores)
+// Checks if the value is URL-safe (alphanumeric, lowercase, hyphens, underscores)
 const isUrlSafe = (value) => /^[a-z0-9_-]+$/.test(value);
 
 // Checks if the value does not start with a dot or underscore

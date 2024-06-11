@@ -27,7 +27,7 @@ const program = new Command();
     .description('Create a new Ontario Frontend project')
     .option(
       '--projectName <name>',
-      'Specify the project name (lowercase, hyphens, underscores allowed)',
+      'Specify the project name (lowercase, alphanumeric, hyphens, underscores allowed)',
       (value) => {
         // Leverage the validation used with Commander for prompted questions
         // The validation result is either True if the value is valid, or
@@ -43,7 +43,7 @@ const program = new Command();
     )
     .option(
       '--enPage <name>',
-      'Specify the English page name (alphanumeric, hyphens, underscores allowed)',
+      'Specify the English page name (lowercase, alphanumeric, hyphens, underscores allowed)',
       (value) => {
         const validationResult = validFileName(value);
         if (validationResult !== true) {
@@ -56,7 +56,7 @@ const program = new Command();
     )
     .option(
       '--frPage <name>',
-      'Specify the French page name (alphanumeric, hyphens, underscores allowed)',
+      'Specify the French page name (lowercase, alphanumeric, hyphens, underscores allowed)',
       (value) => {
         const validationResult = validFileName(value);
         if (validationResult !== true) {
