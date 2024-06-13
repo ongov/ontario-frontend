@@ -1,4 +1,4 @@
-const { question } = require('../utils/styling/textStyling');
+const { question } = require('../../utils/styling/textStyling');
 
 const prettierQuestion = {
   type: 'list',
