@@ -24,8 +24,6 @@ const program = new Command();
     program
       .name('ontario-add-package')
       .version(packageJson.version, '-v, --version', 'Output the current version');
-      // TODO: Add a description to package.json
-      // .description(packageJson.description);
 
     program.addHelpText(
       'after',
@@ -37,10 +35,6 @@ const program = new Command();
 
     program
       .description('Add additional Ontario packages to your project.')
-      .option(
-        '--local',
-        'Use a local version of the Ontario package dependency',
-      )
       .action(async (options) => {
         if (!await doesPackageJsonExist()) {
           logger.error("package.json file not found.");
