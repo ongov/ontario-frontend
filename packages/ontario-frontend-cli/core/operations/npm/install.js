@@ -21,7 +21,10 @@ function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
       cwd,
     });
     process.on('close', (code) => {
-      if (code === 0) resolve();
+      if (code === 0) {
+        packageNames.forEach((packageName) => logger.success(`${packageName} successfully installed.`));
+        resolve();
+      }
       else
         reject(
           new Error(`npm install for ${packageNames} failed with code ${code}`),

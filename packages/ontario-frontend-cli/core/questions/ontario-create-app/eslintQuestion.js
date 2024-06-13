@@ -1,4 +1,4 @@
-const { question } = require('../utils/styling/textStyling');
+const { question } = require('../../utils/styling/textStyling');
 
 /**
  * Generates a question object for ESLint configuration.

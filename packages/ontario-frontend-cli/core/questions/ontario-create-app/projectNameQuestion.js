@@ -1,5 +1,5 @@
-const { validFileName } = require('../validation');
-const { question } = require('../utils/styling/textStyling');
+const { validFileName } = require('../../validation');
+const { question } = require('../../utils/styling/textStyling');
 
 /**
  * Generates a question object for the project name.
