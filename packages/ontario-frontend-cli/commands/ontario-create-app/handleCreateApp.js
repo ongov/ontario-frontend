@@ -166,7 +166,9 @@ async function handleCreateAppCommand(cmd = {}) {
       askProjectName: !options.projectName,
       askEnPage: !options.enPage,
       askFrPage: !options.frPage,
+      // Check if ESLint option was provided; if not, ask the question
       askESLint: options.addESLint === undefined,
+      // Check if Prettier option was provided; if not, ask the question
       askPrettier: options.addPrettier === undefined,
     };
 
@@ -182,8 +184,12 @@ async function handleCreateAppCommand(cmd = {}) {
       projectName: options.projectName || answers.projectName,
       enPage: options.enPage || answers.enPage,
       frPage: options.frPage || answers.frPage,
-      addESLint: options.addESLint !== undefined ? options.addESLint : answers.addESLint,
-      addPrettier: options.addPrettier !== undefined ? options.addPrettier : answers.addPrettier,
+      addESLint:
+        options.addESLint !== undefined ? options.addESLint : answers.addESLint,
+      addPrettier:
+        options.addPrettier !== undefined
+          ? options.addPrettier
+          : answers.addPrettier,
     };
 
     logger.debug('Final answers:', finalAnswers);
