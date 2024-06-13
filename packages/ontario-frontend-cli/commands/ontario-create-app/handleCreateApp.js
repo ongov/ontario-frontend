@@ -166,9 +166,9 @@ async function handleCreateAppCommand(cmd = {}) {
       askProjectName: !options.projectName,
       askEnPage: !options.enPage,
       askFrPage: !options.frPage,
-      // Check if ESLint option was provided; if not, ask the question
+      // Check if ESLint option was provided (true or false); if not, set as undefined to ask the question
       askESLint: options.addESLint === undefined,
-      // Check if Prettier option was provided; if not, ask the question
+      // Check if Prettier option was provided (true or false); if not, set as undefined to ask the question
       askPrettier: options.addPrettier === undefined,
     };
 
