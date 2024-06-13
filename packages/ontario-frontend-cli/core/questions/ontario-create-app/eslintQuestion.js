@@ -1,12 +1,21 @@
 const { question } = require('../../utils/styling/textStyling');
 
-const eslintQuestion = {
+/**
+ * Generates a question object for ESLint configuration.
+ *
+ * @param {boolean} askESLint - Whether to ask for ESLint configuration.
+ * @returns {Object} A question object to be used with inquirer.prompt.
+ */
+const eslintQuestion = (askESLint) => ({
   type: 'list',
   name: 'addESLint',
-  message: question('Add ESLint for fixing code problems?'),
-  choices: ['Yes', 'No'],
-  default: 'No',
-  filter: (value) => value === 'Yes',
-};
+  message: question('Would you like to add ESLint for fixing code problems?'),
+  choices: [
+    { name: 'Yes', value: true },
+    { name: 'No', value: false },
+  ],
+  default: 1, // Default to "No"
+  when: askESLint,
+});
 
 module.exports = eslintQuestion;

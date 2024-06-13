@@ -1,12 +1,21 @@
 const { question } = require('../../utils/styling/textStyling');
 
-const prettierQuestion = {
+/**
+ * Generates a question object for Prettier configuration.
+ *
+ * @param {boolean} askPrettier - Whether to ask for Prettier configuration.
+ * @returns {Object} A question object to be used with inquirer.prompt.
+ */
+const prettierQuestion = (askPrettier) => ({
   type: 'list',
   name: 'addPrettier',
-  message: question('Add Prettier for formatting and styling code?'),
-  choices: ['Yes', 'No'],
-  default: 'No',
-  filter: (value) => value === 'Yes',
-};
+  message: question('Would you like to add Prettier for formatting and styling code?'),
+  choices: [
+    { name: 'Yes', value: true },
+    { name: 'No', value: false },
+  ],
+  default: 1, // Default to "No"
+  when: askPrettier,
+});
 
 module.exports = prettierQuestion;
