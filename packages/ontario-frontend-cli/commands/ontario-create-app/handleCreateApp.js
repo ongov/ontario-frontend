@@ -27,7 +27,6 @@ configureTemplates(CREATE_TEMPLATE_DIR);
  * @param {Object} cmd - The command object containing user inputs and options.
  */
 async function handleCreateAppCommand(cmd = {}) {
-  logger.setDebug(cmd.debug);
   console.log(textStyling.banner('Ontario\nFrontend'));
   
   try {
