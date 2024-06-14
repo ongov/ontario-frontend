@@ -3,7 +3,7 @@ const logger = require('../logger');
 const { SHARED_BOILERPLATE_DIR, PACKAGES_CONFIG } = require('../../config');
 const { copyFiles } = require('../../operations/file/copy');
 const { withErrorHandling } = require('../../errors/errorHandler');
-const CopyOperationError = require('../../errors/CopyOperationError'); // Custom error class
+const PackageCopyOperationError = require('../../errors/PackageCopyOperationError'); // Custom error class
 
 /**
  * Copies package configuration files from the shared directory to the specified output path.
@@ -34,5 +34,5 @@ async function handlePackageCopy(outputPath, packageName) {
 }
 
 module.exports = {
-  handlePackageCopy: withErrorHandling(handlePackageCopy, CopyOperationError),
+  handlePackageCopy: withErrorHandling(handlePackageCopy, PackageCopyOperationError),
 };

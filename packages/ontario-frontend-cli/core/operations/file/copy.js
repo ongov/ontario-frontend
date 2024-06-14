@@ -30,5 +30,5 @@ async function copyFiles(files) {
 // Export the functions wrapped with error handling to ensure consistent error logging and handling across the application.
 module.exports = {
   copy: withErrorHandling(copy, CopyOperationError),
-  copyFiles: withErrorHandling(copyFiles, CopyOperationError),
+  copyFiles,
 };
