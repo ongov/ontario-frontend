@@ -1,7 +1,7 @@
 const path = require('path');
 const inquirer = require('inquirer');
 const {
-  ensureDirectory,
+  ensureDirectoryExists,
   copy,
   installAllPackages,
 } = require('../../core/operations');
@@ -123,7 +123,7 @@ async function createNewProject(answers, options) {
   logger.debug(`Project path resolved to: ${newProjectPath}`);
 
   logger.info(`Creating a new Ontario Frontend project in ${newProjectPath}`);
-  await ensureDirectory(newProjectPath);
+  await ensureDirectoryExists(newProjectPath);
 
   const conf = createProjectConfig(answers, options);
   logger.debug('Project configuration:', conf);
@@ -181,7 +181,7 @@ async function generateProjectFiles(newProjectPath, conf) {
     const outputPath = path.join(newProjectPath, outputDir, outputFile);
     const directoryPath = path.dirname(outputPath); // Get the directory path for the current file
 
-    await ensureDirectory(directoryPath);
+    await ensureDirectoryExists(directoryPath);
 
     logger.info(`Generating ${template}`);
     logger.debug(`Rendering ${template} and writing to ${outputPath}`);

@@ -1,5 +1,7 @@
+const PackageUninstallationError = require('../../errors/PackageUninstallationError');
+const { withErrorHandling } = require('../../errors/errorHandler');
 const logger = require('../../utils/logger');
-const spawnAsync = require('../../utils/spawnAsync');
+const { spawnAsync } = require('../../utils/process/spawnAsync');
 
 /**
  * Uninstall a list of packages using npm.
@@ -19,6 +21,14 @@ async function uninstallPackages(
   devFlag = false,
   { cwd = '' } = {},
 ) {
+  if (!Array.isArray(packageNames) || packageNames.length === 0) {
+    throw new PackageUninstallationError(
+      'uninstallPackages',
+      packageNames,
+      'No packages specified for uninstallation'
+    );
+  }
+
   const command = 'npm';
   const args = [
     'uninstall',
@@ -32,19 +42,14 @@ async function uninstallPackages(
     )} with devFlag=${devFlag} in directory=${cwd}`,
   );
 
-  try {
-    await spawnAsync(command, args, { cwd });
-    packageNames.forEach((packageName) =>
-      logger.success(`${packageName} successfully uninstalled.`),
-    );
-  } catch (error) {
-    logger.error(
-      `npm uninstall for ${packageNames.join(', ')} failed with error: ${
-        error.message
-      }`,
-    );
-    throw new Error(`npm uninstall for ${packageNames.join(', ')} failed`);
-  }
+  await spawnAsync(command, args, { cwd });
+  packageNames.forEach((packageName) => logger.success(`${packageName} successfully uninstalled.`));
 }
 
-module.exports = { uninstallPackages };
+// Export the uninstallPackages function wrapped with withErrorHandling to ensure consistent error logging and handling across the application.
+module.exports = {
+  uninstallPackages: withErrorHandling(
+    uninstallPackages,
+    PackageUninstallationError,
+  ),
+};

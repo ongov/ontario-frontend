@@ -1,4 +1,4 @@
-const { withErrorHandling } = require('../utils/errorHandler');
+const { withErrorHandling } = require('../errors/errorHandler');
 const logger = require('../utils/logger');
 const { readPackageJson } = require('../utils/project/readPackageJson');
 const fs = require('fs').promises;

@@ -1,5 +1,7 @@
+const { withErrorHandling } = require('../../errors/errorHandler');
+const PackageInstallationError = require('../../errors/PackageInstallationError');
+const { spawnAsync } = require('../../utils');
 const logger = require('../../utils/logger');
-const spawnAsync = require('../../utils/process/spawnAsync');
 
 /**
  * Installs the given packages using npm.
@@ -10,35 +12,14 @@ const spawnAsync = require('../../utils/process/spawnAsync');
  * @param {string} [options.cwd=''] - The current working directory for the installation.
  * @returns {Promise<void>} - A promise that resolves when the installation is complete.
  */
-async function installPackages(
-  packageNames,
-  devFlag = false,
-  { cwd = '' } = {},
-) {
+async function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
   const command = 'npm';
-  const args = ['install', devFlag ? '--save-dev' : '', ...packageNames].filter(
-    Boolean,
-  ); // filter to remove empty strings
+  const args = ['install', devFlag ? '--save-dev' : '', ...packageNames].filter(Boolean); // filter to remove empty strings
 
-  logger.debug(
-    `Installing packages: ${packageNames.join(
-      ', ',
-    )} with devFlag=${devFlag} in directory=${cwd}`,
-  );
+  logger.debug(`Installing packages: ${packageNames.join(', ')} with devFlag=${devFlag} in directory=${cwd}`);
 
-  try {
-    await spawnAsync(command, args, { cwd });
-    packageNames.forEach((packageName) =>
-      logger.success(`${packageName} successfully installed.`),
-    );
-  } catch (error) {
-    logger.error(
-      `npm install for ${packageNames.join(', ')} failed with error: ${
-        error.message
-      }`,
-    );
-    throw new Error(`npm install for ${packageNames.join(', ')} failed`);
-  }
+  await spawnAsync(command, args, { cwd });
+  packageNames.forEach((packageName) => logger.success(`${packageName} successfully installed.`));
 }
 
 /**
@@ -48,9 +29,12 @@ async function installPackages(
  * @returns {Promise<void>} A promise that resolves when the installation is complete or rejects on failure.
  */
 async function installAllPackages(projectPath) {
-  logger.info('Installing all NPM dependencies...');
+  logger.debug(`Spawning npm install with cwd:${projectPath}`);
   await spawnAsync('npm', ['install'], { cwd: projectPath });
-  logger.success('NPM dependencies installed successfully.');
 }
 
-module.exports = { installPackages, installAllPackages };
+// Export the functions wrapped with error handling to ensure consistent error logging and handling across the application.
+module.exports = {
+  installPackages: withErrorHandling(installPackages, PackageInstallationError),
+  installAllPackages: withErrorHandling(installAllPackages, PackageInstallationError),
+};

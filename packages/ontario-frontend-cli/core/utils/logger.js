@@ -35,11 +35,29 @@ class Logger {
   }
 
   /**
+   * Gets the current timestamp.
+   * @returns {string} - The current timestamp in ISO format.
+   */
+  getTimestamp() {
+    return new Date().toISOString();
+  }
+
+  /**
+   * Logs a message with the specified chalk color.
+   * @param {Function} color - The chalk color function.
+   * @param {...any} messages - The messages to log.
+   */
+  log(color, ...messages) {
+    const timestamp = this.getTimestamp();
+    console.log(color(`[${timestamp}] ${this.formatMessages(...messages)}`));
+  }
+
+  /**
    * Logs an info message.
    * @param {...any} messages - The messages to log.
    */
   info(...messages) {
-    console.log(chalk.blue(this.formatMessages(...messages)));
+    this.log(chalk.blue, ...messages);
   }
 
   /**
@@ -47,7 +65,7 @@ class Logger {
    * @param {...any} messages - The messages to log.
    */
   success(...messages) {
-    console.log(chalk.green(this.formatMessages(...messages)));
+    this.log(chalk.green, ...messages);
   }
 
   /**
@@ -55,7 +73,7 @@ class Logger {
    * @param {...any} messages - The messages to log.
    */
   warning(...messages) {
-    console.log(chalk.yellow(this.formatMessages(...messages)));
+    this.log(chalk.yellow, ...messages);
   }
 
   /**
@@ -63,7 +81,7 @@ class Logger {
    * @param {...any} messages - The messages to log.
    */
   error(...messages) {
-    console.log(chalk.red(this.formatMessages(...messages)));
+    this.log(chalk.red, ...messages);
   }
 
   /**
@@ -72,7 +90,7 @@ class Logger {
    */
   debug(...messages) {
     if (this.debugMode) {
-      console.log(chalk.gray(this.formatMessages(...messages)));
+      this.log(chalk.gray, ...messages);
     }
   }
 }

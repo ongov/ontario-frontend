@@ -8,6 +8,7 @@ const {
   handleRemovePackage,
 } = require('../../core/utils/process/removePackage');
 const { ontarioRemovePackageQuestions } = require('../../core/questions');
+const { withErrorHandling } = require('../../core/errors/errorHandler');
 
 /**
  * This function triggers the CLI to ask the user a confirmation question on
@@ -82,4 +83,6 @@ async function checkAndWarnMissingConfigFiles(cmd) {
   });
 }
 
-module.exports = { handleRemovePackageCommand };
+module.exports = {
+  handleRemovePackageCommand: withErrorHandling(handleRemovePackageCommand),
+};

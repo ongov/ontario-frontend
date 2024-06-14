@@ -1,6 +1,7 @@
 const fs = require('fs').promises;
+const { withErrorHandling } = require('../../errors/errorHandler');
+const CopyOperationError = require('../../errors/CopyOperationError');
 const logger = require('../../utils/logger');
-const { withErrorHandling } = require('../../utils/errorHandler');
 
 /**
  * Copies files and directories from the source path to the destination path.
@@ -9,10 +10,10 @@ const { withErrorHandling } = require('../../utils/errorHandler');
  * @param {string} destination - The path to the destination directory.
  * @returns {Promise<void>}
  */
-const copy = withErrorHandling(async (source, destination) => {
+async function copy(source, destination) {
   await fs.cp(source, destination, { recursive: true });
-  logger.info(`Copied from ${source} to ${destination}`);
-});
+  logger.debug(`Copied from ${source} to ${destination}`);
+}
 
 /**
  * Copies files from a list of source paths to their corresponding destination paths.
@@ -20,10 +21,14 @@ const copy = withErrorHandling(async (source, destination) => {
  * @param {Array<{source: string, destination: string}>} files - The list of files to copy.
  * @returns {Promise<void>}
  */
-const copyFiles = withErrorHandling(async (files) => {
+async function copyFiles(files) {
   for (const { source, destination } of files) {
     await copy(source, destination);
   }
-});
+}
 
-module.exports = { copy, copyFiles };
+// Export the functions wrapped with error handling to ensure consistent error logging and handling across the application.
+module.exports = {
+  copy: withErrorHandling(copy, CopyOperationError),
+  copyFiles: withErrorHandling(copyFiles, CopyOperationError),
+};
