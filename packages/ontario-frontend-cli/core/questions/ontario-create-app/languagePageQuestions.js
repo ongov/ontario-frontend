@@ -1,5 +1,5 @@
-const { validFileName } = require('../validation');
-const { question } = require('../utils/styling/textStyling');
+const { validFileName } = require('../../validation');
+const { question } = require('../../utils/styling/textStyling');
 
 /**
  * Generates an array of question objects for the English and French page names.

@@ -5,11 +5,17 @@ const { installPackages } = require('../../core/operations');
 const logger = require('../../core/utils/logger');
 const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
 
-async function handleAddOntarioPackageCommand(cmd = {}) {
+/**
+ * Add Ontario packages to the project.
+ *
+ * @param {String|Object} cmd - The input value from the user when running the 
+ * ontario-remove-package command. e.g. "eslint" or "prettier".
+ */
+async function handleAddPackageCommand(cmd = {}) {
   try {
     switch (cmd) {
       case 'eslint':
-        logger.info('eslint selected');
+        logger.info(`Installation process for ${cmd} started.`);
 
         await installPackages(PACKAGES_CONFIG[cmd]?.packages, true);
 
@@ -19,7 +25,7 @@ async function handleAddOntarioPackageCommand(cmd = {}) {
         await handlePackageCopy(path.resolve(process.cwd()), cmd);
         break;
       case 'prettier':
-        logger.info('prettier selected');
+        logger.info(`Installation process for ${cmd} started.`);
 
         await installPackages(PACKAGES_CONFIG[cmd]?.packages, true);
 
@@ -40,4 +46,4 @@ async function handleAddOntarioPackageCommand(cmd = {}) {
   }
 }
 
-module.exports = { handleAddOntarioPackageCommand };
+module.exports = { handleAddPackageCommand };

@@ -23,6 +23,95 @@ const { createOntarioAppQuestions } = require('../../core/questions');
 configureTemplates(CREATE_TEMPLATE_DIR);
 
 /**
+ * Command handler for creating a new Ontario Frontend project.
+ * @param {Object} cmd - The command object containing user inputs and options.
+ */
+async function handleCreateAppCommand(cmd = {}) {
+  logger.setDebug(cmd.debug);
+  console.log(textStyling.banner('Ontario\nFrontend'));
+  
+  try {
+    const options = parseOptions(cmd);
+    const questionsToAsk = determineQuestionsToAsk(options);
+    const answers = await inquirer.prompt(questionsToAsk);
+
+    logger.debug('User answers:', answers);
+
+    const finalAnswers = mergeOptionsAndAnswers(options, answers);
+    logger.debug('Final answers:', finalAnswers);
+
+    await createNewProject(finalAnswers, options);
+
+    logger.success('Project creation successful!');
+  } catch (error) {
+    logger.error('Failed to create a new project:', error.message);
+    if (cmd.debug) {
+      console.error(error.stack);
+    }
+  }
+}
+
+/**
+ * Parses the command options.
+ * @param {Object} cmd - The command object containing user inputs and options.
+ * @returns {Object} The parsed options.
+ */
+function parseOptions(cmd) {
+  const options = {
+    isLocal: cmd.local || false,
+    projectName: cmd.projectName || '',
+    enPage: cmd.enPage || '',
+    frPage: cmd.frPage || '',
+    addESLint: typeof cmd.eslint === 'boolean' ? cmd.eslint : undefined,
+    addPrettier: typeof cmd.prettier === 'boolean' ? cmd.prettier : undefined,
+  };
+  logger.debug('Parsed options:', options);
+  return options;
+}
+
+/**
+ * Determines the questions to ask based on the parsed options.
+ * @param {Object} options - The parsed command options.
+ * @returns {Array} The questions to ask.
+ */
+function determineQuestionsToAsk(options) {
+  const askQuestions = {
+    askProjectName: !options.projectName,
+    askEnPage: !options.enPage,
+    askFrPage: !options.frPage,
+    askESLint: options.addESLint === undefined,
+    askPrettier: options.addPrettier === undefined,
+  };
+
+  const questionsToAsk = createOntarioAppQuestions(askQuestions);
+  logger.debug('Questions to ask:', questionsToAsk);
+  return questionsToAsk;
+}
+
+/**
+ * Merges the command options and user-provided answers.
+ * @param {Object} options - The parsed command options.
+ * @param {Object} answers - The answers provided by the user.
+ * @returns {Object} The merged options and answers.
+ */
+function mergeOptionsAndAnswers(options, answers) {
+  const finalAnswers = {
+    ...answers,
+    projectName: options.projectName || answers.projectName,
+    enPage: options.enPage || answers.enPage,
+    frPage: options.frPage || answers.frPage,
+    addESLint:
+      options.addESLint !== undefined ? options.addESLint : answers.addESLint,
+    addPrettier:
+      options.addPrettier !== undefined
+        ? options.addPrettier
+        : answers.addPrettier,
+  };
+  logger.debug('Merged options and answers:', finalAnswers);
+  return finalAnswers;
+}
+
+/**
  * Function to create a new Ontario Frontend project.
  * @param {Object} answers - The answers provided by the user.
  * @param {Object} options - Additional options for project creation.
@@ -32,38 +121,50 @@ async function createNewProject(answers, options) {
   logger.debug('Options received:', options);
 
   const newProjectPath = path.resolve(process.cwd(), answers.projectName);
-
-  // Create the directory for the new project
-  logger.info(`Creating a new Ontario Frontend project in ${newProjectPath}`);
   logger.debug(`Project path resolved to: ${newProjectPath}`);
 
+  logger.info(`Creating a new Ontario Frontend project in ${newProjectPath}`);
   await ensureDirectory(newProjectPath);
 
-  const ontarioFrontendDependency = options.isLocal
-    ? `"file:${LOCAL_CORE_DEPENDENCY_DIR}/"`
-    : '"latest"';
-
-  // Configuration for the new project
-  const conf = {
-    ...answers,
-    createDate: new Date().toISOString(),
-    ontarioFrontendDependency: ontarioFrontendDependency,
-  };
-
+  const conf = createProjectConfig(answers, options);
   logger.debug('Project configuration:', conf);
 
-  logger.debug('Created project context');
-
-  // Perform steps to set up the project
-  await copyBoilerplateFiles(newProjectPath);
-  await generateProjectFiles(newProjectPath, conf);
-  await copyOptionalConfig(newProjectPath, conf);
+  await setupNewProject(newProjectPath, conf);
   await installAllPackages(newProjectPath);
 
-  logger.success('New Project Created!');
+  logger.info('New Project Created!');
   logger.info(`Project is now created in ${newProjectPath}`);
   logger.info('You can run the project with `npm run serve`');
   logger.info('You can build the project with `npm run build`');
+}
+
+/**
+ * Creates the project configuration.
+ * @param {Object} answers - The answers provided by the user.
+ * @param {Object} options - Additional options for project creation.
+ * @returns {Object} The project configuration object.
+ */
+function createProjectConfig(answers, options) {
+  const conf = {
+    ...answers,
+    createDate: new Date().toISOString(),
+    ontarioFrontendDependency: options.isLocal
+      ? `"file:${LOCAL_CORE_DEPENDENCY_DIR}/"`
+      : '"latest"',
+  };
+  logger.debug('Created project configuration:', conf);
+  return conf;
+}
+
+/**
+ * Sets up the new project by copying boilerplate files and generating project-specific files.
+ * @param {string} newProjectPath - The path to the new project directory.
+ * @param {Object} conf - The configuration object for the project.
+ */
+async function setupNewProject(newProjectPath, conf) {
+  await copyBoilerplateFiles(newProjectPath);
+  await generateProjectFiles(newProjectPath, conf);
+  await copyOptionalConfig(newProjectPath, conf);
 }
 
 /**
@@ -76,7 +177,7 @@ async function generateProjectFiles(newProjectPath, conf) {
   logger.debug('Configuration for project files:', conf);
 
   const templates = ontarioCreateAppTemplates(conf);
-  logger.debug('ontarioCreateAppTemplates(conf): ', templates);
+  logger.debug('ontarioCreateAppTemplates(conf):', templates);
   for (let { template, outputDir, outputFile } of templates) {
     const outputPath = path.join(newProjectPath, outputDir, outputFile);
     const directoryPath = path.dirname(outputPath); // Get the directory path for the current file
@@ -90,9 +191,9 @@ async function generateProjectFiles(newProjectPath, conf) {
       outputPath,
       conf,
     );
-    logger.success(`Generated ${outputPath}`);
+    logger.debug(`Generated ${outputPath}`);
   }
-  logger.success('Generated project files');
+  logger.info('Generated project files');
 }
 
 /**
@@ -102,7 +203,7 @@ async function generateProjectFiles(newProjectPath, conf) {
 async function copyBoilerplateFiles(newProjectPath) {
   logger.info('Copying boilerplate files');
   await copy(CREATE_BOILERPLATE_DIR, newProjectPath);
-  logger.success('Project boilerplate files copied successfully.');
+  logger.debug('Project boilerplate files copied successfully.');
 }
 
 /**
@@ -113,74 +214,16 @@ async function copyBoilerplateFiles(newProjectPath) {
 async function copyOptionalConfig(newProjectPath, conf) {
   if (conf.addESLint) {
     logger.info('Copying ESLint config files');
+    logger.debug('Copying ESLint config files to', newProjectPath);
     await handlePackageCopy(newProjectPath, 'eslint');
+    logger.debug('ESLint config files copied successfully.');
   }
   if (conf.addPrettier) {
     logger.info('Copying Prettier config files');
+    logger.debug('Copying Prettier config files to', newProjectPath);
     await handlePackageCopy(newProjectPath, 'prettier');
+    logger.debug('Prettier config files copied successfully.');
   }
-}
-
-/**
- * Command handler for creating a new Ontario Frontend project.
- * @param {Object} cmd - The command object containing user inputs and options.
- */
-async function handleCreateAppCommand(cmd = {}) {
-  // Enable debug logging if --debug option is set
-  logger.setDebug(cmd.debug);
-
-  try {
-    const options = parseOptions(cmd);
-
-    logger.debug('Command options:', options);
-
-    console.log(textStyling.banner('Ontario\nFrontend'));
-
-    // Determine which questions to ask based on options passed to command
-    const askQuestions = {
-      askProjectName: !options.projectName,
-      askEnPage: !options.enPage,
-      askFrPage: !options.frPage,
-    };
-
-    const questions = createOntarioAppQuestions(askQuestions);
-    const answers = await inquirer.prompt(questions);
-
-    logger.debug('User answers:', answers);
-
-    // Merge the answers with the provided projectName, enPage, and frPage if any
-    const finalAnswers = {
-      ...answers,
-      projectName: options.projectName || answers.projectName,
-      enPage: options.enPage || answers.enPage,
-      frPage: options.frPage || answers.frPage,
-    };
-
-    logger.debug('Final answers:', finalAnswers);
-
-    await createNewProject(finalAnswers, options);
-
-    logger.success('Project creation successful!');
-  } catch (error) {
-    logger.error('Failed to create a new project:', error.message);
-    if (cmd.debug) {
-      console.error(error.stack); // Print the stack trace for debugging only if debug is enabled
-    }
-  }
-}
-
-/**
- * Parses the command options.
- * @param {Object} cmd - The command object containing user inputs and options.
- * @returns {Object} The parsed options.
- */
-function parseOptions(cmd) {
-  return {
-    isLocal: cmd.local || false,
-    projectName: cmd.projectName || '',
-    enPage: cmd.enPage || '',
-    frPage: cmd.frPage || '',
-  };
 }
 
 module.exports = { handleCreateAppCommand };

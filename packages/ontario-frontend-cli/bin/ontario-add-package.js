@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const Command = require('commander').Command;
 const Argument = require('commander').Argument;
-const { handleAddOntarioPackageCommand } = require('../commands/ontario-add-package/handleAddPackage');
+const { handleAddPackageCommand } = require('../commands/ontario-add-package/handleAddPackage');
 const { ROOT_DIR } = require('../core/config');
 const { readPackageJson } = require('../core/utils');
 const logger = require('../core/utils/logger');
@@ -22,7 +22,7 @@ const program = new Command();
     const packageJson = await readPackageJson(ROOT_DIR);
 
     program
-      .name('add-ontario-package')
+      .name('ontario-add-package')
       .version(packageJson.version, '-v, --version', 'Output the current version');
       // TODO: Add a description to package.json
       // .description(packageJson.description);
@@ -51,7 +51,7 @@ const program = new Command();
           process.exit(1);
         }
         try {
-          await handleAddOntarioPackageCommand(options);
+          await handleAddPackageCommand(options);
         } catch (error) {
           logger.error(`Error installing package: ${error.message}`);
           process.exit(1);

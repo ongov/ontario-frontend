@@ -8,14 +8,28 @@ const spawnAsync = require('../../utils/process/spawnAsync');
  * @param {boolean} devFlag - Whether or not the installed packages should be devDependencies.
  * @param {Object} options - Options for the npm command, including the current working directory (cwd).
  * @returns {Promise<void>} A promise that resolves when the installation is complete or rejects on failure.
- */
-async function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
-  const args = ['install', ...packageNames];
-  if (devFlag) {
-    args.splice(1, 0, '--save-dev'); // Insert '--save-dev' after 'install'
-  }
-  logger.info(`Installing packages: ${packageNames.join(', ')} (dev: ${devFlag})`);
-  await spawnAsync('npm', args, { cwd });
+ * 
+ * @example
+ * // Install 2 packages relating to eslint as devDependencies.
+ * await installPackages(['eslint', '@ongov/eslint-config-ontario-frontend'], true);
+ */ 
+function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
+  return new Promise((resolve, reject) => {
+    const process = spawn('npm', ['install', devFlag ? '--save-dev' : '', ...packageNames], {
+      stdio: 'inherit',
+      cwd,
+    });
+    process.on('close', (code) => {
+      if (code === 0) {
+        packageNames.forEach((packageName) => logger.success(`${packageName} successfully installed.`));
+        resolve();
+      }
+      else
+        reject(
+          new Error(`npm install for ${packageNames} failed with code ${code}`),
+        );
+    });
+  });
 }
 
 /**
