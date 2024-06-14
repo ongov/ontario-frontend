@@ -12,6 +12,7 @@ const withErrorHandling =
       return await fn(...args);
     } catch (error) {
       logger.error(`Error in function ${fn.name}: ${error.message}`);
+      logger.debug(`Stack trace: ${error.stack}`);
       throw error;
     }
   };
@@ -27,9 +28,10 @@ const withSyncErrorHandling = (fn) => {
       return fn(...args);
     } catch (error) {
       logger.error(`Error in function ${fn.name}: ${error.message}`);
+      logger.debug(`Stack trace: ${error.stack}`);
       throw error;
     }
   };
 };
 
-module.exports = { withErrorHandling };
+module.exports = { withErrorHandling, withSyncErrorHandling };
