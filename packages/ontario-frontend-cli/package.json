@@ -29,5 +29,8 @@
     "figlet": "^1.6.0",
     "inquirer": "^8.2.6",
     "nunjucks": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18.17.0"
   }
 }

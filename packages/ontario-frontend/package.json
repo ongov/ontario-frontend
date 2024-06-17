@@ -21,5 +21,8 @@
     "gray-matter": "^4.0.3",
     "markdown-it": "^13.0.1",
     "nunjucks": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18.17.0"
   }
 }

@@ -13,5 +13,8 @@
     ],
     "author": "Ontario.ca Frontend",
     "license": "MIT",
-    "main": "lib/.prettierrc.json"
+    "main": "lib/.prettierrc.json",
+    "engines": {
+      "node": ">=18.17.0"
+    }
 }
