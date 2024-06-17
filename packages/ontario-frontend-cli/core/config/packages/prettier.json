@@ -3,11 +3,13 @@
     "configFiles": [
       {
         "source": "prettier-config/.prettierignore",
-        "destination": ".prettierignore"
+        "destination": ".prettierignore",
+        "warningMessage": ".prettierignore file already present. Please ignore the following directories and files: node_modules/, dist/, src/assets/vendor/* and *.njk"
       },
       {
         "source": "prettier-config/.prettierrc.js",
-        "destination": ".prettierrc.js"
+        "destination": ".prettierrc.js",
+        "warningMessage": ".prettierrc.js file already present. Please add \"...@ongov/prettier-config-ontario-frontend\" to your existing file."
       }
     ],
     "packages": [

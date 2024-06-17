@@ -37,18 +37,20 @@ async function confirmPackageRemoval(cmd = {}) {
  */
 async function handleRemovePackageCommand(cmd = {}) {
   await confirmPackageRemoval(cmd);
-  logger.info(`Removal process for ${cmd} started.`);
 
-  if (!PACKAGES_CONFIG[cmd]) {
+  const packageConfig = PACKAGES_CONFIG[cmd];
+
+  if (!packageConfig) {
+    const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
     logger.error(
-      'Invalid package option selected. Please select either "eslint" or "prettier".',
+      `Invalid package option selected. Please select a valid package. Available packages are: ${availablePackages}`,
     );
     return;
   }
 
   try {
     logger.info(`Removal process for ${cmd} started.`);
-    await uninstallPackages(PACKAGES_CONFIG[cmd]?.packages, true, {
+    await uninstallPackages(packageConfig.packages, true, {
       cwd: process.cwd(),
     });
     logger.debug(`Packages for ${cmd} uninstalled.`);
@@ -71,14 +73,11 @@ async function handleRemovePackageCommand(cmd = {}) {
  * @param {string} cmd - The package being removed (e.g., "eslint" or "prettier").
  */
 async function checkAndWarnMissingConfigFiles(cmd) {
-  const configFiles = {
-    eslint: ['.eslintrc.js'],
-    prettier: ['.prettierrc.js', '.prettierignore'],
-  };
+  const configFiles = PACKAGES_CONFIG[cmd]?.configFiles;
 
-  (configFiles[cmd] || []).forEach((file) => {
-    if (!fs.existsSync(file)) {
-      logger.warning(`${file} not found.`);
+  (configFiles || []).forEach(({ destination, warningMessage }) => {
+    if (!fs.existsSync(destination)) {
+      logger.warning(warningMessage);
     }
   });
 }

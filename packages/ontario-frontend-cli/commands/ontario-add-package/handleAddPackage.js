@@ -12,36 +12,28 @@ const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
  * ontario-remove-package command. e.g. "eslint" or "prettier".
  */
 async function handleAddPackageCommand(cmd = {}) {
+  const packageConfig = PACKAGES_CONFIG[cmd];
+
+  if (!packageConfig) {
+    const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
+    logger.error(`Invalid package option selected. Please select a valid package. Available packages are: ${availablePackages}`);
+    return;
+  }
+
   try {
-    switch (cmd) {
-      case 'eslint':
-        logger.info(`Installation process for ${cmd} started.`);
+    logger.info(`Installation process for ${cmd} started.`);
+    await installPackages(packageConfig.packages, true);
 
-        await installPackages(PACKAGES_CONFIG[cmd]?.packages, true);
+    packageConfig.configFiles.forEach(({ destination, warningMessage }) => {
+      if (fs.existsSync(destination)) {
+        logger.warning(warningMessage);
+      }
+    });
 
-        if (fs.existsSync(".eslintrc.js"))
-          logger.warning(".eslint.js file already present. Please add \"extends\": \"@ongov/eslint-config-ontario-frontend\" to your existing file.");
-
-        await handlePackageCopy(path.resolve(process.cwd()), cmd);
-        break;
-      case 'prettier':
-        logger.info(`Installation process for ${cmd} started.`);
-
-        await installPackages(PACKAGES_CONFIG[cmd]?.packages, true);
-
-        if (fs.existsSync(".prettierrc.js"))
-          logger.warning(".prettierrc.js file already present. Please add \"...@ongov/prettier-config-ontario-frontend\" to your existing file.");
-
-        if (fs.existsSync(".prettierignore"))
-          logger.warning(".prettierignore file already present. Please ignore the following directories and files: node_modules/, dist/, src/assets/vendor/* and *.njk");
-
-        await handlePackageCopy(path.resolve(process.cwd()), cmd);
-        break;
-      default:
-        logger.error('Invalid package option selected. Please select either "eslint" or "prettier".');
-    }
+    await handlePackageCopy(path.resolve(process.cwd()), cmd);
+    logger.info(`Installation process for ${cmd} completed.`);
   } catch (error) {
-    const errorMessage = error.message ? error.message : 'Failed to install package.';
+    const errorMessage = error.message ? error.message : `Failed to install package: ${cmd}.`;
     logger.error(errorMessage, error);
   }
 }
