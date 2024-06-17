@@ -17,6 +17,10 @@ const {
   CREATE_TEMPLATE_DIR,
   CREATE_BOILERPLATE_DIR,
   LOCAL_CORE_DEPENDENCY_DIR,
+  DEPENDENCIES,
+  DEV_DEPENDENCIES,
+  ESLINT_DEPENDENCIES,
+  PRETTIER_DEPENDENCIES,
 } = require('../../core/config');
 const { createOntarioAppQuestions } = require('../../core/questions');
 
@@ -28,7 +32,7 @@ configureTemplates(CREATE_TEMPLATE_DIR);
  */
 async function handleCreateAppCommand(cmd = {}) {
   console.log(textStyling.banner('Ontario\nFrontend'));
-  
+
   try {
     const options = parseOptions(cmd);
     const questionsToAsk = determineQuestionsToAsk(options);
@@ -149,7 +153,11 @@ function createProjectConfig(answers, options) {
     createDate: new Date().toISOString(),
     ontarioFrontendDependency: options.isLocal
       ? `"file:${LOCAL_CORE_DEPENDENCY_DIR}/"`
-      : '"latest"',
+      : `"${DEPENDENCIES['@ongov/ontario-frontend']}"`,
+    eslintDependencies: answers.addESLint ? ESLINT_DEPENDENCIES : {},
+    prettierDependencies: answers.addPrettier ? PRETTIER_DEPENDENCIES : {},
+    devDependencies: DEV_DEPENDENCIES,
+    dependencies: DEPENDENCIES,
   };
   logger.debug('Created project configuration:', conf);
   return conf;
