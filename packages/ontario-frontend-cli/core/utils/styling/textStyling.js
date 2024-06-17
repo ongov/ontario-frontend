@@ -11,7 +11,7 @@ const banner = (text) =>
   chalkColours.banner(figlet.textSync(text, { horizontalLayout: 'full' }));
 
 /**
- * Styles a question text with the defined color using chalk.
+ * Styles a question text with the defined colour using chalk.
  *
  * @param {string} text - The text to style.
  * @returns {string} - The styled question text.

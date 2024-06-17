@@ -3,7 +3,7 @@ const chalk = require('chalk');
 /**
  * Logger class for logging messages with different levels of severity.
  * Provides methods for info, success, warning, error, and debug messages.
- * Uses chalk for colored output.
+ * Uses chalk for coloured output.
  */
 class Logger {
   constructor() {
@@ -43,13 +43,13 @@ class Logger {
   }
 
   /**
-   * Logs a message with the specified chalk color.
-   * @param {Function} color - The chalk color function.
+   * Logs a message with the specified chalk colour.
+   * @param {Function} colour - The chalk colour function.
    * @param {...any} messages - The messages to log.
    */
-  log(color, ...messages) {
+  log(colour, ...messages) {
     const timestamp = this.getTimestamp();
-    console.log(color(`[${timestamp}] ${this.formatMessages(...messages)}`));
+    console.log(colour(`[${timestamp}] ${this.formatMessages(...messages)}`));
   }
 
   /**
