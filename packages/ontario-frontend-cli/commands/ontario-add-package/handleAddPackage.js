@@ -38,32 +38,39 @@ async function handleAddPackageCommand(cmd = {}) {
       return;
     }
 
-    // If the package is already installed, don't try to add it
-    if (await isPackageInstalled(projectDir, cmd)) {
+    // Check if the package is already installed
+    const packageAlreadyInstalled = await isPackageInstalled(projectDir, cmd);
+    const configFilesExist = await checkExistingConfigFiles(
+      packageConfig.configFiles,
+    );
+
+    if (packageAlreadyInstalled) {
       logger.info(`${cmd} is already installed.`);
-      return;
+    } else {
+      logger.info(`Installation process for ${cmd} started.`);
+      logger.debug(`Package configuration: ${JSON.stringify(packageConfig)}`);
+      logger.debug(`Project directory: ${projectDir}`);
+
+      await installPackages(packageConfig.packages, true);
+      logger.debug(
+        `Packages ${packageConfig.packages.join(', ')} installed successfully.`,
+      );
     }
 
-    logger.info(`Installation process for ${cmd} started.`);
-    logger.debug(`Package configuration: ${JSON.stringify(packageConfig)}`);
-    logger.debug(`Project directory: ${projectDir}`);
+    if (configFilesExist) {
+      logger.info(`One or more configuration files for ${cmd} already exist.`);
+    } else {
+      await handlePackageCopy(path.resolve(projectDir), cmd);
+      logger.success(`Configuration files for ${cmd} copied successfully.`);
+    }
 
-    await installPackages(packageConfig.packages, true);
-    logger.debug(
-      `Packages ${packageConfig.packages.join(', ')} installed successfully.`,
-    );
-
-    // Check for existing config files and log warnings if found
-    await checkExistingConfigFiles(packageConfig.configFiles);
-    logger.debug(
-      `Checked for existing config files: ${JSON.stringify(
-        packageConfig.configFiles,
-      )}`,
-    );
-
-    // Copy the config files to the specified output path
-    await handlePackageCopy(path.resolve(projectDir), cmd);
-    logger.success(`Installation process for ${cmd} completed.`);
+    if (packageAlreadyInstalled && configFilesExist) {
+      logger.info(
+        `The ${cmd} package and configuration files are already present. No further action required.`,
+      );
+    } else {
+      logger.success(`Installation process for ${cmd} completed.`);
+    }
   } catch (error) {
     const errorMessage = error.message
       ? error.message

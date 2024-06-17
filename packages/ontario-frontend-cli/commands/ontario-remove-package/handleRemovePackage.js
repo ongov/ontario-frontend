@@ -13,6 +13,7 @@ const {
   isOntarioFrontendProject,
   isPackageInstalled,
   checkExistingConfigFiles,
+  doesFileExist,
 } = require('../../core/utils/project/packageUtils');
 
 /**
@@ -63,34 +64,31 @@ async function handleRemovePackageCommand(cmd = {}) {
   }
 
   // Check if the package is installed
-  if (!(await isPackageInstalled(projectDir, cmd))) {
+  const packageInstalled = await isPackageInstalled(projectDir, cmd);
+  const configFilesExist = await checkExistingConfigFiles(
+    packageConfig.configFiles,
+  );
+
+  if (!packageInstalled) {
     logger.info(`${cmd} is not installed.`);
     return;
   }
 
   try {
-    logger.info(`Removal process for ${cmd} started.`);
-    logger.debug(`Package configuration: ${JSON.stringify(packageConfig)}`);
-    logger.debug(`Project directory: ${projectDir}`);
-
     // Uninstall the necessary packages
+    logger.info(`Removing packages: ${packageConfig.packages.join(', ')}`);
     await uninstallPackages(packageConfig.packages, true, {
       cwd: projectDir,
     });
-    logger.debug(
-      `Packages ${packageConfig.packages.join(', ')} uninstalled successfully.`,
-    );
 
     // Check and log warnings for missing config files
-    await checkExistingConfigFiles(packageConfig.configFiles);
-    logger.debug(
-      `Checked for existing config files: ${JSON.stringify(
-        packageConfig.configFiles,
-      )}`,
-    );
+    for (const configFile of packageConfig.configFiles) {
+      if (await doesFileExist(configFile.destination)) {
+        logger.info(`Removing configuration file: ${configFile.destination}`);
+        await handleRemovePackage(path.resolve(projectDir), cmd);
+      }
+    }
 
-    // Remove the config files from the specified path
-    await handleRemovePackage(path.resolve(process.cwd()), cmd);
     logger.success(`Removal process for ${cmd} completed.`);
   } catch (error) {
     const errorMessage = error.message
