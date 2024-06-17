@@ -25,6 +25,7 @@ const {
  * @returns {Promise<void>} A promise that resolves when the confirmation is complete.
  */
 async function confirmPackageRemoval(cmd = {}) {
+  logger.debug(`Confirming package removal for: ${cmd}`);
   const questions = ontarioRemovePackageQuestions(cmd);
   const answers = await inquirer.prompt(questions);
 
@@ -42,10 +43,12 @@ async function confirmPackageRemoval(cmd = {}) {
  * @returns {Promise<void>} A promise that resolves when the package removal is complete.
  */
 async function handleRemovePackageCommand(cmd = {}) {
+  logger.debug(`Starting handleRemovePackageCommand with cmd: ${cmd}`);
   await confirmPackageRemoval(cmd);
   logger.info(`Removal process for ${cmd} started.`);
 
   const packageConfig = PACKAGES_CONFIG[cmd];
+  logger.debug(`Package config for ${cmd}: ${JSON.stringify(packageConfig)}`);
 
   if (!packageConfig) {
     const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
@@ -56,6 +59,7 @@ async function handleRemovePackageCommand(cmd = {}) {
   }
 
   const projectDir = process.cwd();
+  logger.debug(`Current project directory: ${projectDir}`);
 
   // Check if the current project is an Ontario Frontend project
   if (!(await isOntarioFrontendProject(projectDir))) {
@@ -65,11 +69,14 @@ async function handleRemovePackageCommand(cmd = {}) {
 
   // Check if the package is installed
   const packageInstalled = await isPackageInstalled(projectDir, cmd);
+  logger.debug(`Package installed status for ${cmd}: ${packageInstalled}`);
   const configFilesExist = await checkExistingConfigFiles(
     packageConfig.configFiles,
   );
+  logger.debug(`Config files existence status for ${cmd}: ${configFilesExist}`);
 
-  if (!packageInstalled) {
+  // If the package is not installed and there are no config files, don't bother
+  if (!packageInstalled && !configFilesExist) {
     logger.info(`${cmd} is not installed.`);
     return;
   }
@@ -81,8 +88,10 @@ async function handleRemovePackageCommand(cmd = {}) {
       cwd: projectDir,
     });
 
-    // Check and log warnings for missing config files
     for (const configFile of packageConfig.configFiles) {
+      logger.debug(
+        `Checking if configuration file exists: ${configFile.destination}`,
+      );
       if (await doesFileExist(configFile.destination)) {
         logger.info(`Removing configuration file: ${configFile.destination}`);
         await handleRemovePackage(path.resolve(projectDir), cmd);
@@ -94,6 +103,7 @@ async function handleRemovePackageCommand(cmd = {}) {
     const errorMessage = error.message
       ? error.message
       : 'Failed to uninstall package.';
+    logger.error(`Error occurred during package removal: ${errorMessage}`);
     throw new RemovePackageError(
       'handleRemovePackageCommand',
       [cmd],

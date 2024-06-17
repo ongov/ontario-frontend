@@ -18,7 +18,9 @@ const {
  *
  */
 async function handleAddPackageCommand(cmd = {}) {
+  logger.debug(`Starting handleAddPackageCommand with cmd: ${cmd}`);
   const packageConfig = PACKAGES_CONFIG[cmd];
+  logger.debug(`Package config for ${cmd}: ${JSON.stringify(packageConfig)}`);
 
   if (!packageConfig) {
     const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
@@ -30,6 +32,7 @@ async function handleAddPackageCommand(cmd = {}) {
 
   try {
     const projectDir = process.cwd();
+    logger.debug(`Current project directory: ${projectDir}`);
 
     // If the current project is not an Ontario Frontend project,
     // do not try adding the package.
@@ -40,8 +43,14 @@ async function handleAddPackageCommand(cmd = {}) {
 
     // Check if the package is already installed
     const packageAlreadyInstalled = await isPackageInstalled(projectDir, cmd);
+    logger.debug(
+      `Package installed status for ${cmd}: ${packageAlreadyInstalled}`,
+    );
     const configFilesExist = await checkExistingConfigFiles(
       packageConfig.configFiles,
+    );
+    logger.debug(
+      `Config files existence status for ${cmd}: ${configFilesExist}`,
     );
 
     if (packageAlreadyInstalled) {
@@ -75,6 +84,7 @@ async function handleAddPackageCommand(cmd = {}) {
     const errorMessage = error.message
       ? error.message
       : 'Failed to install package.';
+    logger.error(`Error occurred during package installation: ${errorMessage}`);
     throw new AddPackageError('handleAddPackageCommand', [cmd], errorMessage);
   }
 }
