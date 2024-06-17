@@ -49,7 +49,7 @@ async function handleCreateAppCommand(cmd = {}) {
   } catch (error) {
     logger.error('Failed to create a new project:', error.message);
     if (cmd.debug) {
-      console.error(error.stack);
+      logger.error(error.stack);
     }
   }
 }

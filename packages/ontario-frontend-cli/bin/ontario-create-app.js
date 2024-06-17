@@ -75,7 +75,7 @@ async function initializeProgram() {
 
     // Error on unknown commands should not interfere with the help option
     program.on('command:*', (operands) => {
-      console.error(
+      logger.error(
         `Invalid command: ${operands[0]}\nSee --help for a list of available commands.`,
       );
       process.exit(1);
