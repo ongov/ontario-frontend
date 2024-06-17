@@ -5,6 +5,7 @@ const packagesDir = path.resolve(rootDir, '../');
 
 const packageEslint = require('./packages/eslint.json');
 const packagePrettier = require('./packages/prettier.json');
+const core = require('./packages/core.json');
 
 module.exports = {
   CREATE_TEMPLATE_DIR: path.join(
@@ -28,4 +29,5 @@ module.exports = {
   LOCAL_CORE_DEPENDENCY_DIR: path.join(packagesDir, 'ontario-frontend'),
   ROOT_DIR: rootDir,
   PACKAGES_CONFIG: { ...packageEslint, ...packagePrettier },
+  CORE_DEPENDENCY: core.core,
 };

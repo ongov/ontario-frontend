@@ -24,7 +24,7 @@ const withSyncErrorHandling = (fn, CustomError = GeneralError) => (...args) => {
   try {
     return fn(...args);
   } catch (error) {
-    throw new CustomError(fn.name, ...args, error.message);
+    throw new CustomError(fn.name, args, error.message);
   }
 };
 

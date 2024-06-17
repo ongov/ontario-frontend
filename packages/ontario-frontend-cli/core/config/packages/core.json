@@ -1,0 +1,7 @@
+{
+    "core": {
+      "name": "@ongov/ontario-frontend",
+      "errorMessage": "No '@ongov/ontario-frontend' dependency found inside of package.json. Ensure you are performing this command within an Ontario.ca Frontend project."
+    }
+  }
+  

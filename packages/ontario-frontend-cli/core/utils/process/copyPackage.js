@@ -3,7 +3,7 @@ const logger = require('../logger');
 const { SHARED_BOILERPLATE_DIR, PACKAGES_CONFIG } = require('../../config');
 const { copyFiles } = require('../../operations/file/copy');
 const { withErrorHandling } = require('../../errors/errorHandler');
-const PackageCopyOperationError = require('../../errors/PackageCopyOperationError'); // Custom error class
+const PackageCopyOperationError = require('../../errors/PackageCopyOperationError');
 
 /**
  * Copies package configuration files from the shared directory to the specified output path.
@@ -11,7 +11,7 @@ const PackageCopyOperationError = require('../../errors/PackageCopyOperationErro
  * @param {string} outputPath - The path inside your project where the files should be copied.
  * @param {string} packageName - The name of the package to copy config for (e.g., eslint, prettier).
  * @returns {Promise<void>} A promise that resolves when the files are copied successfully or rejects on failure.
- * @throws Will throw an error if the package configuration is not found or any copy operation fails.
+ * @throws {PackageCopyOperationError} Will throw an error if the package configuration is not found or any copy operation fails.
  */
 async function handlePackageCopy(outputPath, packageName) {
   const packageFiles = PACKAGES_CONFIG[packageName]?.configFiles;
@@ -19,7 +19,7 @@ async function handlePackageCopy(outputPath, packageName) {
   if (!Array.isArray(packageFiles)) {
     const errorMessage = `Package configuration for ${packageName} not found.`;
     logger.error(errorMessage);
-    throw new Error(errorMessage);
+    throw new PackageCopyOperationError('handlePackageCopy', [outputPath, packageName], errorMessage);
   }
 
   const filesToCopy = packageFiles.map((file) => ({
@@ -28,9 +28,7 @@ async function handlePackageCopy(outputPath, packageName) {
   }));
 
   await copyFiles(filesToCopy);
-  logger.success(
-    `All configuration files for ${packageName} copied successfully.`,
-  );
+  logger.success(`All configuration files for ${packageName} copied successfully.`);
 }
 
 module.exports = {

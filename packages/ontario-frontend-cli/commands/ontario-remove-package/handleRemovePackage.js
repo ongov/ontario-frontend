@@ -1,6 +1,5 @@
 const path = require('path');
 const inquirer = require('inquirer');
-const fs = require('fs');
 const { PACKAGES_CONFIG } = require('../../core/config');
 const { uninstallPackages } = require('../../core/operations');
 const logger = require('../../core/utils/logger');
@@ -9,6 +8,12 @@ const {
 } = require('../../core/utils/process/removePackage');
 const { ontarioRemovePackageQuestions } = require('../../core/questions');
 const { withErrorHandling } = require('../../core/errors/errorHandler');
+const RemovePackageError = require('../../core/errors/RemovePackageError');
+const {
+  isOntarioFrontendProject,
+  isPackageInstalled,
+  checkExistingConfigFiles,
+} = require('../../core/utils/project/packageUtils');
 
 /**
  * This function triggers the CLI to ask the user a confirmation question on
@@ -37,6 +42,7 @@ async function confirmPackageRemoval(cmd = {}) {
  */
 async function handleRemovePackageCommand(cmd = {}) {
   await confirmPackageRemoval(cmd);
+  logger.info(`Removal process for ${cmd} started.`);
 
   const packageConfig = PACKAGES_CONFIG[cmd];
 
@@ -48,40 +54,59 @@ async function handleRemovePackageCommand(cmd = {}) {
     return;
   }
 
+  const projectDir = process.cwd();
+
+  // Check if the current project is an Ontario Frontend project
+  if (!(await isOntarioFrontendProject(projectDir))) {
+    logger.error('This is not an Ontario Frontend project.');
+    return;
+  }
+
+  // Check if the package is installed
+  if (!(await isPackageInstalled(projectDir, cmd))) {
+    logger.info(`${cmd} is not installed.`);
+    return;
+  }
+
   try {
     logger.info(`Removal process for ${cmd} started.`);
+    logger.debug(`Package configuration: ${JSON.stringify(packageConfig)}`);
+    logger.debug(`Project directory: ${projectDir}`);
+
+    // Uninstall the necessary packages
     await uninstallPackages(packageConfig.packages, true, {
-      cwd: process.cwd(),
+      cwd: projectDir,
     });
-    logger.debug(`Packages for ${cmd} uninstalled.`);
+    logger.debug(
+      `Packages ${packageConfig.packages.join(', ')} uninstalled successfully.`,
+    );
 
-    await checkAndWarnMissingConfigFiles(cmd);
+    // Check and log warnings for missing config files
+    await checkExistingConfigFiles(packageConfig.configFiles);
+    logger.debug(
+      `Checked for existing config files: ${JSON.stringify(
+        packageConfig.configFiles,
+      )}`,
+    );
 
+    // Remove the config files from the specified path
     await handleRemovePackage(path.resolve(process.cwd()), cmd);
-    logger.info(`Removal process for ${cmd} completed.`);
+    logger.success(`Removal process for ${cmd} completed.`);
   } catch (error) {
     const errorMessage = error.message
       ? error.message
       : 'Failed to uninstall package.';
-    logger.error(errorMessage, error);
+    throw new RemovePackageError(
+      'handleRemovePackageCommand',
+      [cmd],
+      errorMessage,
+    );
   }
 }
 
-/**
- * Checks for the existence of specific configuration files and logs warnings if they are not found.
- *
- * @param {string} cmd - The package being removed (e.g., "eslint" or "prettier").
- */
-async function checkAndWarnMissingConfigFiles(cmd) {
-  const configFiles = PACKAGES_CONFIG[cmd]?.configFiles;
-
-  (configFiles || []).forEach(({ destination, warningMessage }) => {
-    if (!fs.existsSync(destination)) {
-      logger.warning(warningMessage);
-    }
-  });
-}
-
 module.exports = {
-  handleRemovePackageCommand: withErrorHandling(handleRemovePackageCommand),
+  handleRemovePackageCommand: withErrorHandling(
+    handleRemovePackageCommand,
+    RemovePackageError,
+  ),
 };
