@@ -27,5 +27,5 @@ module.exports = {
   ),
   LOCAL_CORE_DEPENDENCY_DIR: path.join(packagesDir, 'ontario-frontend'),
   ROOT_DIR: rootDir,
-  PACKAGES_CONFIG: {...packageEslint, ...packagePrettier},
+  PACKAGES_CONFIG: { ...packageEslint, ...packagePrettier },
 };
