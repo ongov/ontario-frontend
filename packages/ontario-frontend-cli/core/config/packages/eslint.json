@@ -3,7 +3,8 @@
     "configFiles": [
       {
         "source": "eslint-config/.eslintrc.js",
-        "destination": ".eslintrc.js"
+        "destination": ".eslintrc.js",
+        "warningMessage": ".eslintrc.js file already present. Please add \"extends\": \"@ongov/eslint-config-ontario-frontend\" to your existing file."
       }
     ],
     "packages": [
@@ -13,4 +14,3 @@
     ]
   }
 }
-  

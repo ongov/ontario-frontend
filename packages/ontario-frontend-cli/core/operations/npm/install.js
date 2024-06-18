@@ -1,36 +1,25 @@
-const { spawn } = require('child_process');
+const { withErrorHandling } = require('../../errors/errorHandler');
+const PackageInstallationError = require('../../errors/PackageInstallationError');
+const { spawnAsync } = require('../../utils');
 const logger = require('../../utils/logger');
 
 /**
- * Install a list of packages using npm.
- * 
- * @param {Array<String>} packageNames - An array of the packages you wish to install.
- * @param {boolean} devFlag - Whether or not you want the installed packages to be devDependencies.
- * @param {Object} cwd (current working directory) - TODO - better describe this.
- * 
- * @returns {Promise<void>} A promise that resolves when the installation is complete or rejects on failure.
- * 
- * @example
- * // Install 2 packages relating to eslint as devDependencies.
- * await installPackages(['eslint', '@ongov/eslint-config-ontario-frontend'], true);
- */ 
-function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
-  return new Promise((resolve, reject) => {
-    const process = spawn('npm', ['install', devFlag ? '--save-dev' : '', ...packageNames], {
-      stdio: 'inherit',
-      cwd,
-    });
-    process.on('close', (code) => {
-      if (code === 0) {
-        packageNames.forEach((packageName) => logger.success(`${packageName} successfully installed.`));
-        resolve();
-      }
-      else
-        reject(
-          new Error(`npm install for ${packageNames} failed with code ${code}`),
-        );
-    });
-  });
+ * Installs the given packages using npm.
+ *
+ * @param {string[]} packageNames - The names of the packages to install.
+ * @param {boolean} [devFlag=false] - Whether to install the packages as dev dependencies.
+ * @param {Object} [options={}] - Options for the installation.
+ * @param {string} [options.cwd=''] - The current working directory for the installation.
+ * @returns {Promise<void>} - A promise that resolves when the installation is complete.
+ */
+async function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
+  const command = 'npm';
+  const args = ['install', devFlag ? '--save-dev' : '', ...packageNames].filter(Boolean); // filter to remove empty strings
+
+  logger.debug(`Installing packages: ${packageNames.join(', ')} with devFlag=${devFlag} in directory=${cwd}`);
+
+  await spawnAsync(command, args, { cwd });
+  packageNames.forEach((packageName) => logger.success(`${packageName} successfully installed.`));
 }
 
 /**
@@ -39,23 +28,13 @@ function installPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
  * @param {string} projectPath - The path to the project directory where package.json is located.
  * @returns {Promise<void>} A promise that resolves when the installation is complete or rejects on failure.
  */
-function installAllPackages(projectPath) {
-  logger.info('Installing NPM dependencies...');
-  return new Promise((resolve, reject) => {
-    const npmInstall = spawn('npm', ['install'], {
-      stdio: 'inherit',
-      cwd: projectPath,
-    });
-
-    npmInstall.on('close', (code) => {
-      if (code === 0) {
-        logger.success('NPM dependencies installed successfully.');
-        resolve();
-      } else {
-        reject(new Error(`npm install failed with code ${code}`));
-      }
-    });
-  });
+async function installAllPackages(projectPath) {
+  logger.debug(`Spawning npm install with cwd:${projectPath}`);
+  await spawnAsync('npm', ['install'], { cwd: projectPath });
 }
 
-module.exports = { installPackages, installAllPackages };
+// Export the functions wrapped with error handling to ensure consistent error logging and handling across the application.
+module.exports = {
+  installPackages: withErrorHandling(installPackages, PackageInstallationError),
+  installAllPackages: withErrorHandling(installAllPackages, PackageInstallationError),
+};

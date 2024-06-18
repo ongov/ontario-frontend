@@ -1,36 +1,55 @@
-const { spawn } = require('child_process');
+const PackageUninstallationError = require('../../errors/PackageUninstallationError');
+const { withErrorHandling } = require('../../errors/errorHandler');
 const logger = require('../../utils/logger');
+const { spawnAsync } = require('../../utils/process/spawnAsync');
 
 /**
  * Uninstall a list of packages using npm.
- * 
- * @param {Array<String>} packageNames - An array of the packages you wish to uninstall.
- * @param {boolean} devFlag - Whether or not the packages to be uninstalled are devDependencies.
- * @param {Object} cwd (current working directory) - TODO - better describe this.
- * 
+ *
+ * @param {string[]} packageNames - An array of the packages you wish to uninstall.
+ * @param {boolean} [devFlag=false] - Whether or not the packages to be uninstalled are devDependencies.
+ * @param {Object} [options={}] - Options for the uninstallation.
+ * @param {string} [options.cwd=''] - The current working directory for the uninstallation.
  * @returns {Promise<void>} A promise that resolves when the uninstallation is complete or rejects on failure.
- * 
+ *
  * @example
  * // Uninstall 2 packages relating to eslint which are devDependencies.
  * await uninstallPackages(['eslint', '@ongov/eslint-config-ontario-frontend'], true);
- */ 
-function uninstallPackages(packageNames, devFlag = false, { cwd = '' } = {}) {
-  return new Promise((resolve, reject) => {
-    const process = spawn('npm', ['uninstall', devFlag ? '--save-dev' : '', ...packageNames], {
-      stdio: 'inherit',
-      cwd,
-    });
-    process.on('close', (code) => {
-      if (code === 0) {
-        packageNames.forEach((packageName) => logger.success(`${packageName} successfully uninstalled.`));
-        resolve();
-      }
-      else
-        reject(
-          new Error(`npm uninstall for ${packageNames} failed with code ${code}`),
-        );
-    });
-  });
+ */
+async function uninstallPackages(
+  packageNames,
+  devFlag = false,
+  { cwd = '' } = {},
+) {
+  if (!Array.isArray(packageNames) || packageNames.length === 0) {
+    throw new PackageUninstallationError(
+      'uninstallPackages',
+      packageNames,
+      'No packages specified for uninstallation'
+    );
+  }
+
+  const command = 'npm';
+  const args = [
+    'uninstall',
+    devFlag ? '--save-dev' : '',
+    ...packageNames,
+  ].filter(Boolean); // filter to remove empty strings
+
+  logger.debug(
+    `Uninstalling packages: ${packageNames.join(
+      ', ',
+    )} with devFlag=${devFlag} in directory=${cwd}`,
+  );
+
+  await spawnAsync(command, args, { cwd });
+  packageNames.forEach((packageName) => logger.success(`${packageName} successfully uninstalled.`));
 }
 
-module.exports = { uninstallPackages };
+// Export the uninstallPackages function wrapped with withErrorHandling to ensure consistent error logging and handling across the application.
+module.exports = {
+  uninstallPackages: withErrorHandling(
+    uninstallPackages,
+    PackageUninstallationError,
+  ),
+};

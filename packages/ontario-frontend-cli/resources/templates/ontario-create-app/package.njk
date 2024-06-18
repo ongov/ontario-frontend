@@ -13,14 +13,12 @@
   "author": "TODO changeme",
   "license": "Apache 2.0",
   "dependencies": {
-    "@ongov/ontario-frontend": {{ ontarioFrontendDependency | safe }}
-  },
+    {% for dep, version in dependencies %}"{{ dep }}": "{{ version }}"{% if not loop.last %},{% endif %}
+  {% endfor %}},
   "devDependencies": {
-      "@11ty/eleventy": "^1.0.1"{% if addESLint %},
-      "eslint": "^8.57.0",
-      "eslint-plugin-import": "^2.0.1",
-      "@ongov/eslint-config-ontario-frontend": "latest"{% endif %}{% if addPrettier %},
-      "prettier": "^3.2.5",
-      "@ongov/prettier-config-ontario-frontend": "latest"{% endif %}
-  }
+    {% for dep, version in devDependencies %}"{{ dep }}": "{{ version }}"{% if not loop.last or addESLint or addPrettier %},{% endif %}
+    {% endfor %}{% if addESLint %}{% for dep, version in eslintDependencies %}"{{ dep }}": "{{ version }}"{% if not loop.last or addPrettier %},{% endif %}
+    {% endfor %}{% endif %}{% if addPrettier %}{% for dep, version in prettierDependencies %}"{{ dep }}": "{{ version }}"{% if not loop.last %},{% endif %}
+    {% endfor %}
+  {% endif %}}
 }

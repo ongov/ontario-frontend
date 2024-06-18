@@ -11,10 +11,10 @@
     "test": "pnpm --recursive run test",
     "bootstrap": "node scripts/bootstrap.js",
     "clean": "node scripts/clean.js",
+    "check-template-deps": "node packages/ontario-frontend-cli/scripts/check-template-deps.js",
     "publish:specific": "node scripts/publish.js",
     "update:version": "node scripts/update-version.js"
   },
-  "devDependencies": {},
   "resolutions": {},
   "engines": {
     "node": ">=18.17.0",

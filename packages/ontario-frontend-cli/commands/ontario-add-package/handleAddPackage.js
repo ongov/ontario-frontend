@@ -1,49 +1,97 @@
 const path = require('path');
-const fs = require('fs');
 const { PACKAGES_CONFIG } = require('../../core/config');
 const { installPackages } = require('../../core/operations');
 const logger = require('../../core/utils/logger');
 const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
+const { withErrorHandling } = require('../../core/errors/errorHandler');
+const AddPackageError = require('../../core/errors/AddPackageError');
+const {
+  isOntarioFrontendProject,
+  isPackageInstalled,
+  checkExistingConfigFiles,
+} = require('../../core/utils/project/packageUtils');
 
 /**
  * Add Ontario packages to the project.
  *
- * @param {String|Object} cmd - The input value from the user when running the 
- * ontario-remove-package command. e.g. "eslint" or "prettier".
+ * @param {String} cmd - The name of the package to add (e.g., "eslint" or "prettier").
+ *
  */
 async function handleAddPackageCommand(cmd = {}) {
+  logger.debug(`Starting handleAddPackageCommand with cmd: ${cmd}`);
+  const packageConfig = PACKAGES_CONFIG[cmd];
+  logger.debug(`Package config for ${cmd}: ${JSON.stringify(packageConfig)}`);
+
+  if (!packageConfig) {
+    const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
+    logger.error(
+      `Invalid package option selected. Please select a valid package. Available packages are: ${availablePackages}`,
+    );
+    return;
+  }
+
   try {
-    switch (cmd) {
-      case 'eslint':
-        logger.info(`Installation process for ${cmd} started.`);
+    const projectDir = process.cwd();
+    logger.debug(`Current project directory: ${projectDir}`);
 
-        await installPackages(PACKAGES_CONFIG[cmd]?.packages, true);
+    // If the current project is not an Ontario Frontend project,
+    // do not try adding the package.
+    if (!(await isOntarioFrontendProject(projectDir))) {
+      logger.error('This is not an Ontario Frontend project');
+      return;
+    }
 
-        if (fs.existsSync(".eslintrc.js"))
-          logger.warning(".eslint.js file already present. Please add \"extends\": \"@ongov/eslint-config-ontario-frontend\" to your existing file.");
+    // Check if the package is already installed
+    const packageAlreadyInstalled = await isPackageInstalled(projectDir, cmd);
+    logger.debug(
+      `Package installed status for ${cmd}: ${packageAlreadyInstalled}`,
+    );
+    const configFilesExist = await checkExistingConfigFiles(
+      packageConfig.configFiles,
+    );
+    logger.debug(
+      `Config files existence status for ${cmd}: ${configFilesExist}`,
+    );
 
-        await handlePackageCopy(path.resolve(process.cwd()), cmd);
-        break;
-      case 'prettier':
-        logger.info(`Installation process for ${cmd} started.`);
+    if (packageAlreadyInstalled) {
+      logger.info(`${cmd} is already installed.`);
+    } else {
+      logger.info(`Installation process for ${cmd} started.`);
+      logger.debug(`Package configuration: ${JSON.stringify(packageConfig)}`);
+      logger.debug(`Project directory: ${projectDir}`);
 
-        await installPackages(PACKAGES_CONFIG[cmd]?.packages, true);
+      await installPackages(packageConfig.packages, true);
+      logger.debug(
+        `Packages ${packageConfig.packages.join(', ')} installed successfully.`,
+      );
+    }
 
-        if (fs.existsSync(".prettierrc.js"))
-          logger.warning(".prettierrc.js file already present. Please add \"...@ongov/prettier-config-ontario-frontend\" to your existing file.");
+    if (configFilesExist) {
+      logger.info(`One or more configuration files for ${cmd} already exist.`);
+    } else {
+      await handlePackageCopy(path.resolve(projectDir), cmd);
+      logger.success(`Configuration files for ${cmd} copied successfully.`);
+    }
 
-        if (fs.existsSync(".prettierignore"))
-          logger.warning(".prettierignore file already present. Please ignore the following directories and files: node_modules/, dist/, src/assets/vendor/* and *.njk");
-
-        await handlePackageCopy(path.resolve(process.cwd()), cmd);
-        break;
-      default:
-        logger.error('Invalid package option selected. Please select either "eslint" or "prettier".');
+    if (packageAlreadyInstalled && configFilesExist) {
+      logger.info(
+        `The ${cmd} package and configuration files are already present. No further action required.`,
+      );
+    } else {
+      logger.success(`Installation process for ${cmd} completed.`);
     }
   } catch (error) {
-    const errorMessage = error.message ? error.message : 'Failed to install package.';
-    logger.error(errorMessage, error);
+    const errorMessage = error.message
+      ? error.message
+      : 'Failed to install package.';
+    logger.error(`Error occurred during package installation: ${errorMessage}`);
+    throw new AddPackageError('handleAddPackageCommand', [cmd], errorMessage);
   }
 }
 
-module.exports = { handleAddPackageCommand };
+module.exports = {
+  handleAddPackageCommand: withErrorHandling(
+    handleAddPackageCommand,
+    AddPackageError,
+  ),
+};

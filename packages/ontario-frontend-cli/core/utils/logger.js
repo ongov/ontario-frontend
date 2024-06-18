@@ -1,46 +1,99 @@
 const chalk = require('chalk');
 
-// Controls whether debug messages should be logged
-let debugMode = false;
-
 /**
- * Sets the debug mode.
- * @param {boolean} debug - Enables or disables debug logging.
+ * Logger class for logging messages with different levels of severity.
+ * Provides methods for info, success, warning, error, and debug messages.
+ * Uses chalk for coloured output.
  */
-const setDebug = (debug) => {
-  debugMode = debug;
-};
+class Logger {
+  constructor() {
+    this.debugMode = false;
+  }
 
-/**
- * Formats messages for logging.
- * Converts objects to JSON strings and joins all messages into a single string.
- * @param {...any} messages - The messages to format.
- * @returns {string} - The formatted message string.
- */
-const formatMessages = (...messages) => {
-  return messages
-    .map((message) => {
-      if (typeof message === 'object') {
-        return JSON.stringify(message, null, 2);
-      }
-      return message;
-    })
-    .join(' ');
-};
+  /**
+   * Sets the debug mode.
+   * @param {boolean} debug - Enables or disables debug logging.
+   */
+  setDebug(debug) {
+    this.debugMode = debug;
+  }
 
-const logger = {
-  info: (...messages) => console.log(chalk.blue(formatMessages(...messages))),
-  success: (...messages) =>
-    console.log(chalk.green(formatMessages(...messages))),
-  warning: (...messages) =>
-    console.log(chalk.yellow(formatMessages(...messages))),
-  error: (...messages) => console.log(chalk.red(formatMessages(...messages))),
-  debug: (...messages) => {
-    if (debugMode) {
-      console.log(chalk.gray(formatMessages(...messages)));
+  /**
+   * Formats messages for logging.
+   * Converts objects to JSON strings and joins all messages into a single string.
+   * @param {...any} messages - The messages to format.
+   * @returns {string} - The formatted message string.
+   */
+  formatMessages(...messages) {
+    return messages
+      .map((message) =>
+        typeof message === 'object'
+          ? JSON.stringify(message, null, 2)
+          : message,
+      )
+      .join(' ');
+  }
+
+  /**
+   * Gets the current timestamp.
+   * @returns {string} - The current timestamp in ISO format.
+   */
+  getTimestamp() {
+    return new Date().toISOString();
+  }
+
+  /**
+   * Logs a message with the specified chalk colour.
+   * @param {Function} colour - The chalk colour function.
+   * @param {...any} messages - The messages to log.
+   */
+  log(colour, ...messages) {
+    const timestamp = this.getTimestamp();
+    console.log(colour(`[${timestamp}] ${this.formatMessages(...messages)}`));
+  }
+
+  /**
+   * Logs an info message.
+   * @param {...any} messages - The messages to log.
+   */
+  info(...messages) {
+    this.log(chalk.blue, ...messages);
+  }
+
+  /**
+   * Logs a success message.
+   * @param {...any} messages - The messages to log.
+   */
+  success(...messages) {
+    this.log(chalk.green, ...messages);
+  }
+
+  /**
+   * Logs a warning message.
+   * @param {...any} messages - The messages to log.
+   */
+  warning(...messages) {
+    this.log(chalk.yellow, ...messages);
+  }
+
+  /**
+   * Logs an error message.
+   * @param {...any} messages - The messages to log.
+   */
+  error(...messages) {
+    this.log(chalk.red, ...messages);
+  }
+
+  /**
+   * Logs a debug message if debug mode is enabled.
+   * @param {...any} messages - The messages to log.
+   */
+  debug(...messages) {
+    if (this.debugMode) {
+      this.log(chalk.gray, ...messages);
     }
-  },
-  setDebug,
-};
+  }
+}
 
-module.exports = logger;
+// Export a single instance of the logger
+module.exports = new Logger();

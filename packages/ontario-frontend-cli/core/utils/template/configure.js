@@ -1,18 +1,33 @@
 const nunjucks = require('nunjucks');
+const { withErrorHandling } = require('../../errors/errorHandler');
+const TemplateConfigurationError = require('../../errors/TemplateConfigurationError'); // Custom error class
 
 /**
  * Configures the Nunjucks templating engine.
+ *
  * @param {string} templatesPath - Path to the directory containing template files.
+ * @throws {TemplateConfigurationError} Throws an error if the templatesPath is not a string or is empty.
  */
-function configureTemplates(templatesPath) {
+async function configureTemplates(templatesPath) {
+  if (typeof templatesPath !== 'string' || templatesPath.trim() === '') {
+    throw new TemplateConfigurationError(
+      'configureTemplates',
+      templatesPath,
+      'Invalid templates path. Please provide a valid string path to the templates directory.',
+    );
+  }
+
   // Setting up Nunjucks with the provided templates directory and enabling autoescape for security.
   nunjucks.configure(templatesPath, { autoescape: true });
 }
 
 /**
- * Map application templates to their correct output location in new projects.
- * 
- * @param {Array<string>} answers - The user answers from the CLI prompts.
+ * Maps application templates to their correct output location in new projects.
+ *
+ * @param {Object} answers - The user answers from the CLI prompts.
+ * @param {string} answers.enPage - The name of the English page.
+ * @param {string} answers.frPage - The name of the French page.
+ * @returns {Array<Object>} An array of template mappings.
  */
 const ontarioCreateAppTemplates = (answers) => [
   { template: 'package.njk', outputDir: '', outputFile: 'package.json' },
@@ -25,4 +40,10 @@ const ontarioCreateAppTemplates = (answers) => [
   { template: 'globals.njk', outputDir: 'src/_data', outputFile: 'globals.js' },
 ];
 
-module.exports = { configureTemplates, ontarioCreateAppTemplates };
+module.exports = {
+  configureTemplates: withErrorHandling(
+    configureTemplates,
+    TemplateConfigurationError,
+  ),
+  ontarioCreateAppTemplates,
+};

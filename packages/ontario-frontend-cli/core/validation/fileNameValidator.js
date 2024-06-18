@@ -5,6 +5,12 @@ const {
   doesNotStartWithDotOrUnderscore,
 } = require('./validationUtils');
 
+/**
+ * Validates a file name based on specific criteria.
+ *
+ * @param {string} value - The file name to validate.
+ * @returns {string|boolean} - Returns true if valid, otherwise returns an error message.
+ */
 const validFileName = (value) => {
   if (!isPresent(value)) {
     return 'Please enter a value.';

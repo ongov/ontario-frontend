@@ -1,14 +1,20 @@
 const fs = require('fs').promises;
+const FileWriteError = require('../../errors/FileWriteError');
+const { withErrorHandling } = require('../../errors/errorHandler');
 const logger = require('../../utils/logger');
 
+/**
+ * Writes data to a specified file.
+ *
+ * @param {string} path - The file path.
+ * @param {string} data - The data to write.
+ * @returns {Promise<void>}
+ */
 async function write(path, data) {
-  try {
-    await fs.writeFile(path, data, 'utf8');
-    logger.info(`File written successfully: ${path}`);
-  } catch (error) {
-    logger.error(`Error writing to file: ${error.message}`);
-    throw error;
-  }
+  await fs.writeFile(path, data, 'utf8');
+  logger.debug(`File written successfully: ${path}`);
 }
 
-module.exports = { write };
+module.exports = {
+  write: withErrorHandling(write, FileWriteError),
+};
