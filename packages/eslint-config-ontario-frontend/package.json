@@ -2,6 +2,11 @@
   "name": "@ongov/eslint-config-ontario-frontend",
   "version": "1.0.1",
   "description": "ESLint configuration for Ontario.ca Frontend projects",
+  "scripts": {
+    "build": "echo \"No build step defined\"",
+    "lint": "echo \"No lint step defined\"",
+    "test": "echo \"No test step defined\""
+  },
   "keywords": [
     "prettier",
     "config",

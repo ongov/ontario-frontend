@@ -1,0 +1,90 @@
+{
+  "npmScope": "@ongov/ontario-frontend",
+  "defaultBase": "develop",
+  "tasksRunnerOptions": {
+    "default": {
+      "runner": "nx/tasks-runners/default",
+      "options": {
+        "cacheableOperations": ["build", "lint", "test"]
+      }
+    }
+  },
+  "projects": {
+    "@ongov/eslint-config-ontario-frontend": {
+      "root": "packages/eslint-config-ontario-frontend",
+      "sourceRoot": "packages/eslint-config-ontario-frontend/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "pnpm run lint"
+          }
+        }
+      }
+    },
+    "@ongov/prettier-config-ontario-frontend": {
+      "root": "packages/prettier-config-ontario-frontend",
+      "sourceRoot": "packages/prettier-config-ontario-frontend/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "pnpm run lint"
+          }
+        }
+      }
+    },
+    "@ongov/ontario-frontend-cli": {
+      "root": "packages/ontario-frontend-cli",
+      "sourceRoot": "packages/ontario-frontend-cli/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "pnpm run build"
+          }
+        },
+        "lint": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "pnpm run lint"
+          }
+        },
+        "test": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "pnpm run test"
+          }
+        }
+      }
+    },
+    "@ongov/ontario-frontend": {
+      "root": "packages/ontario-frontend",
+      "sourceRoot": "packages/ontario-frontend/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "pnpm run build"
+          }
+        },
+        "lint": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "pnpm run lint"
+          }
+        },
+        "test": {
+          "executor": "nx:run-commands",
+          "options": {
+            "command": "pnpm run test"
+          }
+        }
+      }
+    }
+  }
+}
