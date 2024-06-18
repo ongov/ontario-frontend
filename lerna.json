@@ -1,0 +1,15 @@
+{
+  "packages": ["packages/*", "components/**", "!**/test/**"],
+  "$schema": "node_modules/lerna/schemas/lerna-schema.json",
+  "version": "independent",
+  "npmClient": "pnpm",
+  "command": {
+    "publish": {
+      "ignoreChanges": ["**/__tests__/**", "**/*.md"]
+    },
+    "version": {
+      "conventionalCommits": true,
+      "message": "chore(release): publish %s"
+    }
+  }
+}

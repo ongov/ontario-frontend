@@ -9,16 +9,21 @@
   "scripts": {
     "build": "pnpm --filter './packages/*' run build",
     "test": "pnpm --recursive run test",
-    "bootstrap": "node scripts/bootstrap.js",
-    "clean": "node scripts/clean.js",
+    "bootstrap": "pnpm install",
+    "publish": "lerna publish",
+    "clean": "pnpm recursive exec rm -rf node_modules dist",
     "check-template-deps": "node packages/ontario-frontend-cli/scripts/check-template-deps.js",
-    "publish:specific": "node scripts/publish.js",
-    "update:version": "node scripts/update-version.js"
+    "update:version": "lerna version"
   },
   "resolutions": {},
   "engines": {
     "node": ">=18.17.0",
     "pnpm": ">=8.15.1"
   },
-  "packageManager": "pnpm@8.15.1"
+  "packageManager": "pnpm@8.15.1",
+  "devDependencies": {
+    "@commitlint/cli": "^19.3.0",
+    "@commitlint/config-conventional": "^19.2.2",
+    "lerna": "^8.1.3"
+  }
 }
