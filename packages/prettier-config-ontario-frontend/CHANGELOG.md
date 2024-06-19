@@ -1,9 +1,4 @@
-# Change Log
-
-All notable changes to this project will be documented in this file.
-See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
-
-# [1.1.0](https://github.com/ongov/ontario-frontend/compare/@ongov/prettier-config-ontario-frontend@1.2.0...@ongov/prettier-config-ontario-frontend@1.1.0) (2024-06-19)
+# [1.1.0](https://github.com/ongov/ontario-frontend/compare/v3.0.0...v1.1.0) (2024-06-19)
 
 
 ### Bug Fixes
@@ -11,31 +6,13 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * package versions ([492d783](https://github.com/ongov/ontario-frontend/commit/492d783a7b5bad75a8430f3f7fcc27bad2902d28))
 
 
-
-
-
-# 1.2.0 (2024-06-19)
-
-
 ### Features
 
 * **nx:** integrate Nx into monorepo for enhanced workflows ([c4763d6](https://github.com/ongov/ontario-frontend/commit/c4763d6deff19bd09cb6023404b83448ff4420ca))
 
 
 
-# 3.0.0-beta.1 (2024-03-08)
+# 3.0.0-beta.1 (2024-3-8)
 
 
 
-
-
-# 1.1.0 (2024-06-19)
-
-
-### Features
-
-* **nx:** integrate Nx into monorepo for enhanced workflows ([c4763d6](https://github.com/ongov/ontario-frontend/commit/c4763d6deff19bd09cb6023404b83448ff4420ca))
-
-
-
-# 3.0.0-beta.1 (2024-03-08)
