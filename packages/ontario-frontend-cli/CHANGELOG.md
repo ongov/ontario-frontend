@@ -1,4 +1,4 @@
-# [1.1.0](https://github.com/ongov/ontario-frontend/compare/v3.0.0...v1.1.0) (2024-06-19)
+## 1.0.1 (2024-06-19)
 
 
 ### Bug Fixes
@@ -25,12 +25,9 @@
 * handle package.njk deps and devdeps more robustly and add a check script ([6558d0d](https://github.com/ongov/ontario-frontend/commit/6558d0d8c439f432f252268d2534579964548ea8))
 * handle prettier and eslint as boolean for bypass while prompt is a yes/no list ([1d99225](https://github.com/ongov/ontario-frontend/commit/1d99225cc7d813bdfc17c2972e1f2b25d0155ae2))
 * handle the provided appname, validate ([06a8001](https://github.com/ongov/ontario-frontend/commit/06a8001c40451e009739b22d50a64ef54e7b3072))
-* inquiring about and installing ESLint ([#10](https://github.com/ongov/ontario-frontend/issues/10)) ([5c11d7a](https://github.com/ongov/ontario-frontend/commit/5c11d7a7e98fa274adb70bb1532329581dbe9e28))
 * more checks in add/remove, handle all scenarios of installation and files ([b9a2994](https://github.com/ongov/ontario-frontend/commit/b9a29942907b232c195753437db826f84ef1f47e))
 * more modularization, pre-checks and validation, better organization ([ca32280](https://github.com/ongov/ontario-frontend/commit/ca322806ff12411bc60e896d561bf4594f7712f5))
 * **nx:** integrate Nx into monorepo for enhanced workflows ([c4763d6](https://github.com/ongov/ontario-frontend/commit/c4763d6deff19bd09cb6023404b83448ff4420ca))
-* prettier promt, installation, config installation  ([#11](https://github.com/ongov/ontario-frontend/issues/11)) ([0aa2246](https://github.com/ongov/ontario-frontend/commit/0aa2246374d8de2e89f12a5679e067c6c36f7723))
-* refactor to prepare for additional commands and packages ([91d6c6b](https://github.com/ongov/ontario-frontend/commit/91d6c6b628c44e01778c9c0dfcf755cd80ee2c42))
 * update create cmd with eslint and prettier options ([4b10e55](https://github.com/ongov/ontario-frontend/commit/4b10e5534312f015043b96046b99b2c5ff6fd801))
 * update eslint and prettier options to accept true/false ([755ba89](https://github.com/ongov/ontario-frontend/commit/755ba89a1bedada9d164e929500c145a80f34204))
 * update eslint and prettier questions, and the index, for conditionally asking ([b62c2c4](https://github.com/ongov/ontario-frontend/commit/b62c2c49c3d15b416bf82c0ff9bf173ab65825b6))
@@ -40,6 +37,13 @@
 
 
 # 3.0.0-beta.1 (2024-3-8)
+
+
+### Features
+
+* inquiring about and installing ESLint ([#10](https://github.com/ongov/ontario-frontend/issues/10)) ([5c11d7a](https://github.com/ongov/ontario-frontend/commit/5c11d7a7e98fa274adb70bb1532329581dbe9e28))
+* prettier promt, installation, config installation  ([#11](https://github.com/ongov/ontario-frontend/issues/11)) ([0aa2246](https://github.com/ongov/ontario-frontend/commit/0aa2246374d8de2e89f12a5679e067c6c36f7723))
+* refactor to prepare for additional commands and packages ([91d6c6b](https://github.com/ongov/ontario-frontend/commit/91d6c6b628c44e01778c9c0dfcf755cd80ee2c42))
 
 
 

@@ -1,4 +1,4 @@
-# [1.1.0](https://github.com/ongov/ontario-frontend/compare/v3.0.0...v1.1.0) (2024-06-19)
+# 1.0.0 (2024-06-19)
 
 
 ### Bug Fixes
