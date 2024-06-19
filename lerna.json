@@ -5,7 +5,8 @@
   "npmClient": "pnpm",
   "command": {
     "publish": {
-      "ignoreChanges": ["**/__tests__/**", "**/*.md"]
+      "ignoreChanges": ["**/__tests__/**", "**/*.md"],
+      "conventionalCommits": true
     },
     "version": {
       "conventionalCommits": true,
