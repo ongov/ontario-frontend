@@ -1,6 +1,6 @@
 {
   "name": "@ongov/eslint-config-ontario-frontend",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "ESLint configuration for Ontario.ca Frontend projects",
   "scripts": {
     "build": "echo \"No build step defined\"",

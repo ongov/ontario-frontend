@@ -1,12 +1,12 @@
 {
     "name": "@ongov/prettier-config-ontario-frontend",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "prettier": "@ongov/prettier-config-ontario-frontend",
     "description": "Prettier configuration based on Ontario.ca Frontend's coding standards",
     "scripts": {
-      "build": "echo \"No build step defined\"",
-      "lint": "echo \"No lint step defined\"",
-      "test": "echo \"No test step defined\""
+        "build": "echo \"No build step defined\"",
+        "lint": "echo \"No lint step defined\"",
+        "test": "echo \"No test step defined\""
     },
     "keywords": [
         "prettier",
@@ -20,6 +20,6 @@
     "license": "MIT",
     "main": "lib/.prettierrc.json",
     "engines": {
-      "node": ">=18.17.0"
+        "node": ">=18.17.0"
     }
 }
