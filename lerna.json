@@ -9,7 +9,8 @@
       "conventionalCommits": true
     },
     "version": {
-      "conventionalCommits": true
+      "conventionalCommits": true,
+      "message": "chore: update version"
     }
   }
 }
