@@ -97,3 +97,32 @@ Licensed under Apache License 2.0.
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/ongov/ontario-frontend/tags).
+
+### Changes with Lerna
+
+We have integrated [Lerna](https://lerna.js.org/) to manage and streamline the process of versioning and publishing packages independently. Here are the updated development steps involving Lerna:
+
+1. **Bootstrap the Monorepo**
+
+   To install dependencies and link packages:
+
+   ```bash
+   pnpm run bootstrap
+   ```
+
+2. **Version and Publish Packages**
+
+   To update versions based on conventional commits and publish packages:
+
+   ```bash
+   pnpm run update:version
+   pnpm run publish
+   ```
+
+3. **Clean the Monorepo**
+
+   To clean the monorepo by removing `node_modules` and build artifacts:
+
+   ```bash
+   pnpm run clean
+   ```

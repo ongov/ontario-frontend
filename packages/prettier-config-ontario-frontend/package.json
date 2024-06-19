@@ -3,6 +3,11 @@
     "version": "1.0.1",
     "prettier": "@ongov/prettier-config-ontario-frontend",
     "description": "Prettier configuration based on Ontario.ca Frontend's coding standards",
+    "scripts": {
+      "build": "echo \"No build step defined\"",
+      "lint": "echo \"No lint step defined\"",
+      "test": "echo \"No test step defined\""
+    },
     "keywords": [
         "prettier",
         "config",

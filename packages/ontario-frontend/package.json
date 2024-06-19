@@ -2,7 +2,11 @@
   "name": "@ongov/ontario-frontend",
   "version": "1.0.1",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "build": "echo \"No build step defined\"",
+    "lint": "echo \"No lint step defined\"",
+    "test": "echo \"No test step defined\""
+  },
   "author": "Ontario.ca Frontend",
   "keywords": [
     "jamstack",

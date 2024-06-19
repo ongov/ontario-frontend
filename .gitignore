@@ -5,3 +5,7 @@ package-lock.json
 yarn.lock
 .env
 .npm-debug.log
+
+
+.nx/cache
+.nx/workspace-data
