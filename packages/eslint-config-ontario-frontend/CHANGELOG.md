@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0](https://github.com/ongov/ontario-frontend/compare/@ongov/eslint-config-ontario-frontend@1.2.0...@ongov/eslint-config-ontario-frontend@1.1.0) (2024-06-19)
+
+
+### Bug Fixes
+
+* package versions ([492d783](https://github.com/ongov/ontario-frontend/commit/492d783a7b5bad75a8430f3f7fcc27bad2902d28))
+
+
+
+
+
 # 1.2.0 (2024-06-19)
 
 
