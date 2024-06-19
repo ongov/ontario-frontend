@@ -1,0 +1,139 @@
+0 silly argv {
+0 silly argv   _: [ 'version' ],
+0 silly argv   lernaVersion: '8.1.3',
+0 silly argv   '$0': 'node_modules/lerna/dist/cli.js'
+0 silly argv }
+1 notice cli v8.1.3
+2 verbose packageConfigs Explicit "packages" configuration found in lerna.json. Resolving packages using the configured glob(s): ["packages/*","components/**","!**/test/**"]
+3 verbose rootPath /Users/mattstjean/Development/frontend-stuff/ontario-frontend
+4 info versioning independent
+5 silly isAnythingCommitted
+6 verbose isAnythingCommitted 1
+7 silly getCurrentBranch
+8 verbose currentBranch develop
+9 silly remoteBranchExists
+10 silly isBehindUpstream
+11 silly isBehindUpstream develop is behind origin/develop by 0 commit(s) and ahead by 0
+12 silly hasTags
+13 verbose hasTags true
+14 silly git-describe.sync "08b30e6" => {"refCount":"122","sha":"08b30e6","isDirty":false}
+15 info Assuming all packages changed
+16 verbose updated @ongov/eslint-config-ontario-frontend
+17 verbose updated @ongov/ontario-frontend
+18 verbose updated @ongov/ontario-frontend-cli
+19 verbose updated @ongov/prettier-config-ontario-frontend
+20 verbose git-describe undefined => "08b30e6"
+21 silly git-describe parsed => {"refCount":"122","sha":"08b30e6","isDirty":false}
+22 silly independent for @ongov/eslint-config-ontario-frontend at /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/eslint-config-ontario-frontend
+23 verbose getChangelogConfig using preset "conventional-changelog-angular"
+24 silly npa Result {
+24 silly npa   type: 'tag',
+24 silly npa   registry: true,
+24 silly npa   where: undefined,
+24 silly npa   raw: 'conventional-changelog-angular',
+24 silly npa   name: 'conventional-changelog-angular',
+24 silly npa   escapedName: 'conventional-changelog-angular',
+24 silly npa   scope: undefined,
+24 silly npa   rawSpec: '',
+24 silly npa   saveSpec: null,
+24 silly npa   fetchSpec: 'latest',
+24 silly npa   gitRange: undefined,
+24 silly npa   gitCommittish: undefined,
+24 silly npa   hosted: undefined
+24 silly npa }
+25 verbose getChangelogConfig Attempting to resolve preset "conventional-changelog-angular"
+26 info getChangelogConfig Successfully resolved preset "conventional-changelog-angular"
+27 verbose independent increment 1.0.1 by minor
+28 silly independent for @ongov/ontario-frontend at /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/ontario-frontend
+29 verbose independent increment 1.0.1 by minor
+30 silly independent for @ongov/ontario-frontend-cli at /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/ontario-frontend-cli
+31 verbose independent increment 1.1.0 by minor
+32 silly independent for @ongov/prettier-config-ontario-frontend at /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/prettier-config-ontario-frontend
+33 verbose independent increment 1.0.1 by minor
+34 info execute Skipping releases
+35 silly lifecycle No script for "preversion" in "@ongov/ontario-frontend-project", continuing
+36 silly lifecycle No script for "preversion" in "@ongov/eslint-config-ontario-frontend", continuing
+37 silly lifecycle No script for "preversion" in "@ongov/ontario-frontend", continuing
+38 silly lifecycle No script for "preversion" in "@ongov/ontario-frontend-cli", continuing
+39 silly lifecycle No script for "preversion" in "@ongov/prettier-config-ontario-frontend", continuing
+40 verbose version @ongov/eslint-config-ontario-frontend has no lockfile. Skipping lockfile update.
+41 verbose version @ongov/ontario-frontend-cli has no lockfile. Skipping lockfile update.
+42 verbose version @ongov/ontario-frontend has no lockfile. Skipping lockfile update.
+43 verbose version @ongov/prettier-config-ontario-frontend has no lockfile. Skipping lockfile update.
+44 silly lifecycle No script for "version" in "@ongov/eslint-config-ontario-frontend", continuing
+45 silly independent for @ongov/eslint-config-ontario-frontend at /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/eslint-config-ontario-frontend
+46 silly lifecycle No script for "version" in "@ongov/ontario-frontend", continuing
+47 silly independent for @ongov/ontario-frontend at /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/ontario-frontend
+48 silly lifecycle No script for "version" in "@ongov/prettier-config-ontario-frontend", continuing
+49 silly independent for @ongov/prettier-config-ontario-frontend at /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/prettier-config-ontario-frontend
+50 silly lifecycle No script for "version" in "@ongov/ontario-frontend-cli", continuing
+51 silly independent for @ongov/ontario-frontend-cli at /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/ontario-frontend-cli
+52 silly independent writing new entry: "# 1.1.0 (2024-06-19)\n\n\n### Features\n\n* **nx:** integrate Nx into monorepo for enhanced workflows ([c4763d6](https://github.com/ongov/ontario-frontend/commit/c4763d6deff19bd09cb6023404b83448ff4420ca))\n\n\n\n# 3.0.0-beta.1 (2024-03-08)\n\n\n### Features\n\n* prettier promt, installation, config installation  ([#11](https://github.com/ongov/ontario-frontend/issues/11)) ([0aa2246](https://github.com/ongov/ontario-frontend/commit/0aa2246374d8de2e89f12a5679e067c6c36f7723))\n\n\n\n"
+53 silly independent writing new entry: "# 1.1.0 (2024-06-19)\n\n\n### Features\n\n* **nx:** integrate Nx into monorepo for enhanced workflows ([c4763d6](https://github.com/ongov/ontario-frontend/commit/c4763d6deff19bd09cb6023404b83448ff4420ca))\n* Updating the monorepo with Design System v1.8.0 ([e059922](https://github.com/ongov/ontario-frontend/commit/e059922ff78a1cccb3b7ce0141a87c24dcaf5e81))\n\n\n\n# 3.0.0-beta.1 (2024-03-08)\n\n\n\n"
+54 silly independent writing new entry: "# 1.1.0 (2024-06-19)\n\n\n### Features\n\n* **nx:** integrate Nx into monorepo for enhanced workflows ([c4763d6](https://github.com/ongov/ontario-frontend/commit/c4763d6deff19bd09cb6023404b83448ff4420ca))\n\n\n\n# 3.0.0-beta.1 (2024-03-08)\n\n\n\n"
+55 verbose independent wrote /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/eslint-config-ontario-frontend/CHANGELOG.md
+56 verbose independent wrote /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/ontario-frontend/CHANGELOG.md
+57 verbose independent wrote /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/prettier-config-ontario-frontend/CHANGELOG.md
+58 silly independent writing new entry: "# 1.2.0 (2024-06-19)\n\n\n### Bug Fixes\n\n*  prettier config format and extension syntax ([e574e70](https://github.com/ongov/ontario-frontend/commit/e574e701ed7249ea19717b838b82e74d53583e9f))\n* bad import paths ([f8244c5](https://github.com/ongov/ontario-frontend/commit/f8244c5ad69e05cf854a58ef9dafe793e33c4387))\n* errorHandler args passing to error ([fdf0f31](https://github.com/ongov/ontario-frontend/commit/fdf0f3159fcf364cda854e40a55e9a3f8c61ab9b))\n* leftover console logs and errors ([43825bf](https://github.com/ongov/ontario-frontend/commit/43825bfbfb5bb3dbe470a9708f31482fa6873716))\n* missing imports ([29c972f](https://github.com/ongov/ontario-frontend/commit/29c972fa0603ab69062f71e4b9d2af7dac666933))\n* standardize language for url-safe strings ([86187df](https://github.com/ongov/ontario-frontend/commit/86187dff487034d513b9b627c453fe4fbc7cef0e))\n* validation functions ([a0c678b](https://github.com/ongov/ontario-frontend/commit/a0c678bd636af1a4d86bbe31a17792c7b8f0efe2))\n\n\n### Features\n\n* accept appname as a param, create ([5062324](https://github.com/ongov/ontario-frontend/commit/506232435a70228352cb4156a97babbaed903509))\n* add debug statements to handleAddPackage and handleRemovePackage ([a6e3996](https://github.com/ongov/ontario-frontend/commit/a6e399673c7ca411674a5a535417e6811faeb4ff))\n* add info log message for proj name bypass ([1e85d82](https://github.com/ongov/ontario-frontend/commit/1e85d82c5c7272fd0bb22fcfe44e8d0a1adb8472))\n* Add ontario-remove-package command. ([0d71f38](https://github.com/ongov/ontario-frontend/commit/0d71f380bd0622a8813b2e319468b09e4d934ce3))\n* add stacktrace to errorhandler ([384d068](https://github.com/ongov/ontario-frontend/commit/384d068ffc7f0c9425755f3c3aa52f31df2d7774))\n* debug mode and projectname validation during bypass ([6570a5c](https://github.com/ongov/ontario-frontend/commit/6570a5c2d81227f09e8a9b4c052f29a0352a421b))\n* handle bypass page names ([6fe5a4f](https://github.com/ongov/ontario-frontend/commit/6fe5a4f7fe7cc6bc86929a2f35d77de96437c3f4))\n* handle package.njk deps and devdeps more robustly and add a check script ([6558d0d](https://github.com/ongov/ontario-frontend/commit/6558d0d8c439f432f252268d2534579964548ea8))\n* handle prettier and eslint as boolean for bypass while prompt is a yes/no list ([1d99225](https://github.com/ongov/ontario-frontend/commit/1d99225cc7d813bdfc17c2972e1f2b25d0155ae2))\n* handle the provided appname, validate ([06a8001](https://github.com/ongov/ontario-frontend/commit/06a8001c40451e009739b22d50a64ef54e7b3072))\n* more checks in add/remove, handle all scenarios of installation and files ([b9a2994](https://github.com/ongov/ontario-frontend/commit/b9a29942907b232c195753437db826f84ef1f47e))\n* more modularization, pre-checks and validation, better organization ([ca32280](https://github.com/ongov/ontario-frontend/commit/ca322806ff12411bc60e896d561bf4594f7712f5))\n* **nx:** integrate Nx into monorepo for enhanced workflows ([c4763d6](https://github.com/ongov/ontario-frontend/commit/c4763d6deff19bd09cb6023404b83448ff4420ca))\n* update create cmd with eslint and prettier options ([4b10e55](https://github.com/ongov/ontario-frontend/commit/4b10e5534312f015043b96046b99b2c5ff6fd801))\n* update eslint and prettier options to accept true/false ([755ba89](https://github.com/ongov/ontario-frontend/commit/755ba89a1bedada9d164e929500c145a80f34204))\n* update eslint and prettier questions, and the index, for conditionally asking ([b62c2c4](https://github.com/ongov/ontario-frontend/commit/b62c2c49c3d15b416bf82c0ff9bf173ab65825b6))\n* Updated create script to recognize new params (enpage, frpage) ([a537d7c](https://github.com/ongov/ontario-frontend/commit/a537d7c6d4c6ae583e5d1b1e6af2a8e25ee8cf4a))\n* Updating the monorepo with Design System v1.8.0 ([e059922](https://github.com/ongov/ontario-frontend/commit/e059922ff78a1cccb3b7ce0141a87c24dcaf5e81))\n\n\n\n# 3.0.0-beta.1 (2024-03-08)\n\n\n### Features\n\n* inquiring about and installing ESLint ([#10](https://github.com/ongov/ontario-frontend/issues/10)) ([5c11d7a](https://github.com/ongov/ontario-frontend/commit/5c11d7a7e98fa274adb70bb1532329581dbe9e28))\n* prettier promt, installation, config installation  ([#11](https://github.com/ongov/ontario-frontend/issues/11)) ([0aa2246](https://github.com/ongov/ontario-frontend/commit/0aa2246374d8de2e89f12a5679e067c6c36f7723))\n* refactor to prepare for additional commands and packages ([91d6c6b](https://github.com/ongov/ontario-frontend/commit/91d6c6b628c44e01778c9c0dfcf755cd80ee2c42))\n\n\n\n"
+59 verbose independent wrote /Users/mattstjean/Development/frontend-stuff/ontario-frontend/packages/ontario-frontend-cli/CHANGELOG.md
+60 silly lifecycle No script for "version" in "@ongov/ontario-frontend-project", continuing
+61 verbose version Updating root pnpm-lock.yaml
+62 silly gitAdd [
+62 silly gitAdd   'packages/eslint-config-ontario-frontend/package.json',
+62 silly gitAdd   'packages/ontario-frontend/package.json',
+62 silly gitAdd   'packages/prettier-config-ontario-frontend/package.json',
+62 silly gitAdd   'packages/ontario-frontend-cli/package.json',
+62 silly gitAdd   'packages/eslint-config-ontario-frontend/CHANGELOG.md',
+62 silly gitAdd   'packages/ontario-frontend/CHANGELOG.md',
+62 silly gitAdd   'packages/prettier-config-ontario-frontend/CHANGELOG.md',
+62 silly gitAdd   'packages/ontario-frontend-cli/CHANGELOG.md',
+62 silly gitAdd   'pnpm-lock.yaml'
+62 silly gitAdd ]
+63 silly gitCommit chore(release): publish %v
+63 silly gitCommit
+63 silly gitCommit  - @ongov/eslint-config-ontario-frontend@1.1.0
+63 silly gitCommit  - @ongov/ontario-frontend@1.1.0
+63 silly gitCommit  - @ongov/ontario-frontend-cli@1.2.0
+63 silly gitCommit  - @ongov/prettier-config-ontario-frontend@1.1.0
+64 verbose git [
+64 verbose git   'commit',
+64 verbose git   '-F',
+64 verbose git   '/private/var/folders/b7/mm0n17qs4754bcsw0bcf8pj80000gp/T/36cb8ba9-ef90-4e7e-9402-5132dae81a37/lerna-commit.txt'
+64 verbose git ]
+65 silly gitTag @ongov/eslint-config-ontario-frontend@1.1.0 git tag %s -m %s
+66 verbose git [
+66 verbose git   'tag',
+66 verbose git   '@ongov/eslint-config-ontario-frontend@1.1.0',
+66 verbose git   '-m',
+66 verbose git   '@ongov/eslint-config-ontario-frontend@1.1.0'
+66 verbose git ]
+67 silly gitTag @ongov/ontario-frontend@1.1.0 git tag %s -m %s
+68 verbose git [
+68 verbose git   'tag',
+68 verbose git   '@ongov/ontario-frontend@1.1.0',
+68 verbose git   '-m',
+68 verbose git   '@ongov/ontario-frontend@1.1.0'
+68 verbose git ]
+69 silly gitTag @ongov/ontario-frontend-cli@1.2.0 git tag %s -m %s
+70 verbose git [
+70 verbose git   'tag',
+70 verbose git   '@ongov/ontario-frontend-cli@1.2.0',
+70 verbose git   '-m',
+70 verbose git   '@ongov/ontario-frontend-cli@1.2.0'
+70 verbose git ]
+71 silly gitTag @ongov/prettier-config-ontario-frontend@1.1.0 git tag %s -m %s
+72 verbose git [
+72 verbose git   'tag',
+72 verbose git   '@ongov/prettier-config-ontario-frontend@1.1.0',
+72 verbose git   '-m',
+72 verbose git   '@ongov/prettier-config-ontario-frontend@1.1.0'
+72 verbose git ]
+73 error Error: Command failed with exit code 128: git tag @ongov/eslint-config-ontario-frontend@1.1.0 -m @ongov/eslint-config-ontario-frontend@1.1.0
+73 error fatal: tag '@ongov/eslint-config-ontario-frontend@1.1.0' already exists
+73 error     at makeError (/Users/mattstjean/Development/frontend-stuff/ontario-frontend/node_modules/.pnpm/execa@5.0.0/node_modules/execa/lib/error.js:59:11)
+73 error     at handlePromise (/Users/mattstjean/Development/frontend-stuff/ontario-frontend/node_modules/.pnpm/execa@5.0.0/node_modules/execa/index.js:114:26)
+73 error     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+73 error     at async Promise.all (index 0)
+73 error     at async VersionCommand.gitCommitAndTagVersionForUpdates (/Users/mattstjean/Development/frontend-stuff/ontario-frontend/node_modules/.pnpm/lerna@8.1.3/node_modules/lerna/dist/index.js:8536:11)
+73 error     at async VersionCommand.commitAndTagUpdates (/Users/mattstjean/Development/frontend-stuff/ontario-frontend/node_modules/.pnpm/lerna@8.1.3/node_modules/lerna/dist/index.js:8511:18)
+73 error     at async Promise.all (index 0)
