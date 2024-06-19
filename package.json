@@ -7,7 +7,7 @@
     "build": "pnpm --filter './packages/*' run build",
     "test": "pnpm --recursive run test",
     "bootstrap": "pnpm install",
-    "publish": "lerna publish",
+    "publish:lerna": "lerna publish from-package",
     "clean": "pnpm recursive exec rm -rf node_modules dist",
     "check-template-deps": "node packages/ontario-frontend-cli/scripts/check-template-deps.js",
     "update:version": "lerna version",
