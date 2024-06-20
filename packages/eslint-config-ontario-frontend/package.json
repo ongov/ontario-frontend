@@ -20,11 +20,9 @@
   "author": "Ontario.ca Frontend",
   "license": "Apache-2.0",
   "main": "lib/.eslintrc.js",
-  "peerDependencies": {
-    "eslint": "^7.0.0 || ^8.0.0",
-    "eslint-plugin-import": "^2.0.1"
-  },
   "engines": {
     "node": ">=18.17.0"
   }
 }
+
+
