@@ -2,7 +2,9 @@ const path = require('path');
 const {
   PACKAGES_CONFIG,
 } = require('../../core/config');
-const { installPackages } = require('../../core/operations');
+const { installPackages,
+  linkLocalPackages
+ } = require('../../core/operations');
 const logger = require('../../core/utils/logger');
 const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
 const { withErrorHandling } = require('../../core/errors/errorHandler');
@@ -12,9 +14,6 @@ const {
   isPackageInstalled,
   checkExistingConfigFiles,
 } = require('../../core/utils/project/packageUtils');
-const {
-  linkLocalPackages,
-} = require('../../core/operations/npm/install');
 
 /**
  * Add Ontario packages to the project.
