@@ -62,9 +62,17 @@ async function handleAddPackageCommand(cmd = {}, options = {}) {
       logger.debug(`Package configuration: ${JSON.stringify(packageConfig)}`);
       logger.debug(`Project directory: ${projectDir}`);
 
-      await installPackages(packageConfig.packages, true);
+      // Adjust packages for local or remote installation
+      const packagesToInstall = [
+        ...packageConfig.thirdPartyPackages,
+        ...packageConfig.localPackages.map((pkg) =>
+          options.isLocal ? `file:${LOCAL_CORE_DEPENDENCY_DIR}/${pkg}` : pkg,
+        ),
+      ];
+
+      await installPackages(packagesToInstall, true);
       logger.debug(
-        `Packages ${packageConfig.packages.join(', ')} installed successfully.`,
+        `Packages ${packagesToInstall.join(', ')} installed successfully.`,
       );
     }
 
