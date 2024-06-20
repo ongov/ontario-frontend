@@ -82,7 +82,7 @@ async function initializeProgram() {
 async function handleAddPackageAction(cmd, options) {
   logger.setDebug(options.debug);
   logger.debug('CLI options:', options);
-  logger.debug(' CLI command: ', cmd);
+  logger.debug('CLI command: ', cmd);
 
   const projectDir = process.cwd();
 
