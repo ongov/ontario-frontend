@@ -1,5 +1,7 @@
 const path = require('path');
-const { PACKAGES_CONFIG } = require('../../core/config');
+const {
+  PACKAGES_CONFIG,
+} = require('../../core/config');
 const { installPackages } = require('../../core/operations');
 const logger = require('../../core/utils/logger');
 const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
@@ -10,6 +12,9 @@ const {
   isPackageInstalled,
   checkExistingConfigFiles,
 } = require('../../core/utils/project/packageUtils');
+const {
+  linkLocalPackages,
+} = require('../../core/operations/npm/install');
 
 /**
  * Add Ontario packages to the project.
@@ -19,7 +24,11 @@ const {
  *
  */
 async function handleAddPackageCommand(cmd = {}, options = {}) {
-  logger.debug(`Starting handleAddPackageCommand with cmd: ${cmd}, options: ${JSON.stringify(options)}`);
+  logger.debug(
+    `Starting handleAddPackageCommand with cmd: ${cmd}, options: ${JSON.stringify(
+      options,
+    )}`,
+  );
   const packageConfig = PACKAGES_CONFIG[cmd];
   logger.debug(`Package config for ${cmd}: ${JSON.stringify(packageConfig)}`);
 
@@ -65,10 +74,8 @@ async function handleAddPackageCommand(cmd = {}, options = {}) {
       // Adjust packages for local or remote installation
       const packagesToInstall = [
         ...packageConfig.thirdPartyPackages,
-        ...packageConfig.localPackages.map((pkg) =>
-          options.isLocal ? `file:${LOCAL_CORE_DEPENDENCY_DIR}/${pkg}` : pkg,
-        ),
-      ];
+        ...packageConfig.localPackages.map((pkg) => (options.local ? '' : pkg)),
+      ].filter(Boolean); // Filter out empty strings
 
       logger.debug(`Packages to install: ${packagesToInstall.join(', ')}`);
 
@@ -76,6 +83,14 @@ async function handleAddPackageCommand(cmd = {}, options = {}) {
       logger.debug(
         `Packages ${packagesToInstall.join(', ')} installed successfully.`,
       );
+
+      if (options.local) {
+        const packagesToLink = [...packageConfig.localPackages];
+        await linkLocalPackages(packagesToLink, process.cwd());
+        logger.debug(
+          `Packages ${packagesToLink.join(', ')} linked successfully.`,
+        );
+      }
     }
 
     if (configFilesExist) {
