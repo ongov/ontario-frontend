@@ -19,7 +19,7 @@ const {
  *
  */
 async function handleAddPackageCommand(cmd = {}, options = {}) {
-  logger.debug(`Starting handleAddPackageCommand with cmd: ${cmd}`);
+  logger.debug(`Starting handleAddPackageCommand with cmd: ${cmd}, options: ${JSON.stringify(options)}`);
   const packageConfig = PACKAGES_CONFIG[cmd];
   logger.debug(`Package config for ${cmd}: ${JSON.stringify(packageConfig)}`);
 
@@ -70,6 +70,8 @@ async function handleAddPackageCommand(cmd = {}, options = {}) {
         ),
       ];
 
+      logger.debug(`Packages to install: ${packagesToInstall.join(', ')}`);
+
       await installPackages(packagesToInstall, true);
       logger.debug(
         `Packages ${packagesToInstall.join(', ')} installed successfully.`,
@@ -79,6 +81,7 @@ async function handleAddPackageCommand(cmd = {}, options = {}) {
     if (configFilesExist) {
       logger.info(`One or more configuration files for ${cmd} already exist.`);
     } else {
+      logger.debug(`Copying configuration files for ${cmd}...`);
       await handlePackageCopy(path.resolve(projectDir), cmd);
       logger.success(`Configuration files for ${cmd} copied successfully.`);
     }
