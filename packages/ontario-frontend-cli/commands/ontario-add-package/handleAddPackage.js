@@ -15,9 +15,10 @@ const {
  * Add Ontario packages to the project.
  *
  * @param {String} cmd - The name of the package to add (e.g., "eslint" or "prettier").
+ * @param {Object} options - Options for adding the package (e.g., --local flag).
  *
  */
-async function handleAddPackageCommand(cmd = {}) {
+async function handleAddPackageCommand(cmd = {}, options = {}) {
   logger.debug(`Starting handleAddPackageCommand with cmd: ${cmd}`);
   const packageConfig = PACKAGES_CONFIG[cmd];
   logger.debug(`Package config for ${cmd}: ${JSON.stringify(packageConfig)}`);
@@ -46,6 +47,7 @@ async function handleAddPackageCommand(cmd = {}) {
     logger.debug(
       `Package installed status for ${cmd}: ${packageAlreadyInstalled}`,
     );
+
     const configFilesExist = await checkExistingConfigFiles(
       packageConfig.configFiles,
     );

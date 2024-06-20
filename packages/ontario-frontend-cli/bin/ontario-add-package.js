@@ -75,12 +75,14 @@ async function initializeProgram() {
 /**
  * Handle the add package action.
  *
- * @param {string} pkg - The package to add.
- * @param {Object} cmd - The command object containing user inputs and options.
+ * @param {String} cmd - The name of the package to add (e.g., "eslint" or "prettier").
+ * @param {Object} options - Options for adding the package (e.g., --local flag).
+ * 
  */
-async function handleAddPackageAction(pkg, cmd) {
-  logger.setDebug(cmd.debug);
-  logger.debug('CLI options:', cmd);
+async function handleAddPackageAction(cmd, options) {
+  logger.setDebug(options.debug);
+  logger.debug('CLI options:', options);
+  logger.debug(' CLI command: ', cmd);
 
   const projectDir = process.cwd();
 
@@ -97,7 +99,7 @@ async function handleAddPackageAction(pkg, cmd) {
   }
 
   try {
-    await handleAddPackageCommand(pkg);
+    await handleAddPackageCommand(cmd, options);
   } catch (error) {
     logger.error(`Error installing package: ${error.message}`);
     process.exit(1);
