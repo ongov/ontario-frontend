@@ -1,10 +1,6 @@
 const path = require('path');
-const {
-  PACKAGES_CONFIG,
-} = require('../../core/config');
-const { installPackages,
-  linkLocalPackages
- } = require('../../core/operations');
+const { PACKAGES_CONFIG } = require('../../core/config');
+const { installPackages, linkLocalPackages } = require('../../core/operations');
 const logger = require('../../core/utils/logger');
 const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
 const { withErrorHandling } = require('../../core/errors/errorHandler');

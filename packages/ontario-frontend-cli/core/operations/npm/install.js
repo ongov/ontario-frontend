@@ -1,6 +1,7 @@
 const { LOCAL_CORE_DEPENDENCY_DIR } = require('../../config');
-const { withErrorHandling } = require('../../errors/errorHandler');
+const PackageLinkError = require('../../errors/PackageLinkError');
 const PackageInstallationError = require('../../errors/PackageInstallationError');
+const { withErrorHandling } = require('../../errors/errorHandler');
 const { spawnAsync } = require('../../utils');
 const logger = require('../../utils/logger');
 
@@ -49,13 +50,34 @@ async function installAllPackages(projectPath) {
 /**
  * Runs `npm link` for local packages.
  *
- * @param {String} pkg - The name of the package to link.
+ * @param {Array} packages - The names of the packages to link.
+ * @param {String} cwd - The current working directory.
  */
-async function linkLocalPackages(pkg, { cwd = '' } = {}) {
+async function linkLocalPackages(packages, cwd = '') {
   const command = 'npm';
 
-  for (pkgName of pkg) {
-    const args = ['link', pkg];
+  for (const pkgName of packages) {
+    // Check if the package is already linked globally
+    const { stdout } = await spawnAsync(command, ['ls', '-g', '--depth=0'], {});
+    if (stdout.includes(pkgName)) {
+      // Unlink the globally linked package to avoid conflicts
+      await spawnAsync(command, ['unlink', pkgName], { cwd });
+      logger.info(`${pkgName} unlinked globally to avoid conflicts.`);
+    }
+
+    // Check if the package is already linked locally
+    const { stdout: localLinks } = await spawnAsync(
+      command,
+      ['ls', '--depth=0'],
+      { cwd },
+    );
+    if (localLinks.includes(pkgName)) {
+      logger.info(`${pkgName} is already linked locally.`);
+      continue;
+    }
+
+    // Link the local package
+    const args = ['link', pkgName];
     await spawnAsync(command, args, { cwd });
     logger.success(`${pkgName} successfully linked locally.`);
   }
@@ -68,8 +90,5 @@ module.exports = {
     installAllPackages,
     PackageInstallationError,
   ),
-  linkLocalPackages: withErrorHandling(
-    linkLocalPackages,
-    PackageInstallationError,
-  ),
+  linkLocalPackages: withErrorHandling(linkLocalPackages, PackageLinkError),
 };
