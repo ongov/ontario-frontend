@@ -64,14 +64,14 @@ async function isOntarioFrontendProject(dir = process.cwd()) {
  * @param {Array} configFiles - List of configuration files to check.
  * @returns {Promise<boolean>} - Returns true if any configuration file exists, otherwise false.
  */
-async function checkExistingConfigFiles(configFiles) {
+async function checkExistingConfigFiles(configFiles, noWarning) {
   let anyConfigFileExists = false;
   for (const { destination, warningMessage } of configFiles) {
     try {
       await fs.access(destination);
       anyConfigFileExists = true;
       logger.warning(
-        warningMessage || `Configuration file ${destination} already exists.`,
+        noWarning ? `${destination} exists.` : warningMessage
       );
     } catch (err) {
       // File does not exist, no action needed

@@ -9,7 +9,7 @@ const SpawnProcessError = require('../../errors/SpawnProcessError'); // Import t
  * @param {string} command - The command to run.
  * @param {Array<string>} args - The arguments to pass to the command.
  * @param {Object} [options={}] - Options to pass to the spawn function.
- * @returns {Promise<void>} A promise that resolves when the command completes successfully or rejects on failure.
+ * @returns {Promise<{stdout: string, stderr: string}>} A promise that resolves with the command output or rejects on failure.
  */
 async function spawnAsync(command, args, options = {}) {
   logger.debug(
@@ -18,14 +18,28 @@ async function spawnAsync(command, args, options = {}) {
   );
 
   return new Promise((resolve, reject) => {
-    const subprocess = spawn(command, args, { stdio: 'inherit', ...options });
+    let stdout = '';
+    let stderr = '';
+
+    const subprocess = spawn(command, args, {
+      stdio: ['pipe', 'pipe', 'pipe'],
+      ...options,
+    });
+
+    subprocess.stdout.on('data', (data) => {
+      stdout += data.toString();
+    });
+
+    subprocess.stderr.on('data', (data) => {
+      stderr += data.toString();
+    });
 
     subprocess.on('close', (code) => {
       if (code === 0) {
         logger.debug(
           `Command "${command} ${args.join(' ')}" completed successfully.`,
         );
-        resolve();
+        resolve({ stdout, stderr });
       } else {
         logger.error(
           `Command "${command} ${args.join(' ')}" exited with code ${code}.`,

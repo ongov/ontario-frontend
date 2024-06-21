@@ -2,7 +2,7 @@ const { copy } = require('./file/copy');
 const { ensureDirectoryExists } = require('./file/ensureDirectoryExists');
 const { remove } = require('./file/remove');
 const { write } = require('./file/write');
-const { installPackages, installAllPackages } = require('./npm/install');
+const { installPackages, installAllPackages, linkLocalPackages } = require('./npm/install');
 const { uninstallPackages } = require('./npm/uninstall');
 
 module.exports = {
@@ -14,5 +14,6 @@ module.exports = {
   // NPM operations
   installPackages,
   installAllPackages,
+  linkLocalPackages,
   uninstallPackages
 };

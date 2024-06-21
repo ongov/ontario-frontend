@@ -1,6 +1,6 @@
 {
   "name": "@ongov/eslint-config-ontario-frontend",
-  "version": "1.1.0",
+  "version": "9.0.0",
   "description": "ESLint configuration for Ontario.ca Frontend projects",
   "scripts": {
     "build": "echo \"No build step defined\"",
@@ -20,11 +20,9 @@
   "author": "Ontario.ca Frontend",
   "license": "Apache-2.0",
   "main": "lib/.eslintrc.js",
-  "peerDependencies": {
-    "eslint": "^7.0.0 || ^8.0.0",
-    "eslint-plugin-import": "^2.0.1"
-  },
   "engines": {
     "node": ">=18.17.0"
   }
 }
+
+

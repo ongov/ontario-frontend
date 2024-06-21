@@ -7,10 +7,12 @@
         "warningMessage": ".eslintrc.js file already present. Please add \"extends\": \"@ongov/eslint-config-ontario-frontend\" to your existing file."
       }
     ],
-    "packages": [
-      "eslint",
-      "eslint-plugin-import",
+    "localPackages": [
       "@ongov/eslint-config-ontario-frontend"
+    ],
+    "thirdPartyPackages": [
+      "eslint",
+      "eslint-plugin-import"
     ]
   }
 }

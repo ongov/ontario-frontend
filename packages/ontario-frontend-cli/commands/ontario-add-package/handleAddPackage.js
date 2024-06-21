@@ -1,6 +1,6 @@
 const path = require('path');
 const { PACKAGES_CONFIG } = require('../../core/config');
-const { installPackages } = require('../../core/operations');
+const { installPackages, linkLocalPackages } = require('../../core/operations');
 const logger = require('../../core/utils/logger');
 const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
 const { withErrorHandling } = require('../../core/errors/errorHandler');
@@ -15,10 +15,15 @@ const {
  * Add Ontario packages to the project.
  *
  * @param {String} cmd - The name of the package to add (e.g., "eslint" or "prettier").
+ * @param {Object} options - Options for adding the package (e.g., --local flag).
  *
  */
-async function handleAddPackageCommand(cmd = {}) {
-  logger.debug(`Starting handleAddPackageCommand with cmd: ${cmd}`);
+async function handleAddPackageCommand(cmd = {}, options = {}) {
+  logger.debug(
+    `Starting handleAddPackageCommand with cmd: ${cmd}, options: ${JSON.stringify(
+      options,
+    )}`,
+  );
   const packageConfig = PACKAGES_CONFIG[cmd];
   logger.debug(`Package config for ${cmd}: ${JSON.stringify(packageConfig)}`);
 
@@ -46,6 +51,7 @@ async function handleAddPackageCommand(cmd = {}) {
     logger.debug(
       `Package installed status for ${cmd}: ${packageAlreadyInstalled}`,
     );
+
     const configFilesExist = await checkExistingConfigFiles(
       packageConfig.configFiles,
     );
@@ -60,15 +66,32 @@ async function handleAddPackageCommand(cmd = {}) {
       logger.debug(`Package configuration: ${JSON.stringify(packageConfig)}`);
       logger.debug(`Project directory: ${projectDir}`);
 
-      await installPackages(packageConfig.packages, true);
+      // Adjust packages for local or remote installation
+      const packagesToInstall = [
+        ...packageConfig.thirdPartyPackages,
+        ...packageConfig.localPackages.map((pkg) => (options.local ? '' : pkg)),
+      ].filter(Boolean); // Filter out empty strings
+
+      logger.debug(`Packages to install: ${packagesToInstall.join(', ')}`);
+
+      await installPackages(packagesToInstall, true);
       logger.debug(
-        `Packages ${packageConfig.packages.join(', ')} installed successfully.`,
+        `Packages ${packagesToInstall.join(', ')} installed successfully.`,
       );
+
+      if (options.local) {
+        const packagesToLink = [...packageConfig.localPackages];
+        await linkLocalPackages(packagesToLink, process.cwd());
+        logger.debug(
+          `Packages ${packagesToLink.join(', ')} linked successfully.`,
+        );
+      }
     }
 
     if (configFilesExist) {
       logger.info(`One or more configuration files for ${cmd} already exist.`);
     } else {
+      logger.debug(`Copying configuration files for ${cmd}...`);
       await handlePackageCopy(path.resolve(projectDir), cmd);
       logger.success(`Configuration files for ${cmd} copied successfully.`);
     }

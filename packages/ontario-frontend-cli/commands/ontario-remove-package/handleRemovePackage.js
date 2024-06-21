@@ -72,6 +72,7 @@ async function handleRemovePackageCommand(cmd = {}) {
   logger.debug(`Package installed status for ${cmd}: ${packageInstalled}`);
   const configFilesExist = await checkExistingConfigFiles(
     packageConfig.configFiles,
+    true
   );
   logger.debug(`Config files existence status for ${cmd}: ${configFilesExist}`);
 
@@ -82,9 +83,13 @@ async function handleRemovePackageCommand(cmd = {}) {
   }
 
   try {
+    const packagesToUninstall = [
+      ...packageConfig.thirdPartyPackages,
+      ...packageConfig.localPackages
+    ]
     // Uninstall the necessary packages
-    logger.info(`Removing packages: ${packageConfig.packages.join(', ')}`);
-    await uninstallPackages(packageConfig.packages, true, {
+    logger.info(`Removing packages: ${packagesToUninstall.join(', ')}`);
+    await uninstallPackages(packagesToUninstall, true, {
       cwd: projectDir,
     });
 
