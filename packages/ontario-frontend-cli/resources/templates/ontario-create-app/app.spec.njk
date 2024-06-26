@@ -1,0 +1,91 @@
+{# Unit tests for projects created using Ontario Frontend #}
+/**
+ * Unit tests that check if the site and application level files were generated properly
+ */
+const chai = require('chai');
+const fs = require('fs');
+const path = require('path');
+
+const assert = chai.assert;
+const existsSync = fs.existsSync;
+
+/**
+ * Helper function to check file existence
+ * @param {string} filePath - The path of the file to check.
+ * @param {string} description - The description of the file.
+ * @param {string} customErrorMessage - Optional custom error message.
+ *
+ * @returns {boolean} TRUE/FALSE value based on if the file was found or
+ */
+function checkFileExists(filePath, description, customErrorMessage) {
+  it(description, function () {
+    assert(
+      existsSync(filePath),
+      `File does not exist: ${filePath} \n ${customErrorMessage}`,
+    );
+  });
+}
+
+/**
+ * 1. Checks if the top level redirect page exists.
+ * 2. The main English template was generated.
+ * 3. The main French template was generated.
+ * 4. The sitemap template was generated.
+ *
+ * @param {string} redirectPage - The path and name of the redirect page in dist.
+ * @param {string} enPage - Name of the English page template.
+ * @param {string} frPage - Name of the French page template.
+ * The page names can also be transferred from the CLI prompts, if required.
+ * @param {string} sitemap - Path and name of the sitemap template.
+ * 
+ * @returns {boolean} Based on the test, the result will either be TRUE or FALSE.
+ * @example
+ * describe("file exists", function () {
+    it("the required file should exist", function () {
+      assert(existsSync(`${projectDir}required-file-name`));
+    });
+  });
+ */
+
+// Directories
+const testDir = path.resolve(__dirname, '..');
+const projectDir = path.resolve(testDir, '../..');
+
+// Page file names
+const enFile = "{{ enPage }}.njk"; // UPDATE if changed
+const frFile = "{{ frPage }}.njk"; // UPDATE if changed
+
+// File paths
+const paths = {
+  redirectPage: path.join(projectDir, 'dist/index.html'),
+  enPage: path.join(projectDir, `src/${enFile}`),
+  frPage: path.join(projectDir, `src/${frFile}`),
+  sitemap: path.join(projectDir, 'src/sitemap.njk'),
+};
+
+describe('Unit: App files generation', function () {
+  describe('Top-level redirect page present', function () {
+    checkFileExists(
+      paths.redirectPage,
+      'should generate a top-level redirect page',
+      "Make sure to run 'npm run build' before running this test",
+    );
+  });
+  describe('English-language template page present', function () {
+    checkFileExists(
+      paths.enPage,
+      'should generate the main English page',
+      "Make sure your main *English njk page name has not changed \n If changed, update the page name in file 'src/tests/_unit/app.spec.js' (enFile)",
+    );
+  });
+  describe('French-language template page present', function () {
+    checkFileExists(
+      paths.frPage,
+      'should generate the main French page',
+      "Make sure your main *French njk page name has not changed \n If changed, update the page name in file 'src/tests/_unit/app.spec.js' (frFile)",
+    );
+  });
+  describe('Sitemap present', function () {
+    checkFileExists(paths.sitemap, 'should generate the sitemap page', '');
+  });
+});

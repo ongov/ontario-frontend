@@ -38,6 +38,7 @@ const ontarioCreateAppTemplates = (answers) => [
   { template: 'fr.njk', outputDir: 'src', outputFile: `${answers.frPage}.njk` },
   { template: 'sitemap.njk', outputDir: 'src', outputFile: 'sitemap.njk' },
   { template: 'globals.njk', outputDir: 'src/_data', outputFile: 'globals.js' },
+  { template: 'app.spec.njk', outputDir: 'src/tests/_unit', outputFile: 'app.spec.js' },
 ];
 
 module.exports = {

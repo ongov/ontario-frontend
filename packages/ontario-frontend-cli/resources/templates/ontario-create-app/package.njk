@@ -6,7 +6,8 @@
   "scripts": {
     "build": "rm -rf dist && eleventy",
     "debug": "rm -rf dist && DEBUG=* eleventy",
-    "serve": "eleventy --serve"{% if addESLint %},
+    "serve": "eleventy --serve",
+    "test": "npm list mocha chai || npm install mocha chai@4.4.1; mocha './src/tests/**/*.spec.js'"{% if addESLint %},
     "lint": "eslint . --ext .js"{% endif %}{% if addPrettier %},
     "format": "prettier --write ."{% endif %}
   },
