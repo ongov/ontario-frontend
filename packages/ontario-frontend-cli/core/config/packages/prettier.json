@@ -12,7 +12,6 @@
         "warningMessage": ".prettierrc.js file already present. Please add \"...@ongov/prettier-config-ontario-frontend\" to your existing file."
       }
     ],
-    "installName": "@ongov/prettier-config-ontario-frontend",
     "packages": [
       "prettier",
       "@ongov/prettier-config-ontario-frontend"
