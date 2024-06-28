@@ -1,9 +1,7 @@
 const { PACKAGES_CONFIG } = require('../../config');
-const { question } = require('../../utils/styling/textStyling');
 
-let packageChoices = Object.entries(PACKAGES_CONFIG).map((o) => o.map((i) => Object.entries(i).find(([key, value]) => key === "installName")).flat().pop());
-
-
+// Grab selection objects from PACKAGES_CONFIG top level keys
+const packageChoices = Object.keys(PACKAGES_CONFIG);
 
 const addPackagesQuestion = (cmd) => {
   return {
