@@ -1,0 +1,77 @@
+{# Integration tests for projects created using Ontario Frontend #}/**
+ * Integration tests that check if the required and selected node modules were installed
+ */
+const { expect } = require("chai");
+
+/** Tests for required and optional packages
+ * 1. Checks if the required ontario-frontend core package is installed.
+ * 2. If selected, the optional ES-Lint or Prettier packages were installed with their associated packages and dependencies.
+ *
+ * @param {string} package - Name of the node package/module.
+ * @param {object} optionalPackages - Name of the optional packages like ES-lint and Prettier.
+ * @param {boolean} optionalPackages.enabled - Boolean value if the optional packages were selected or not through the CLI prompt.
+ * @param {array} optionalPackages.packages - A list of associated packages for a parent package.
+ * The boolean value should be captured from the CLI prompts.
+ * 
+ * @returns {boolean} Based on the test, the result will either be TRUE or FALSE (error).
+ * @example
+ * it(`The core package "${package}" should be installed`, function () {
+      try {
+        require.resolve(package);
+      } catch (e) {
+        expect.fail(`Failed: to detect the package: "${package}"`);
+      }
+    });
+ */
+
+describe('Integration: Installed packages', function () {
+  // Array of required packages
+  const requiredPackages = ['@ongov/ontario-frontend'];
+
+  // Testing the required packages
+  requiredPackages.forEach((package) => {
+    it(`The core package "${package}" should be installed`, function () {
+      try {
+        require.resolve(package);
+      } catch (e) {
+        expect.fail(`Failed: to detect the package: "${package}"`);
+      }
+    });
+  });
+
+  // The optional packages and their associated packages
+  const optionalPackages = {
+    eslint: {
+      enabled: {{ addESLint }},
+      packages: [
+        'eslint',
+        'eslint-plugin-import',
+        '@ongov/eslint-config-ontario-frontend',
+      ],
+    },
+    prettier: {
+      enabled: {{ addPrettier }},
+      packages: [
+        'prettier',
+        '@ongov/prettier-config-ontario-frontend'
+      ],
+    },
+  };
+
+  // Testing optional packages with their associated packages and dependencies
+  for (const [parentPackage, config] of Object.entries(optionalPackages)) {
+    if (config.enabled) {
+      config.packages.forEach((pkg) => {
+        it(`The package "${pkg}" should be installed for "${parentPackage}"`, function () {
+          try {
+            require.resolve(pkg);
+          } catch (e) {
+            expect.fail(
+              `Failed: couldn't locate the package: "${pkg}" for "${parentPackage}"`,
+            );
+          }
+        });
+      });
+    }
+  }
+});
