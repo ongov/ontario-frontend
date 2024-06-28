@@ -1,5 +1,5 @@
 {
-  "eslint": {
+  "@ongov/eslint-config-ontario-frontend": {
     "configFiles": [
       {
         "source": "eslint-config/.eslintrc.js",

@@ -16,8 +16,6 @@ async function installPackages(packageNames, devFlag = false, { cwd = '' } = {})
   const command = 'npm';
   const args = ['install', devFlag ? '--save-dev' : '', ...packageNames].filter(Boolean); // filter to remove empty strings
 
-  logger.debug(`Installing packages: ${packageNames.join(', ')} with devFlag=${devFlag} in directory=${cwd}`);
-
   await spawnAsync(command, args, { cwd });
   packageNames.forEach((packageName) => logger.success(`${packageName} successfully installed.`));
 }

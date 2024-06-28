@@ -41,7 +41,7 @@ async function isPackageInstalled(dir, packageName) {
     const packageJson = await readPackageJson(dir);
     return !!(
       packageJson.dependencies && packageJson.dependencies[packageName]
-    );
+    ) || !!(packageJson.devDependencies && packageJson.devDependencies[packageName]);
   } catch (error) {
     logger.error(`Failed to read package.json: ${error.message}`);
     return false;

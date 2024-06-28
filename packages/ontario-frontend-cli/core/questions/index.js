@@ -4,6 +4,7 @@ const eslintQuestion = require('./ontario-create-app/eslintQuestion');
 const prettierQuestion = require('./ontario-create-app/prettierQuestion');
 
 const removePackageQuestion = require('./ontario-remove-package/removePackageQuestion');
+const addPackagesQuestion = require('./ontario-add-package/addPackagesQuestion');
 
 /**
  * Generates the list of questions to be asked during the project creation process.
@@ -38,5 +39,6 @@ const ontarioRemovePackageQuestions = (cmd) => [
 
 module.exports = {
   createOntarioAppQuestions,
-  ontarioRemovePackageQuestions 
+  ontarioRemovePackageQuestions,
+  addPackagesQuestion
 };

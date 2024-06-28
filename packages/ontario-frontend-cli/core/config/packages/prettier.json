@@ -1,5 +1,5 @@
 {
-  "prettier": {
+  "@ongov/prettier-config-ontario-frontend": {
     "configFiles": [
       {
         "source": "prettier-config/.prettierignore",
