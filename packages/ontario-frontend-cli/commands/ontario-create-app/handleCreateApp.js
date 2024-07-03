@@ -222,13 +222,13 @@ async function copyOptionalConfig(newProjectPath, conf) {
   if (conf.addESLint) {
     logger.info('Copying ESLint config files');
     logger.debug('Copying ESLint config files to', newProjectPath);
-    await handlePackageCopy(newProjectPath, 'eslint');
+    await handlePackageCopy(newProjectPath, '@ongov/eslint-config-ontario-frontend');
     logger.debug('ESLint config files copied successfully.');
   }
   if (conf.addPrettier) {
     logger.info('Copying Prettier config files');
     logger.debug('Copying Prettier config files to', newProjectPath);
-    await handlePackageCopy(newProjectPath, 'prettier');
+    await handlePackageCopy(newProjectPath, '@ongov/prettier-config-ontario-frontend');
     logger.debug('Prettier config files copied successfully.');
   }
 }
