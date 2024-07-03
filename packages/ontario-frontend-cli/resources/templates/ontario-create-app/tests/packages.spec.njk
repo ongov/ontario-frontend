@@ -1,7 +1,12 @@
 {# Integration tests for projects created using Ontario Frontend #}/**
  * Integration tests that check if the required and selected node modules were installed
  */
+/**
+ * Integration tests that check if the required and selected node modules were installed
+ */
 const { expect } = require("chai");
+const fs = require("fs");
+const path = require("path");
 
 /** Tests for required and optional packages
  * 1. Checks if the required ontario-frontend core package is installed.
@@ -14,27 +19,38 @@ const { expect } = require("chai");
  * The boolean value should be captured from the CLI prompts.
  * 
  * @returns {boolean} Based on the test, the result will either be TRUE or FALSE (error).
- * @example
- * it(`The core package "${package}" should be installed`, function () {
-      try {
-        require.resolve(package);
-      } catch (e) {
-        expect.fail(`Failed: to detect the package: "${package}"`);
-      }
-    });
  */
 
-describe('Integration: Installed packages', function () {
-  // Array of required packages
-  const requiredPackages = ['@ongov/ontario-frontend'];
+// A utility function to read package.json
+const readPackageJson = () => {
+  const packageJsonPath = path.resolve(__dirname, "../../..", "package.json");
+  return JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
+};
+
+// Checks if a package exists in package.json both in dependencies and dev dependencies
+const isPackageInstalled = (pkg) => {
+  const packageJson = readPackageJson();
+  return (
+    (packageJson.dependencies &&
+      packageJson.dependencies.hasOwnProperty(pkg)) ||
+    (packageJson.devDependencies &&
+      packageJson.devDependencies.hasOwnProperty(pkg))
+  );
+};
+
+describe("Integration: Installed packages", function () {
+  // Array of required packages – can add more to the list
+  const requiredPackages = ["@ongov/ontario-frontend"];
 
   // Testing the required packages
-  requiredPackages.forEach((package) => {
-    it(`The core package "${package}" should be installed`, function () {
+  requiredPackages.forEach((pkg) => {
+    it(`The core package "${pkg}" should be installed`, function () {
       try {
-        require.resolve(package);
+        if (!isPackageInstalled(pkg)) {
+          throw new Error();
+        }
       } catch (e) {
-        expect.fail(`Failed: to detect the package: "${package}"`);
+        expect.fail(`Failed: to detect the required package: "${pkg}"`);
       }
     });
   });
@@ -44,17 +60,14 @@ describe('Integration: Installed packages', function () {
     eslint: {
       enabled: {{ addESLint }},
       packages: [
-        'eslint',
-        'eslint-plugin-import',
-        '@ongov/eslint-config-ontario-frontend',
+        "eslint",
+        "eslint-plugin-import",
+        "@ongov/eslint-config-ontario-frontend",
       ],
     },
     prettier: {
       enabled: {{ addPrettier }},
-      packages: [
-        'prettier',
-        '@ongov/prettier-config-ontario-frontend'
-      ],
+      packages: ["prettier", "@ongov/prettier-config-ontario-frontend"],
     },
   };
 
@@ -64,7 +77,9 @@ describe('Integration: Installed packages', function () {
       config.packages.forEach((pkg) => {
         it(`The package "${pkg}" should be installed for "${parentPackage}"`, function () {
           try {
-            require.resolve(pkg);
+            if (!isPackageInstalled(pkg)) {
+              throw new Error();
+            }
           } catch (e) {
             expect.fail(
               `Failed: couldn't locate the package: "${pkg}" for "${parentPackage}"`,
