@@ -38,8 +38,14 @@ const ontarioCreateAppTemplates = (answers) => [
   { template: 'fr.njk', outputDir: 'src', outputFile: `${answers.frPage}.njk` },
   { template: 'sitemap.njk', outputDir: 'src', outputFile: 'sitemap.njk' },
   { template: 'globals.njk', outputDir: 'src/_data', outputFile: 'globals.js' },
-  { template: '/tests/app.spec.njk', outputDir: 'src/tests/_unit', outputFile: 'app.spec.js' },
-  { template: '/tests/packages.spec.njk', outputDir: 'src/tests/integration', outputFile: 'packages.spec.js' },
+  { template: 'env.njk', outputDir: '', outputFile: '.env' },
+  { template: 'gitignore.njk', outputDir: '', outputFile: '.gitignore' },
+  { template: '/tests/unit/app.spec.njk', outputDir: 'src/tests/_unit', outputFile: 'app.spec.js' },
+  { template: '/tests/integration/packages.spec.njk', outputDir: 'src/tests/integration', outputFile: 'packages.spec.js' },
+  { template: '/tests/e2e/nightwatch.conf.njk', outputDir: '', outputFile: 'nightwatch.conf.js' },
+  { template: '/tests/e2e/prompt.spec.njk', outputDir: 'src/tests/e2e', outputFile: '_prompt.spec.js' },
+  { template: '/tests/e2e/localization.spec.njk', outputDir: 'src/tests/e2e', outputFile: 'localization.spec.js' },
+  { template: '/tests/e2e/search.spec.njk', outputDir: 'src/tests/e2e', outputFile: 'search.spec.js' }
 ];
 
 module.exports = {
