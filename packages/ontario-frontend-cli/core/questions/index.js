@@ -3,8 +3,10 @@ const languagePageQuestions = require('./ontario-create-app/languagePageQuestion
 const eslintQuestion = require('./ontario-create-app/eslintQuestion');
 const prettierQuestion = require('./ontario-create-app/prettierQuestion');
 
-const removePackageQuestion = require('./ontario-remove-package/removePackageQuestion');
 const addPackagesQuestion = require('./ontario-add-package/addPackagesQuestion');
+
+const removePackagesQuestion = require('./ontario-remove-package/removePackagesQuestion');
+const confirmRemovalQuestion = require('./ontario-remove-package/confirmRemovalQuestion');
 
 /**
  * Generates the list of questions to be asked during the project creation process.
@@ -33,12 +35,15 @@ const createOntarioAppQuestions = (askQuestions) => [
  * @param {String|Object} cmd - The input value from the user when running the 
  * ontario-remove-package command. e.g. "eslint" or "prettier".
  */
-const ontarioRemovePackageQuestions = (cmd) => [
-  removePackageQuestion(cmd),
+const ontarioRemovePackageQuestions = () => [
+  removePackagesQuestion
+  // confirmRemovalQuestion(cmd),
 ];
 
 module.exports = {
   createOntarioAppQuestions,
   ontarioRemovePackageQuestions,
-  addPackagesQuestion
+  addPackagesQuestion,
+  removePackagesQuestion,
+  confirmRemovalQuestion
 };
