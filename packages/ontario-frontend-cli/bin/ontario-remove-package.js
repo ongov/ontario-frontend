@@ -37,12 +37,6 @@ async function initializeProgram() {
     );
 
     program
-      .addArgument(
-        new Argument('<package>', 'An Ontario package').choices([
-          'eslint',
-          'prettier',
-        ]),
-      )
       .option(
         '--local',
         'Use a local version of the Ontario package dependency',
@@ -75,10 +69,9 @@ async function initializeProgram() {
 /**
  * Handle the remove package action.
  *
- * @param {string} pkg - The package to remove.
  * @param {Object} cmd - The command object containing user inputs and options.
  */
-async function handleRemovePackageAction(pkg, cmd) {
+async function handleRemovePackageAction(cmd) {
   logger.setDebug(cmd.debug);
   logger.debug('CLI options:', cmd);
 
@@ -97,7 +90,7 @@ async function handleRemovePackageAction(pkg, cmd) {
   }
 
   try {
-    await handleRemovePackageCommand(pkg);
+    await handleRemovePackageCommand();
   } catch (error) {
     logger.error(`Error uninstalling package: ${error.message}`);
     process.exit(1);
