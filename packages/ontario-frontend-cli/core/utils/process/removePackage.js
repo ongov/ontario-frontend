@@ -14,13 +14,13 @@ const PackageUninstallationError = require('../../errors/PackageUninstallationEr
  * @throws {PackageUninstallationError} Will throw an error if the package configuration is not found or any remove operation fails.
  * @returns {Promise<void>}
  */
-async function handleRemovePackage(filePath, packageName) {
+async function handlePackageFilesRemoval(filePath, packageName) {
   const packageFiles = PACKAGES_CONFIG[packageName]?.configFiles;
 
   if (!Array.isArray(packageFiles)) {
     const errorMessage = `Package configuration for ${packageName} not found.`;
     logger.error(errorMessage);
-    throw new PackageUninstallationError('handleRemovePackage', [filePath, packageName], errorMessage);
+    throw new PackageUninstallationError('handlePackageFilesRemoval', [filePath, packageName], errorMessage);
   }
 
   const filesToRemove = packageFiles.map((file) => ({
@@ -34,8 +34,8 @@ async function handleRemovePackage(filePath, packageName) {
 }
 
 module.exports = {
-  handleRemovePackage: withErrorHandling(
-    handleRemovePackage,
+  handlePackageFilesRemoval: withErrorHandling(
+    handlePackageFilesRemoval,
     PackageUninstallationError,
   ),
 };
