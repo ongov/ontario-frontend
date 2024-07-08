@@ -154,7 +154,7 @@ async function handleRemovePackageCommand() {
       );
       if (await doesFileExist(configFile.destination)) {
         logger.info(`Removing configuration file: ${configFile.destination}`);
-        await handleRemovePackage(path.resolve(projectDir), cmd);
+        await handlePackageFilesRemoval(path.resolve(projectDir), cmd);
       }
     }
 
