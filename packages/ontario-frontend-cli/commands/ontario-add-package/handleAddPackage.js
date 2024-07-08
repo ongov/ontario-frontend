@@ -5,7 +5,7 @@ const { installPackages } = require('../../core/operations');
 const { addPackagesQuestion } = require('../../core/questions');
 const { extractChildObjectValuesByKey } = require('../../core/utils/datastructures/objectUtils');
 const logger = require('../../core/utils/logger');
-const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
+const { handlePackageFilesCopy } = require('../../core/utils/process/copyPackage');
 const { withErrorHandling } = require('../../core/errors/errorHandler');
 const AddPackageError = require('../../core/errors/AddPackageError');
 const {
@@ -122,7 +122,7 @@ async function handleAddPackageCommand() {
       if (configFilesExist) {
         logger.info(`One or more configuration files for ${package} already exist.`);
       } else {
-        await handlePackageCopy(path.resolve(projectDir), package);
+        await handlePackageFilesCopy(path.resolve(projectDir), package);
         logger.success(`Configuration files for ${package} copied successfully.`);
       }
     } catch (error) {

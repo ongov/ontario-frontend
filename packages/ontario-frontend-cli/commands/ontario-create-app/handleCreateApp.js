@@ -5,7 +5,7 @@ const {
   copy,
   installAllPackages,
 } = require('../../core/operations');
-const { handlePackageCopy } = require('../../core/utils/process/copyPackage');
+const { handlePackageFilesCopy } = require('../../core/utils/process/copyPackage');
 const { textStyling } = require('../../core/utils');
 const logger = require('../../core/utils/logger');
 const {
@@ -222,13 +222,13 @@ async function copyOptionalConfig(newProjectPath, conf) {
   if (conf.addESLint) {
     logger.info('Copying ESLint config files');
     logger.debug('Copying ESLint config files to', newProjectPath);
-    await handlePackageCopy(newProjectPath, '@ongov/eslint-config-ontario-frontend');
+    await handlePackageFilesCopy(newProjectPath, '@ongov/eslint-config-ontario-frontend');
     logger.debug('ESLint config files copied successfully.');
   }
   if (conf.addPrettier) {
     logger.info('Copying Prettier config files');
     logger.debug('Copying Prettier config files to', newProjectPath);
-    await handlePackageCopy(newProjectPath, '@ongov/prettier-config-ontario-frontend');
+    await handlePackageFilesCopy(newProjectPath, '@ongov/prettier-config-ontario-frontend');
     logger.debug('Prettier config files copied successfully.');
   }
 }
