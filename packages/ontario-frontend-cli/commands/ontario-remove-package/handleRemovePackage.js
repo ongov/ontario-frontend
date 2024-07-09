@@ -114,22 +114,52 @@ async function handleRemovePackageCommand() {
     }
   }
 
-  process.exit(1);
+  
 
+
+
+  userSelection.map(async (package) => {
+    const packageConfig = PACKAGES_CONFIG[package];
+    logger.debug(`Package config for ${package}: ${JSON.stringify(packageConfig)}`);
+  
+    if (!packageConfig) {
+      const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
+      logger.error(
+        `Invalid package option selected. Please select a valid package. Available packages are: ${availablePackages}`,
+      );
+      return;
+    }
+  
+    try {
+      logger.success('NEXT STEP');
+      const configFilesExist = await checkExistingConfigFiles(
+        packageConfig.configFiles,
+      );
+      logger.debug(
+        `Config files existence status for ${package}: ${configFilesExist}`,
+      );
+      logger.success('NEXT STEP 2');
+  
+      if (configFilesExist) {
+        // await handlePackageFilesCopy(path.resolve(projectDir), package);
+        logger.info(`One or more configuration files for ${package} have been removed.`);
+      } else {
+        
+        logger.success(`Configuration files for ${package} removed successfully.`);
+      }
+    } catch (error) {
+      const errorMessage = error.message
+        ? error.message
+        : 'Failed to copy package configuration.';
+      logger.error(`Error occurred during package configuration copy: ${errorMessage}`);
+    }
+  });
+
+  process.exit(1);
   const packageConfig = PACKAGES_CONFIG[cmd];
   logger.debug(`Package config for ${cmd}: ${JSON.stringify(packageConfig)}`);
 
-  if (!packageConfig) {
-    const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
-    logger.error(
-      `Invalid package option selected. Please select a valid package. Available packages are: ${availablePackages}`,
-    );
-    return;
-  }
-
-  // Check if the package is installed
-  const packageInstalled = await isPackageInstalled(projectDir, cmd);
-  logger.debug(`Package installed status for ${cmd}: ${packageInstalled}`);
+  
   const configFilesExist = await checkExistingConfigFiles(
     packageConfig.configFiles,
   );
@@ -142,12 +172,6 @@ async function handleRemovePackageCommand() {
   }
 
   try {
-    // Uninstall the necessary packages
-    logger.info(`Removing packages: ${packageConfig.packages.join(', ')}`);
-    await uninstallPackages(packageConfig.packages, true, {
-      cwd: projectDir,
-    });
-
     for (const configFile of packageConfig.configFiles) {
       logger.debug(
         `Checking if configuration file exists: ${configFile.destination}`,

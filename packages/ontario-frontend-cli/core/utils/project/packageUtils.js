@@ -66,14 +66,20 @@ async function isOntarioFrontendProject(dir = process.cwd()) {
  */
 async function checkExistingConfigFiles(configFiles) {
   let anyConfigFileExists = false;
+  // logger.info(configFiles);
   for (const { destination, warningMessage } of configFiles) {
+    logger.info(destination);
+    logger.info( warningMessage);
     try {
-      await fs.access(destination);
+      logger.info(process.cwd());
+      await fs.readFile(destination);
+      logger.success('NEXT STEP 4');
       anyConfigFileExists = true;
       logger.warning(
         warningMessage || `Configuration file ${destination} already exists.`,
       );
     } catch (err) {
+      logger.error(err.message);
       // File does not exist, no action needed
     }
   }
