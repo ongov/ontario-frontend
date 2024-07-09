@@ -3,6 +3,7 @@ const path = require('path');
 const { readPackageJson } = require('./readPackageJson');
 const logger = require('../logger');
 const { CORE_DEPENDENCY } = require('../../config');
+const { removeFiles } = require('../../operations/file/remove');
 
 /**
  * Checks if a file exists at the given path.
@@ -39,9 +40,10 @@ async function doesPackageJsonExist(dir = process.cwd()) {
 async function isPackageInstalled(dir, packageName) {
   try {
     const packageJson = await readPackageJson(dir);
-    return !!(
-      packageJson.dependencies && packageJson.dependencies[packageName]
-    ) || !!(packageJson.devDependencies && packageJson.devDependencies[packageName]);
+    return (
+      (packageJson.dependencies && packageJson.dependencies[packageName]) ||
+      (packageJson.devDependencies && packageJson.devDependencies[packageName])
+    );
   } catch (error) {
     logger.error(`Failed to read package.json: ${error.message}`);
     return false;
@@ -65,26 +67,45 @@ async function isOntarioFrontendProject(dir = process.cwd()) {
  * @returns {Promise<boolean>} - Returns true if any configuration file exists, otherwise false.
  */
 async function checkExistingConfigFiles(configFiles) {
-  let anyConfigFileExists = false;
-  // logger.info(configFiles);
   for (const { destination, warningMessage } of configFiles) {
-    logger.info(destination);
-    logger.info( warningMessage);
+    logger.debug(destination);
+    logger.debug( warningMessage);
     try {
-      logger.info(process.cwd());
-      await fs.readFile(destination);
+      await fs.access(destination);
       logger.success('NEXT STEP 4');
-      anyConfigFileExists = true;
       logger.warning(
         warningMessage || `Configuration file ${destination} already exists.`,
       );
+      return true;
     } catch (err) {
-      logger.error(err.message);
       // File does not exist, no action needed
     }
   }
-  return anyConfigFileExists;
+  return false;
 }
+
+/**
+ * Checks for the existence of configuration files and removes them if they exist.
+ *
+ * @param {Array} configFiles - List of configuration files to check and remove.
+ * @returns {Promise<void>}
+ */
+async function checkAndRemoveConfigFiles(configFiles) {
+  const existingFiles = await Promise.all(
+    configFiles.map(async ({ destination }) => {
+      const fileExists = await doesFileExist(destination);
+      return fileExists ? { location: destination } : null;
+    })
+  );
+
+  const filesToRemove = existingFiles.filter(Boolean);
+  if (filesToRemove.length > 0) {
+    await removeFiles(filesToRemove);
+  } else {
+    logger.info('No configuration files to remove.');
+  }
+}
+
 
 module.exports = {
   doesFileExist,
@@ -92,4 +113,5 @@ module.exports = {
   isPackageInstalled,
   isOntarioFrontendProject,
   checkExistingConfigFiles,
+  checkAndRemoveConfigFiles,
 };
