@@ -1,4 +1,5 @@
 const path = require('path');
+const inquirer = require('inquirer');
 const { PACKAGES_CONFIG } = require('../../core/config');
 const { installPackages } = require('../../core/operations');
 const { addPackagesQuestion } = require('../../core/questions');
