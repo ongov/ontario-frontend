@@ -18,14 +18,15 @@ const {
 } = require('../../core/utils/project/packageUtils');
 
 /**
- * Prompts the user to confirm package removal.
+ * Prompts the user to select packages to install.
  *
- * @returns {Promise<string[]>} A promise that resolves to an array of package names to be removed.
+ * @returns {Promise<string[]>} A promise that resolves to an array of selected package names to be installed.
  */
-async function confirmPackageRemoval() {
-  logger.debug('Prompting package removal questions.');
+async function selectPackagestoUninstall() {
+  logger.debug('Prompting packages to uninstall question.');
 
   const { removePackages } = await inquirer.prompt(removePackagesQuestion());
+
   logger.debug(
     `Packages selected to remove: ${JSON.stringify(removePackages)}`,
   );
@@ -35,20 +36,23 @@ async function confirmPackageRemoval() {
     process.exit(1);
   }
 
+  return removePackages;
+}
+
+/**
+ * Prompts the user to confirm package removal.
+ *
+ * @returns {Promise<string[]>} A promise that resolves to a boolean.
+ */
+async function confirmPackageRemoval(packageArray) {
+  logger.debug('Prompting removal confirmation question.');
+
   const { confirmRemoval } = await inquirer.prompt(
-    confirmRemovalQuestion(removePackages),
+    confirmRemovalQuestion(packageArray),
   );
   logger.debug(`Confirm removal value: ${JSON.stringify(confirmRemoval)}`);
 
-  if (!confirmRemoval) {
-    logger.error(
-      'Package removal confirmation not given. Exiting the package removal process.',
-    );
-    process.exit(1);
-  }
-
-  logger.debug('Exiting package removal questions.');
-  return removePackages;
+  return confirmRemoval;
 }
 
 /**
@@ -63,8 +67,16 @@ async function handleRemovePackageCommand() {
   logger.debug(`Current project directory: ${projectDir}`);
 
   // returns an array with the user selected options
-  const userSelection = await confirmPackageRemoval();
+  const userSelection = await selectPackagestoUninstall();
   logger.debug(`user selection: ${JSON.stringify(userSelection)}`);
+
+  const userConfirmation = await confirmPackageRemoval(userSelection);
+
+  if (!userConfirmation) {
+    logger.error('Package removal not confirmed. Exiting the package removal process.');
+    process.exit(1);
+  }
+  logger.debug('End of package removal questions.');
 
   // Based on the user selection, we will trim the PACKAGES_CONFIG object
   // to only include keys aligning to the selected packages

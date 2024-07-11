@@ -21,10 +21,10 @@ const {
 /**
  * Prompts the user to select packages to install.
  *
- * @returns {Promise<string[]>} A promise that resolves to an array of selected package names.
+ * @returns {Promise<string[]>} A promise that resolves to an array of selected package names to be installed.
  */
 async function selectPackagestoInstall() {
-  logger.debug('Prompting add package questions.');
+  logger.debug('Prompting packages to install questions.');
 
   const questions = addPackagesQuestion();
   const answers = await inquirer.prompt(questions);
@@ -48,15 +48,9 @@ async function handleAddPackageCommand() {
   const projectDir = process.cwd();
   logger.debug(`Current project directory: ${projectDir}`);
 
-  // If the current project is not an Ontario Frontend project,
-  // do not try adding the package.
-  if (!(await isOntarioFrontendProject(projectDir))) {
-    logger.error('This is not an Ontario Frontend project.');
-    return;
-  }
-
   // returns an array with the user selected options
   const userSelection = await selectPackagestoInstall();
+  logger.debug('End of package removal questions.');
 
   // Based on the user selection, we will trim the PACKAGES_CONFIG object
   // to only include keys aligning to the selected packages
