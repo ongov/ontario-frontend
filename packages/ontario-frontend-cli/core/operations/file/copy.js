@@ -12,7 +12,8 @@ const logger = require('../../utils/logger');
  */
 async function copy(source, destination) {
   await fs.cp(source, destination, { recursive: true });
-  logger.debug(`Copied from ${source} to ${destination}`);
+  logger.debug(`Copied file from ${source} to ${destination}`);
+  logger.info(`Successfully added: ${destination}`);
 }
 
 /**

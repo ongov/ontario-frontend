@@ -23,7 +23,7 @@ async function remove(path) {
  */
 async function removeFiles(files) {
   await Promise.all(files.map(({ location }) => remove(location)));
-  logger.info(`All specified files have been successfully removed: ${JSON.stringify(files)}`);
+  logger.success(`All specified files have been successfully removed: ${JSON.stringify(files)}`);
 }
 
 module.exports = {

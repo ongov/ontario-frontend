@@ -24,7 +24,7 @@ const {
  * @returns {Promise<string[]>} A promise that resolves to an array of selected package names.
  */
 async function selectPackagestoInstall() {
-  logger.debug('Asking package selection question.');
+  logger.debug('Prompting add package questions.');
 
   const questions = addPackagesQuestion();
   const answers = await inquirer.prompt(questions);
@@ -51,7 +51,7 @@ async function handleAddPackageCommand() {
   // If the current project is not an Ontario Frontend project,
   // do not try adding the package.
   if (!(await isOntarioFrontendProject(projectDir))) {
-    logger.error('This is not an Ontario Frontend project');
+    logger.error('This is not an Ontario Frontend project.');
     return;
   }
 
@@ -91,7 +91,7 @@ async function handleAddPackageCommand() {
   const filteredPackagesToInstall = packagesToInstall.filter(
     (_, index) => !arePackagesInstalled[index],
   );
-  logger.debug(`Filtered packages to install: ${JSON.stringify(filteredPackagesToInstall)}`);
+  logger.debug(`Packages to install (ignoring those which may already be installed): ${JSON.stringify(filteredPackagesToInstall)}`);
 
   if (filteredPackagesToInstall.length) {
     try {
@@ -113,8 +113,9 @@ async function handleAddPackageCommand() {
     userSelection.map(async (pkg) => {
       const packageConfig = PACKAGES_CONFIG[pkg];
       logger.debug(
-        `Package config for ${pkg}: ${JSON.stringify(packageConfig)}`,
+        `Package config for ${pkg}:`
       );
+      logger.debug(JSON.stringify(packageConfig));
 
       if (!packageConfig) {
         const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
@@ -138,7 +139,6 @@ async function handleAddPackageCommand() {
           );
         } else {
           await handlePackageFilesCopy(path.resolve(projectDir), pkg);
-          logger.success(`Configuration files for ${pkg} copied successfully.`);
         }
       } catch (error) {
         const errorMessage =

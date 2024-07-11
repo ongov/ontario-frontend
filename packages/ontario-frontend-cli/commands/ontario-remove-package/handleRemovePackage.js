@@ -16,7 +16,6 @@ const {
   isPackageInstalled,
   checkAndRemoveConfigFiles,
 } = require('../../core/utils/project/packageUtils');
-const { removeFiles } = require('../../core/operations/file/remove');
 
 /**
  * Prompts the user to confirm package removal.
@@ -103,7 +102,7 @@ async function handleRemovePackageCommand() {
     (_, index) => arePackagesInstalled[index],
   );
   logger.debug(
-    `Filtered packages to uninstall: ${JSON.stringify(
+    `Packages to uninstall (ignoring those which are not installed): ${JSON.stringify(
       filteredPackagesToUninstall,
     )}`,
   );
@@ -126,8 +125,9 @@ async function handleRemovePackageCommand() {
     userSelection.map(async (pkg) => {
       const packageConfig = PACKAGES_CONFIG[pkg];
       logger.debug(
-        `Package config for ${pkg}: ${JSON.stringify(packageConfig)}`,
+        `Package config for ${pkg}:`
       );
+      logger.debug(JSON.stringify(packageConfig));
 
       if (!packageConfig) {
         const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
