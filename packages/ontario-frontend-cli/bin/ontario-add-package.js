@@ -49,12 +49,6 @@ async function initializeProgram() {
       )
       .option('--debug', 'Enable debug output')
       .action(handleAddPackageAction);
-      // .action( function(package) {
-      //   console.log(package);
-      //   package.forEach((p) => {
-      //     console.log(p);
-      //   });
-      // });
 
     program
       .command('help')
@@ -95,12 +89,12 @@ async function handleAddPackageAction(pkg, cmd) {
     process.exit(1);
   }
 
-  // if (!(await isOntarioFrontendProject(projectDir))) {
-  //   logger.error(
-  //     'Ontario Frontend package not found within package.json as a dependency.',
-  //   );
-  //   process.exit(1);
-  // }
+  if (!(await isOntarioFrontendProject(projectDir))) {
+    logger.error(
+      'Ontario Frontend package not found within package.json as a dependency.',
+    );
+    process.exit(1);
+  }
 
   try {
     await handleAddPackageCommand(pkg);
