@@ -29,20 +29,8 @@ const createOntarioAppQuestions = (askQuestions) => [
   prettierQuestion(askQuestions.askPrettier),
 ];
 
-/**
- * Generates the list of questions to be asked during the package removal process.
- * 
- * @param {String|Object} cmd - The input value from the user when running the 
- * ontario-remove-package command. e.g. "eslint" or "prettier".
- */
-const ontarioRemovePackageQuestions = () => [
-  removePackagesQuestion
-  // confirmRemovalQuestion(cmd),
-];
-
 module.exports = {
   createOntarioAppQuestions,
-  ontarioRemovePackageQuestions,
   addPackagesQuestion,
   removePackagesQuestion,
   confirmRemovalQuestion
