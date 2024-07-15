@@ -38,7 +38,7 @@ async function initializeProgram() {
 
     program
       .addArgument(
-        new Argument('<package>', 'An Ontario package').choices([
+        new Argument('[packages...]', 'A list of Ontario packages.').choices([
           'eslint',
           'prettier',
         ]),
