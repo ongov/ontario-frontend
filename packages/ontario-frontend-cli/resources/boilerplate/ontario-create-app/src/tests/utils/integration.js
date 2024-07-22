@@ -21,12 +21,15 @@ const readPackageJson = function () {
  */
 const isPackageInstalled = function (pkg) {
   const packageJson = readPackageJson();
-  return (
-    (packageJson.dependencies &&
-      packageJson.dependencies.hasOwnProperty(pkg)) ||
-    (packageJson.devDependencies &&
-      packageJson.devDependencies.hasOwnProperty(pkg))
-  );
+    if (packageJson.dependencies && packageJson.dependencies.hasOwnProperty(pkg)) {
+        console.log(`Package ${pkg} found in dependencies`);
+        return true;
+    }
+    if (packageJson.devDependencies && packageJson.devDependencies.hasOwnProperty(pkg)) {
+        console.log(`Package ${pkg} found in devDependencies`);
+        return true;
+    }
+    return false;
 };
 
 module.exports = {

@@ -54,6 +54,7 @@ describe('Integration: Installed packages', function () {
   // Testing optional packages with their associated packages and dependencies
   for (const [parentPackage, config] of Object.entries(optionalPackages)) {
     if (config.enabled) {
+      console.log(`Testing optional package: ${parentPackage}`);
       config.packages.forEach((pkg) => {
         it(`The package "${pkg}" should be installed for "${parentPackage}"`, function () {
           try {
@@ -62,7 +63,7 @@ describe('Integration: Installed packages', function () {
             }
           } catch (e) {
             expect.fail(
-              `Failed: couldn't locate the package: "${pkg}" for "${parentPackage}"`,
+              `Failed: couldn't locate the package: "${pkg}" for "${parentPackage}"`
             );
           }
         });
