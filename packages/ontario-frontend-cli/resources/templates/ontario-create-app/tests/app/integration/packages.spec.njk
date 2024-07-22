@@ -1,9 +1,9 @@
-{# Integration tests for projects created using Ontario Frontend #}/**
+/**
  * Integration tests that check if the required and selected node modules were installed
+ * This suite ensures that the necessary external packages are installed.
  */
-const { expect } = require("chai");
-const fs = require("fs");
-const path = require("path");
+const { expect } = require('chai');
+const { isPackageInstalled } = require('../../utils/integration.js');
 
 /** Tests for required and optional packages
  * 1. Checks if the required ontario-frontend core package is installed.
@@ -14,30 +14,13 @@ const path = require("path");
  * @param {boolean} optionalPackages.enabled - Boolean value if the optional packages were selected or not through the CLI prompt.
  * @param {array} optionalPackages.packages - A list of associated packages for a parent package.
  * The boolean value should be captured from the CLI prompts.
- * 
+ *
  * @returns {boolean} Based on the test, the result will either be TRUE or FALSE (error).
  */
 
-// A utility function to read package.json
-const readPackageJson = () => {
-  const packageJsonPath = path.resolve(__dirname, "../../..", "package.json");
-  return JSON.parse(fs.readFileSync(packageJsonPath, "utf8"));
-};
-
-// Checks if a package exists in package.json both in dependencies and dev dependencies
-const isPackageInstalled = (pkg) => {
-  const packageJson = readPackageJson();
-  return (
-    (packageJson.dependencies &&
-      packageJson.dependencies.hasOwnProperty(pkg)) ||
-    (packageJson.devDependencies &&
-      packageJson.devDependencies.hasOwnProperty(pkg))
-  );
-};
-
-describe("Integration: Installed packages", function () {
+describe('Integration: Installed packages', function () {
   // Array of required packages – can add more to the list
-  const requiredPackages = ["@ongov/ontario-frontend"];
+  const requiredPackages = ['@ongov/ontario-frontend'];
 
   // Testing the required packages
   requiredPackages.forEach((pkg) => {
@@ -57,14 +40,14 @@ describe("Integration: Installed packages", function () {
     eslint: {
       enabled: {{ addESLint }},
       packages: [
-        "eslint",
-        "eslint-plugin-import",
-        "@ongov/eslint-config-ontario-frontend",
+        'eslint',
+        'eslint-plugin-import',
+        '@ongov/eslint-config-ontario-frontend',
       ],
     },
     prettier: {
       enabled: {{ addPrettier }},
-      packages: ["prettier", "@ongov/prettier-config-ontario-frontend"],
+      packages: ['prettier', '@ongov/prettier-config-ontario-frontend'],
     },
   };
 

@@ -3,4 +3,4 @@ dist/
 logs/
 node_modules/
 tests_output/
-DS_Store
+**/.DS_Store

@@ -1,19 +1,11 @@
-{# Search End to End and integration tests to check if the search takes us to the expected ontario.ca URL #}/**
+/**
  * E2E tests that checks the functionality of the search bar.
+ * This suite ensures that the application works as expected for the end user.
  */
 
-/**
- * Helper function to check if element exists and is visible
- * @param {string} selector - Selector value, either a class or an id, of the element
- * @param {string} description - Description of the element
- */
-function checkElement(selector, description) {
-  browser.assert
-    .elementPresent(selector, `${description} exists`)
-    .assert.visible(selector, `${description} is visible`);
-}
+const { checkElement } = require('../utils/e2e.js');
 
-/**
+/** Tests the Ontario search and searchbar integration
  * 1. Checks if the search input and the search button exist.
  * 2. Types in a search term and checks if the page gets redirected to the expected URL.
  *
@@ -31,29 +23,29 @@ module.exports = {
     browser.maximizeWindow();
   },
 
-  "E2E: Search Bar Test": function (browser) {
+  'E2E: Search Bar Test': function (browser) {
     const E2E_URL = process.env.E2E_URL;
-    const searchTerm = "license";
+    const searchTerm = 'license';
     const expectedSearchURL =
-      "https://www.ontario.ca/search/search-results/?query=license";
-    const searchInputSelector = "#ontario-search-input-field";
-    const searchButtonSelector = "#ontario-search-submit";
+      'https://www.ontario.ca/search/search-results/?query=license';
+    const searchInputSelector = '#ontario-search-input-field';
+    const searchButtonSelector = '#ontario-search-submit';
 
     browser
       .url(E2E_URL)
-      .waitForElementVisible("body", 2000, "Body is visible")
+      .waitForElementVisible('body', 2000, 'Body is visible')
 
       // Check if search elements exist and are visible
-      .perform(() => checkElement(searchInputSelector, "Search input field"))
-      .perform(() => checkElement(searchButtonSelector, "Search button"))
+      .perform(() => checkElement(searchInputSelector, 'Search input field'))
+      .perform(() => checkElement(searchButtonSelector, 'Search button'))
 
       // Type in the search term and check redirection
       .setValue(searchInputSelector, searchTerm)
       .click(searchButtonSelector)
-      .waitForElementVisible("body", 2000, "Body is visible after search")
+      .waitForElementVisible('body', 2000, 'Body is visible after search')
       .assert.urlContains(
         expectedSearchURL,
-        "Redirected to the correct search URL"
+        'Redirected to the correct search URL',
       )
       .end();
   },
