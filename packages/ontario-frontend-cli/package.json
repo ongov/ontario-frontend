@@ -19,9 +19,7 @@
   ],
   "license": "Apache 2.0",
   "bin": {
-    "ontario-create-app": "./bin/ontario-create-app.js",
-    "ontario-add-package": "./bin/ontario-add-package.js",
-    "ontario-remove-package": "./bin/ontario-remove-package.js"
+    "ontario-frontend-cli": "./bin/ontario-frontend-cli.js"
   },
   "dependencies": {
     "chalk": "^4.1.2",
