@@ -13,13 +13,13 @@ const PackageCopyOperationError = require('../../errors/PackageCopyOperationErro
  * @returns {Promise<void>} A promise that resolves when the files are copied successfully or rejects on failure.
  * @throws {PackageCopyOperationError} Will throw an error if the package configuration is not found or any copy operation fails.
  */
-async function handlePackageCopy(outputPath, packageName) {
+async function handlePackageFilesCopy(outputPath, packageName) {
   const packageFiles = PACKAGES_CONFIG[packageName]?.configFiles;
 
   if (!Array.isArray(packageFiles)) {
     const errorMessage = `Package configuration for ${packageName} not found.`;
     logger.error(errorMessage);
-    throw new PackageCopyOperationError('handlePackageCopy', [outputPath, packageName], errorMessage);
+    throw new PackageCopyOperationError('handlePackageFilesCopy', [outputPath, packageName], errorMessage);
   }
 
   const filesToCopy = packageFiles.map((file) => ({
@@ -32,5 +32,5 @@ async function handlePackageCopy(outputPath, packageName) {
 }
 
 module.exports = {
-  handlePackageCopy: withErrorHandling(handlePackageCopy, PackageCopyOperationError),
+  handlePackageFilesCopy: withErrorHandling(handlePackageFilesCopy, PackageCopyOperationError),
 };

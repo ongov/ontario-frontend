@@ -4,112 +4,162 @@ const { PACKAGES_CONFIG } = require('../../core/config');
 const { uninstallPackages } = require('../../core/operations');
 const logger = require('../../core/utils/logger');
 const {
-  handleRemovePackage,
-} = require('../../core/utils/process/removePackage');
-const { ontarioRemovePackageQuestions } = require('../../core/questions');
+  extractChildObjectValuesByKey,
+} = require('../../core/utils/datastructures/objectUtils');
+const {
+  removePackagesQuestion,
+  confirmRemovalQuestion,
+} = require('../../core/questions');
 const { withErrorHandling } = require('../../core/errors/errorHandler');
 const RemovePackageError = require('../../core/errors/RemovePackageError');
 const {
-  isOntarioFrontendProject,
   isPackageInstalled,
-  checkExistingConfigFiles,
-  doesFileExist,
+  checkAndRemoveConfigFiles,
 } = require('../../core/utils/project/packageUtils');
 
 /**
- * This function triggers the CLI to ask the user a confirmation question on
- * whether they want to remove the selected package. If they select "no" the process will exit.
+ * Prompts the user to select packages to install.
  *
- * @param {String|Object} cmd - The input value from the user when running the
- * ontario-remove-package command. e.g. "eslint" or "prettier".
- * @returns {Promise<void>} A promise that resolves when the confirmation is complete.
+ * @returns {Promise<string[]>} A promise that resolves to an array of selected package names to be installed.
  */
-async function confirmPackageRemoval(cmd = {}) {
-  logger.debug(`Confirming package removal for: ${cmd}`);
-  const questions = ontarioRemovePackageQuestions(cmd);
-  const answers = await inquirer.prompt(questions);
+async function selectPackagestoUninstall() {
+  logger.debug('Prompting packages to uninstall question.');
 
-  if (answers.removePackage === false) {
-    logger.info('Exiting the package removal process.');
+  const { removePackages } = await inquirer.prompt(removePackagesQuestion());
+
+  logger.debug(
+    `Packages selected to remove: ${JSON.stringify(removePackages)}`,
+  );
+
+  if (!removePackages.length) {
+    logger.error('No packages selected. Exiting the package removal process.');
     process.exit(1);
   }
+
+  return removePackages;
+}
+
+/**
+ * Prompts the user to confirm package removal.
+ *
+ * @returns {Promise<string[]>} A promise that resolves to a boolean.
+ */
+async function confirmPackageRemoval(packageArray) {
+  logger.debug('Prompting removal confirmation question.');
+
+  const { confirmRemoval } = await inquirer.prompt(
+    confirmRemovalQuestion(packageArray),
+  );
+  logger.debug(`Confirm removal value: ${JSON.stringify(confirmRemoval)}`);
+
+  return confirmRemoval;
 }
 
 /**
  * Remove Ontario packages from the project.
  *
- * @param {String|Object} cmd - The input value from the user when running the
- * ontario-remove-package command. e.g. "eslint" or "prettier".
  * @returns {Promise<void>} A promise that resolves when the package removal is complete.
  */
-async function handleRemovePackageCommand(cmd = {}) {
-  logger.debug(`Starting handleRemovePackageCommand with cmd: ${cmd}`);
-  await confirmPackageRemoval(cmd);
-  logger.info(`Removal process for ${cmd} started.`);
-
-  const packageConfig = PACKAGES_CONFIG[cmd];
-  logger.debug(`Package config for ${cmd}: ${JSON.stringify(packageConfig)}`);
-
-  if (!packageConfig) {
-    const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
-    logger.error(
-      `Invalid package option selected. Please select a valid package. Available packages are: ${availablePackages}`,
-    );
-    return;
-  }
+async function handleRemovePackageCommand() {
+  logger.debug('Starting handleRemovePackageCommand().');
 
   const projectDir = process.cwd();
   logger.debug(`Current project directory: ${projectDir}`);
 
-  // Check if the current project is an Ontario Frontend project
-  if (!(await isOntarioFrontendProject(projectDir))) {
-    logger.error('This is not an Ontario Frontend project.');
-    return;
-  }
+  // returns an array with the user selected options
+  const userSelection = await selectPackagestoUninstall();
+  logger.debug(`user selection: ${JSON.stringify(userSelection)}`);
 
-  // Check if the package is installed
-  const packageInstalled = await isPackageInstalled(projectDir, cmd);
-  logger.debug(`Package installed status for ${cmd}: ${packageInstalled}`);
-  const configFilesExist = await checkExistingConfigFiles(
-    packageConfig.configFiles,
+  const userConfirmation = await confirmPackageRemoval(userSelection);
+
+  if (!userConfirmation) {
+    logger.error('Package removal not confirmed. Exiting the package removal process.');
+    process.exit(1);
+  }
+  logger.debug('End of package removal questions.');
+
+  // Based on the user selection, we will trim the PACKAGES_CONFIG object
+  // to only include keys aligning to the selected packages
+  const trimmedConfig = Object.fromEntries(
+    Object.entries(PACKAGES_CONFIG).filter(([key]) =>
+      userSelection.includes(key),
+    ),
   );
-  logger.debug(`Config files existence status for ${cmd}: ${configFilesExist}`);
 
-  // If the package is not installed and there are no config files, don't bother
-  if (!packageInstalled && !configFilesExist) {
-    logger.info(`${cmd} is not installed.`);
-    return;
-  }
+  // Without .flat() this will return an array of arrays container both eslint and prettier packages
+  // Flat collapses it all into one array
+  const packagesToUninstall = extractChildObjectValuesByKey(
+    trimmedConfig,
+    'packages',
+  ).flat();
+  logger.debug(`packages to uninstall: ${JSON.stringify(packagesToUninstall)}`);
 
-  try {
-    // Uninstall the necessary packages
-    logger.info(`Removing packages: ${packageConfig.packages.join(', ')}`);
-    await uninstallPackages(packageConfig.packages, true, {
-      cwd: projectDir,
-    });
-
-    for (const configFile of packageConfig.configFiles) {
-      logger.debug(
-        `Checking if configuration file exists: ${configFile.destination}`,
-      );
-      if (await doesFileExist(configFile.destination)) {
-        logger.info(`Removing configuration file: ${configFile.destination}`);
-        await handleRemovePackage(path.resolve(projectDir), cmd);
+  // an array of true/false values depending on if each package is installed
+  const arePackagesInstalled = await Promise.all(
+    packagesToUninstall.map(async (pkg) => {
+      const isInstalled = await isPackageInstalled(projectDir, pkg);
+      if (!isInstalled) {
+        logger.warning(`${pkg} is not installed. Skipping removal.`);
       }
-    }
+      return isInstalled;
+    }),
+  );
 
-    logger.success(`Removal process for ${cmd} completed.`);
-  } catch (error) {
-    const errorMessage = error.message
-      ? error.message
-      : 'Failed to uninstall package.';
-    logger.error(`Error occurred during package removal: ${errorMessage}`);
-    throw new RemovePackageError(
-      'handleRemovePackageCommand',
-      [cmd],
-      errorMessage,
-    );
+  logger.debug(
+    `Are packages installed? ${JSON.stringify(arePackagesInstalled)}`,
+  );
+
+  // Filter the list of packages to installed based on if any are already installed
+  const filteredPackagesToUninstall = packagesToUninstall.filter(
+    (_, index) => arePackagesInstalled[index],
+  );
+  logger.debug(
+    `Packages to uninstall (ignoring those which are not installed): ${JSON.stringify(
+      filteredPackagesToUninstall,
+    )}`,
+  );
+
+  if (filteredPackagesToUninstall.length) {
+    try {
+      await uninstallPackages(filteredPackagesToUninstall, true);
+    } catch (error) {
+      const errorMessage = error.message || 'Failed to uninstall package.';
+      logger.error(`Error occurred during package removal: ${errorMessage}`);
+      throw new RemovePackageError(
+        'handleRemovePackageCommand',
+        filteredPackagesToUninstall,
+        errorMessage,
+      );
+    }
   }
+
+  await Promise.all(
+    userSelection.map(async (pkg) => {
+      const packageConfig = PACKAGES_CONFIG[pkg];
+      logger.debug(
+        `Package config for ${pkg}:`
+      );
+      logger.debug(JSON.stringify(packageConfig));
+
+      if (!packageConfig) {
+        const availablePackages = Object.keys(PACKAGES_CONFIG).join(', ');
+        logger.error(
+          `Invalid package option selected. Available packages are: ${availablePackages}`,
+        );
+        return;
+      }
+
+      try {
+        await checkAndRemoveConfigFiles(packageConfig.configFiles);
+      } catch (error) {
+        const errorMessage =
+          error.message || 'Failed to remove package configuration.';
+        logger.error(
+          `Error occurred during package configuration removal: ${errorMessage}`,
+        );
+      }
+    }),
+  );
 }
 
 module.exports = {

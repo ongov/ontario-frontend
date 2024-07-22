@@ -1,4 +1,6 @@
 const toolkit = require('@ongov/ontario-frontend');
+// Sub-object destructing, and then casting result as new var coreVersion
+const { packages: { "node_modules/@ongov/ontario-frontend": { version: coreVersion } } } = require('./package-lock.json');
 
 function configFunc(eleventyConfig) {
   eleventyConfig.addPassthroughCopy({
@@ -7,6 +9,7 @@ function configFunc(eleventyConfig) {
 
   eleventyConfig.addLayoutAlias('ontariocaLayout', 'vendor/ontario-ca/layout.njk');
 
+  eleventyConfig.addShortcode('coreVersion', () => coreVersion);
 
 }
 

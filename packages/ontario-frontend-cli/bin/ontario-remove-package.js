@@ -37,12 +37,6 @@ async function initializeProgram() {
     );
 
     program
-      .addArgument(
-        new Argument('<package>', 'An Ontario package').choices([
-          'eslint',
-          'prettier',
-        ]),
-      )
       .option(
         '--local',
         'Use a local version of the Ontario package dependency',
@@ -75,10 +69,9 @@ async function initializeProgram() {
 /**
  * Handle the remove package action.
  *
- * @param {string} pkg - The package to remove.
  * @param {Object} cmd - The command object containing user inputs and options.
  */
-async function handleRemovePackageAction(pkg, cmd) {
+async function handleRemovePackageAction(cmd) {
   logger.setDebug(cmd.debug);
   logger.debug('CLI options:', cmd);
 
@@ -86,6 +79,7 @@ async function handleRemovePackageAction(pkg, cmd) {
 
   if (!(await doesPackageJsonExist(projectDir))) {
     logger.error('package.json file not found.');
+    logger.error('This command must be executed within an Ontario.ca Frontend project.')
     process.exit(1);
   }
 
@@ -93,11 +87,12 @@ async function handleRemovePackageAction(pkg, cmd) {
     logger.error(
       'Ontario Frontend package not found within package.json as a dependency.',
     );
+    logger.error('This command must be executed within an Ontario.ca Frontend project.')
     process.exit(1);
   }
 
   try {
-    await handleRemovePackageCommand(pkg);
+    await handleRemovePackageCommand();
   } catch (error) {
     logger.error(`Error uninstalling package: ${error.message}`);
     process.exit(1);
