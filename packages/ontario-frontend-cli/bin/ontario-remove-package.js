@@ -79,6 +79,7 @@ async function handleRemovePackageAction(cmd) {
 
   if (!(await doesPackageJsonExist(projectDir))) {
     logger.error('package.json file not found.');
+    logger.error('This command must be executed within an Ontario.ca Frontend project.')
     process.exit(1);
   }
 
@@ -86,6 +87,7 @@ async function handleRemovePackageAction(cmd) {
     logger.error(
       'Ontario Frontend package not found within package.json as a dependency.',
     );
+    logger.error('This command must be executed within an Ontario.ca Frontend project.')
     process.exit(1);
   }
 
