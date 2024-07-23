@@ -33,21 +33,17 @@ describe('Integration: Installed packages', function () {
         expect.fail(`Failed: to detect the required package: "${pkg}"`);
       }
     });
-  });
-
+  }); 
+  {% set eslintPackages = [] %}{% for key, value in eslintDependencies %}{% set eslintPackages = eslintPackages.concat(key) %}{% endfor %}{% set prettierPackages = [] %}{% for key, value in prettierDependencies %}{% set prettierPackages = prettierPackages.concat(key) %}{% endfor %}
   // The optional packages and their associated packages
   const optionalPackages = {
     eslint: {
       enabled: {{ addESLint }},
-      packages: [
-        'eslint',
-        'eslint-plugin-import',
-        '@ongov/eslint-config-ontario-frontend',
-      ],
+      packages: {{ eslintPackages | dump | safe }},
     },
     prettier: {
       enabled: {{ addPrettier }},
-      packages: ['prettier', '@ongov/prettier-config-ontario-frontend'],
+      packages: {{ prettierPackages | dump | safe }},
     },
   };
 
