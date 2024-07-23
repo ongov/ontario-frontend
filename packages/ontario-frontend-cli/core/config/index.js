@@ -9,19 +9,19 @@ const core = require('./packages/core.json');
 
 module.exports = {
   DEPENDENCIES: {
-    '@ongov/ontario-frontend': '^1.0.1',
+    '@ongov/ontario-frontend': '^1.1.0',
   },
   DEV_DEPENDENCIES: {
-    '@11ty/eleventy': '^1.0.1',
+    '@11ty/eleventy': '^1.1.0',
   },
   ESLINT_DEPENDENCIES: {
     eslint: '^8.57.0', // Updated to the latest version compatible with eslint-plugin-import
     'eslint-plugin-import': '^2.29.1',
-    '@ongov/eslint-config-ontario-frontend': '^1.0.1',
+    '@ongov/eslint-config-ontario-frontend': '^1.1.0',
   },
   PRETTIER_DEPENDENCIES: {
     prettier: '^3.3.2',
-    '@ongov/prettier-config-ontario-frontend': '^1.0.1',
+    '@ongov/prettier-config-ontario-frontend': '^1.1.0',
   },
   CREATE_TEMPLATE_DIR: path.join(
     rootDir,
