@@ -5,9 +5,10 @@
 const { expect } = require('chai');
 const { isPackageInstalled } = require('../../utils/integration.js');
 
-/** Tests for required and optional packages
- * 1. Checks if the required ontario-frontend core package is installed.
- * 2. If selected, the optional ES-Lint or Prettier packages were installed with their associated packages and dependencies.
+/** Tests the Ontario search and searchbar integration
+ * The test will open a browser window and try to access the page on the provided URL saved in the .env file
+ * 1. It checks if the search input and the search button exist.
+ * 2. Types in a search term and checks if the page gets redirected to the expected URL.
  *
  * @param {string} package - Name of the node package/module.
  * @param {object} optionalPackages - Name of the optional packages like ES-lint and Prettier.
@@ -20,7 +21,8 @@ const { isPackageInstalled } = require('../../utils/integration.js');
 
 describe('Integration: Installed packages', function () {
   // Array of required packages – can add more to the list
-  const requiredPackages = ['@ongov/ontario-frontend'];
+  {% set corePackages = [] %}{% for key, value in dependencies %}{% set corePackages = corePackages.concat(key) %}{% endfor %}
+  const requiredPackages = {{ corePackages | dump | safe}};
 
   // Testing the required packages
   requiredPackages.forEach((pkg) => {
@@ -50,7 +52,6 @@ describe('Integration: Installed packages', function () {
   // Testing optional packages with their associated packages and dependencies
   for (const [parentPackage, config] of Object.entries(optionalPackages)) {
     if (config.enabled) {
-      console.log(`Testing optional package: ${parentPackage}`);
       config.packages.forEach((pkg) => {
         it(`The package "${pkg}" should be installed for "${parentPackage}"`, function () {
           try {
