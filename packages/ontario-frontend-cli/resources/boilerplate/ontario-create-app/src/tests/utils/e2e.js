@@ -8,9 +8,9 @@
  * @param {string} description - Description of the element
  */
 function checkElement(selector, description) {
-  browser.assert
-    .elementPresent(selector, `${description} should be present`)
-    .assert.visible(selector, `${description} should be visible`);
+  browser
+    .waitForElementVisible(selector, 1000, `${description} is visible within 1 second`)
+    .assert.elementPresent(selector, `${description} should exist`);
 }
 
 /**
@@ -19,8 +19,8 @@ function checkElement(selector, description) {
  * @param {string} attribute - Attribute to check
  * @param {string} expectedValue - Expected value of the attribute
  */
-function checkElementAttributes(selector, attribute, expectedValue) {
-  browser.assert.attributeEquals(selector, attribute, expectedValue);
+function checkElementAttributes(selector, attribute, expectedValue, customMessage) {
+  browser.assert.attributeEquals(selector, attribute, expectedValue, customMessage);
 }
 
 /**
@@ -34,8 +34,25 @@ function checkElementText(selector, expectedText) {
   });
 }
 
+/**
+ * A combined function to check the page language attributes and language toggle button text
+ * @param {string} langAttr - Expected value of the HTML lang attribute
+ * @param {string} buttonText - Expected text content of the language toggle button
+ */
+function checkLanguageAttributes(langAttr, buttonText, customMessage) {
+  checkElementAttributes(
+    'html',
+    'lang',
+    langAttr,
+    customMessage
+  );
+  // Targeting the language toggle button within the ontario header
+  checkElementText('.ontario-header__language-toggler span', buttonText);
+}
+
 module.exports = {
   checkElement,
   checkElementAttributes,
   checkElementText,
+  checkLanguageAttributes,
 };

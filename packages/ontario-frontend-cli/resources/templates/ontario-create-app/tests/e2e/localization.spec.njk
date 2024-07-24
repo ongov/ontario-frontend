@@ -4,27 +4,7 @@
  *
  */
 
-const {
-  checkElement,
-  checkElementAttributes,
-  checkElementText,
-} = require('../utils/e2e.js');
-
-/**
- * Combined function to check the language attributes and button text
- * @param {string} langAttr - Expected value of the HTML lang attribute
- * @param {string} buttonText - Expected text content of the language toggle button
- */
-function checkLanguageAttributes(langAttr, buttonText) {
-  checkElementAttributes(
-    'html',
-    'lang',
-    langAttr,
-    `Expected lang attribute to be ${langAttr}`
-  );
-  // Targeting the language toggle button within the ontario header
-  checkElementText('.ontario-header__language-toggler span', buttonText);
-}
+const { checkElement, checkLanguageAttributes } = require('../utils/e2e.js');
 
 /**
  * This test will open a browser window and try to access the page on the provided URL saved in the .env file
@@ -67,8 +47,12 @@ if (!E2E_URL) {
         // Check if language toggle button exist and is visible
         .perform(() => checkElement(langButton, 'Language toggle button'));
 
-      // Initial check for English
-      checkLanguageAttributes(enLangAttr, frButtonText); // Check English attributes and French button text
+      // Initial check for English as the default language
+      checkLanguageAttributes(
+        enLangAttr,
+        frButtonText,
+        `The page language is "${enLangAttr}"`
+      ); // Check English attributes and French button text
 
       // Toggle to French and check
       browser.click(langButton); // Click the language toggle button to switch to French
@@ -77,6 +61,20 @@ if (!E2E_URL) {
       // Toggle back to English and check
       browser.click(langButton); // Click the language toggle button to switch back to English
       checkLanguageAttributes(enLangAttr, frButtonText); // Check English attributes and French button text
+
+      // Spamming the language toggle button to check performance
+      const numberOfClicks = 10;
+      for (let i = 0; i < numberOfClicks; i++) {
+        browser.click(langButton);
+      }
+      // Check the final language after spamming. EN or FR based on even/odd number of clicks.
+      const finalLangAttr = numberOfClicks % 2 === 0 ? enLangAttr : frLangAttr;
+      const finalButtonText = numberOfClicks % 2 === 0 ? frButtonText : enButtonText;
+      checkLanguageAttributes(finalLangAttr, finalButtonText);
+
+      console.log(
+        `The language toggle button can handle quick toggles. It has been clicked ${numberOfClicks} times in quick succession.\n`
+      );
 
       browser.end();
     },

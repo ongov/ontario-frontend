@@ -7,8 +7,8 @@
     "build": "rm -rf dist && eleventy",
     "debug": "rm -rf dist && DEBUG=* eleventy",
     "serve": "eleventy --serve",
-    "test": "npm list mocha chai || npm install mocha chai@4.4.1; mocha './src/tests/app/**/*.spec.js'",
-    "test:e2e": "npm list nightwatch || npm install nightwatch && npm install chromedriver && if [ -z $npm_config_url ]; then npx nightwatch; else E2E_URL=$npm_config_url npx nightwatch; fi"{% if addESLint %},
+    "test": "npm list mocha chai || npm install mocha@10.7.0 chai@4.4.1 && mocha './src/tests/app/**/*.spec.js'",
+    "test:e2e": "npm list nightwatch || npm install nightwatch@3.7.0 && npm install chromedriver@126.0.5 && if [ -z $npm_config_url ]; then npx nightwatch; else E2E_URL=$npm_config_url npx nightwatch; fi"{% if addESLint %},
     "lint": "eslint . --ext .js"{% endif %}{% if addPrettier %},
     "format": "prettier --write ."{% endif %}
   },
