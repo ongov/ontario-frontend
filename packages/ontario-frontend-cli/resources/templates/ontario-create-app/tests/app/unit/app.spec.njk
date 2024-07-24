@@ -54,14 +54,14 @@ describe('Unit: App files generation', function () {
     checkFileExists(
       paths.enPage,
       'should generate the main English page',
-      "Make sure your main *English njk page name has not changed \n If changed, update the page name in file 'src/tests/_unit/app.spec.js' (enFile)",
+      `\nMake sure your main *English njk page name has not changed \n If changed, update the page name in file "${testDir}/app/_unit/app.spec.js" (enFile)`,
     );
   });
   describe('French-language template page present', function () {
     checkFileExists(
       paths.frPage,
       'should generate the main French page',
-      "Make sure your main *French njk page name has not changed \n If changed, update the page name in file 'src/tests/_unit/app.spec.js' (frFile)",
+      `\nMake sure your main *French njk page name has not changed \n If changed, update the page name in file "${testDir}/app/_unit/app.spec.js" (frFile)`,
     );
   });
   describe('Sitemap present', function () {
