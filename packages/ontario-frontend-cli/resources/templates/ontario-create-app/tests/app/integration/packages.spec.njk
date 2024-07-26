@@ -40,11 +40,11 @@ describe('Integration: Installed packages', function () {
   // The optional packages and their associated packages
   const optionalPackages = {
     eslint: {
-      enabled: {{ addESLint }},
+      enabled: {{ addESLint }}, // UPDATE if changed
       packages: {{ eslintPackages | dump | safe }},
     },
     prettier: {
-      enabled: {{ addPrettier }},
+      enabled: {{ addPrettier }}, // UPDATE if changed
       packages: {{ prettierPackages | dump | safe }},
     },
   };
