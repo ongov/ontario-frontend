@@ -1,0 +1,70 @@
+/**
+ * Integration tests that check if the required and selected node modules were installed
+ * This suite ensures that the necessary external packages are installed.
+ */
+const { expect } = require('chai');
+const { isPackageInstalled } = require('../../utils/integration.js');
+
+/** Tests the Ontario search and searchbar integration
+ * The test will open a browser window and try to access the page on the provided URL saved in the .env file
+ * 1. It checks if the search input and the search button exist.
+ * 2. Types in a search term and checks if the page gets redirected to the expected URL.
+ *
+ * @param {string} package - Name of the node package/module.
+ * @param {object} optionalPackages - Name of the optional packages like ES-lint and Prettier.
+ * @param {boolean} optionalPackages.enabled - Boolean value if the optional packages were selected or not through the CLI prompt.
+ * @param {array} optionalPackages.packages - A list of associated packages for a parent package.
+ * The boolean value should be captured from the CLI prompts.
+ *
+ * @returns {boolean} Based on the test, the result will either be TRUE or FALSE (error).
+ */
+
+describe('Integration: Installed packages', function () {
+  // Array of required packages – can add more to the list
+  {% set corePackages = [] %}{% for key, value in dependencies %}{% set corePackages = corePackages.concat(key) %}{% endfor %}
+  const requiredPackages = {{ corePackages | dump | safe}};
+
+  // Testing the required packages
+  requiredPackages.forEach((pkg) => {
+    it(`The core package "${pkg}" should be installed`, function () {
+      try {
+        if (!isPackageInstalled(pkg)) {
+          throw new Error();
+        }
+      } catch (e) {
+        expect.fail(`Failed: to detect the required package: "${pkg}"`);
+      }
+    });
+  }); 
+  {% set eslintPackages = [] %}{% for key, value in eslintDependencies %}{% set eslintPackages = eslintPackages.concat(key) %}{% endfor %}{% set prettierPackages = [] %}{% for key, value in prettierDependencies %}{% set prettierPackages = prettierPackages.concat(key) %}{% endfor %}
+  // The optional packages and their associated packages
+  const optionalPackages = {
+    eslint: {
+      enabled: {{ addESLint }}, // UPDATE if changed
+      packages: {{ eslintPackages | dump | safe }},
+    },
+    prettier: {
+      enabled: {{ addPrettier }}, // UPDATE if changed
+      packages: {{ prettierPackages | dump | safe }},
+    },
+  };
+
+  // Testing optional packages with their associated packages and dependencies
+  for (const [parentPackage, config] of Object.entries(optionalPackages)) {
+    if (config.enabled) {
+      config.packages.forEach((pkg) => {
+        it(`The package "${pkg}" should be installed for "${parentPackage}"`, function () {
+          try {
+            if (!isPackageInstalled(pkg)) {
+              throw new Error();
+            }
+          } catch (e) {
+            expect.fail(
+              `Failed: couldn't locate the package: "${pkg}" for "${parentPackage}"`
+            );
+          }
+        });
+      });
+    }
+  }
+});
