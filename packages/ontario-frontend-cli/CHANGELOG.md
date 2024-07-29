@@ -3,6 +3,36 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.3.0](https://github.com/ongov/ontario-frontend/compare/@ongov/ontario-frontend-cli@1.1.0...@ongov/ontario-frontend-cli@1.3.0) (2024-07-29)
+
+
+### Bug Fixes
+
+* add inquirer import back ([b9fae44](https://github.com/ongov/ontario-frontend/commit/b9fae44820e0d117bfa41075c755b3791670a8ba))
+* changing the title and meta tags string to lowercase ([7a7bd13](https://github.com/ongov/ontario-frontend/commit/7a7bd132c414e707c9f28534d64b8217c8f36f93))
+* meta generator tag now references the correct version of Ontario Frontend ([71e26c7](https://github.com/ongov/ontario-frontend/commit/71e26c7b3c7822586b0b3f3851cc410cda470880))
+* **ONFRONT-91:** make fatal errors have helpful messages ([5369258](https://github.com/ongov/ontario-frontend/commit/53692587fcf509590d3d5b8edbe622bb855915e8))
+* **ONFRONT-91:** use abs paths ([9955e76](https://github.com/ongov/ontario-frontend/commit/9955e762e919d4baf93da45ef2a7d15943faddb2))
+* updated references to renamed package config keys in create app process ([6591ced](https://github.com/ongov/ontario-frontend/commit/6591ced79d09740e2fd3f7b87ccab03f3b72576a))
+
+
+### Features
+
+* accommodating for use cases where one of the two packages is uninstalled ([9fa9a22](https://github.com/ongov/ontario-frontend/commit/9fa9a2249da79ab86df104e44fa43db693cf615c))
+* added e2e tests and associated templates + .env & .gitignore ([e1787d9](https://github.com/ongov/ontario-frontend/commit/e1787d9f7d5832f44b3825c94b997d1e57b21d19))
+* added integration test templates ([e4f3a78](https://github.com/ongov/ontario-frontend/commit/e4f3a783102f921fffbc70916009c72f3172c756))
+* added unit tests with feedback to handle file name changes ([76b6b0b](https://github.com/ongov/ontario-frontend/commit/76b6b0ba617be862cce356671aa1b8b9a145cc7d))
+* added working integration test templates ([f4a2e1f](https://github.com/ongov/ontario-frontend/commit/f4a2e1f90477b1e9b3243b71be199ec92cebc1a4))
+* hardcoding stable test module versions to avoid future errors ([17bc3e3](https://github.com/ongov/ontario-frontend/commit/17bc3e355b484849a96efa17ba33596016a80d2d))
+* modular tests with abstracted helper utils ([8a22cbd](https://github.com/ongov/ontario-frontend/commit/8a22cbd296c249de0d4cc286919ce3c9ff3f1520))
+* more detailed error messages for unit tests ([8fc04b2](https://github.com/ongov/ontario-frontend/commit/8fc04b2774d8a40d2d417db45b5ed5372f7ab293))
+* taking package dependency list from the config data ([ce0f4a7](https://github.com/ongov/ontario-frontend/commit/ce0f4a71c23df1d3b6561985941c8697ed246ea6))
+* wip remove package ([67ffb59](https://github.com/ongov/ontario-frontend/commit/67ffb593ff4dd7513d2b4be443cd506508baf51d))
+
+
+
+
+
 # [1.2.0](https://github.com/ongov/ontario-frontend/compare/@ongov/ontario-frontend-cli@1.1.0...@ongov/ontario-frontend-cli@1.2.0) (2024-07-29)
 
 
