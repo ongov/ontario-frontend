@@ -11,6 +11,8 @@ const scriptMap = {
   'ontario-create-app': path.join(__dirname, 'ontario-create-app.js'),
   'ontario-add-package': path.join(__dirname, 'ontario-add-package.js'),
   'ontario-remove-package': path.join(__dirname, 'ontario-remove-package.js'),
+  'try': path.join(__dirname, 'try.js'),
+  'show-message': path.join(__dirname, 'show-message.js'),
 };
 
 if (scriptMap[command]) {
