@@ -12,7 +12,7 @@ module.exports = {
     '@ongov/ontario-frontend': '^1.1.0',
   },
   DEV_DEPENDENCIES: {
-    '@11ty/eleventy': '^1.1.0',
+    '@11ty/eleventy': '^1.0.1',
   },
   ESLINT_DEPENDENCIES: {
     eslint: '^8.57.0', // Updated to the latest version compatible with eslint-plugin-import
