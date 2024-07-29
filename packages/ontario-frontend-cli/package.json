@@ -1,6 +1,6 @@
 {
   "name": "@ongov/ontario-frontend-cli",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "The Ontario.ca Frontend Command Line Interface (CLI) is a series of tools for initializing, managing and developing Ontario.ca Frontend projects. It provides a simple interface to scaffold new projects, configure them with essential dependencies, and prepare them for development using Ontario.ca Frontend.",
   "scripts": {
     "build": "echo \"No build step defined\"",

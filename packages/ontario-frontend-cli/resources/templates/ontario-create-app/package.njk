@@ -8,7 +8,7 @@
     "debug": "rm -rf dist && DEBUG=* eleventy",
     "serve": "eleventy --serve"{% if addESLint %},
     "lint": "eslint . --ext .js"{% else %},
-    "lint": "npx @ongov/ontario-frontend-cli try --fail-message 'No configured linter. Please set up ESLint in your project.' -- eslint . || (EXIT_CODE=$? && npx @ongov/ontario-frontend-cli show-message 'no-configured-linter' && exit $EXIT_CODE)"{% endif %}{% if addPrettier %},
+    "lint": "npx @ongov/ontario-frontend-cli try --fail-message 'No configured linter. Please set up ESLint in your project.' -- eslint . || (set EXIT_CODE=%ERRORLEVEL% && npx @ongov/ontario-frontend-cli show-message 'no-configured-linter' && exit %EXIT_CODE%)"{% endif %}{% if addPrettier %},
     "format": "prettier --write ."{% endif %}
   },
   "author": "TODO changeme",
