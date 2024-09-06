@@ -1,3 +1,15 @@
+---
+
+## Ontario.ca Frontend is now in maintenance mode
+
+On September 3, 2024, **Ontario.ca Frontend** entered maintenance mode, pending further organizational review and realignment.
+
+The Ontario.ca team will no longer be adding new features or functionality to Ontario.ca Frontend. Existing applications built with Ontario.ca Frontend will continue to function normally, and delivery teams using it can continue to develop their projects based as they do today. Documentation for using Ontario.ca Frontend will remain available on [developer.ontario.ca/frontend](https://developer.ontario.ca/frontend/), and the source code for the project will remain archived on GitHub.
+
+Ontario.ca Frontend's underlying components continue to be well-supported and actively-maintained open source projects that any delivery team can continue using in its projects. The primary dependency, [Eleventy](https://11ty.dev/), is thoroughly documented and supported by both industry and community members.
+
+---
+
 # Ontario.ca Frontend
 
 A developer toolkit designed for teams that want to create maintainable, performant and dynamic user experiences for Ontario.ca.
